@@ -1,4 +1,5 @@
 import { calculateMonthlyFidc, type CvmRow, type CvmTables, type MonthlyMethodology, type PositionEvidence } from "../_shared/liquidity-monthly.ts";
+import { resolveLiquidityMethodology } from "../_shared/liquidity-methodology.ts";
 import { monthlyCors, monthlyError, requireRiskUser, serviceClient } from "../_shared/monthly-auth.ts";
 
 async function hashInput(value: unknown): Promise<string> {
@@ -73,7 +74,10 @@ Deno.serve(async (req) => {
     if (positionError) throw positionError;
     const snapshot = snapshots?.[0] ?? null;
     const position = snapshot?.summary as PositionEvidence | null;
-    const result = calculateMonthlyFidc(tables, referenceMonth, cnpj, methodology, position, fund.min_subordination_index);
+    const registered = resolveLiquidityMethodology(methodology.code, methodology.version);
+    const result = registered
+      ? registered.compute({ tables, referenceMonth, cnpj, position, minimumSubordination: fund.min_subordination_index }, methodology)
+      : calculateMonthlyFidc(tables, referenceMonth, cnpj, methodology, position, fund.min_subordination_index);
     if (filings.some((filing) => !filing.source_sha256 || !filing.source_storage_path)) {
       result.gaps.unshift("Informe CVM legado sem ZIP original arquivado e hash de origem; reimporte a competência para fechar a trilha de auditoria.");
     }
