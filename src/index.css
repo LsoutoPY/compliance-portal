@@ -1,0 +1,406 @@
+/*
+  Regras de LAYOUT DE PÁGINA que não pertencem ao design system (topbar, grid do
+  dashboard, etc). NUNCA declare cores, espaçamentos ou raios aqui com valores
+  soltos — sempre var(--token). Ver docs/reference/liquidez_mockup.html para o
+  bloco <style> completo com o padrão exato (.topbar, .kpi, .row2, .bucket-bar,
+  .faixa-stack, .conc-row, .trend-svg etc) — copie esse bloco como ponto de
+  partida em vez de reinventar.
+*/
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  min-height: var(--layout-topbar);
+  flex: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+  padding: var(--space-3) var(--space-7);
+  background: var(--surface-card);
+  border-bottom: var(--rule-width) solid var(--border-subtle);
+}
+.topbar__title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  color: var(--text-strong);
+  letter-spacing: var(--tracking-tight);
+}
+.topbar__spacer {
+  flex: 1;
+}
+.topbar__fund {
+  width: 170px;
+}
+.topbar__month {
+  width: 150px;
+}
+
+.main {
+  padding: var(--space-7);
+  max-width: var(--layout-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+.main--wide,
+.main--flush {
+  max-width: none;
+  margin: 0;
+  padding: var(--space-4) var(--space-6);
+}
+
+.kpi {
+  padding: var(--space-5);
+}
+.kpi__label {
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-muted);
+  font-weight: var(--weight-semibold);
+}
+.kpi__value {
+  font-family: var(--font-mono);
+  font-variant-numeric: var(--numeric-tabular);
+  font-size: var(--text-2xl);
+  color: var(--text-strong);
+  font-weight: var(--weight-semibold);
+  margin-top: var(--space-2);
+}
+.kpi__delta {
+  font-size: var(--text-xs);
+  margin-top: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.row2 {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--space-6);
+}
+.row2b {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+@media (max-width: 980px) {
+  .row2,
+  .row2b {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sub-readout {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.sub-readout__value {
+  font-family: var(--font-mono);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-semibold);
+  color: var(--text-strong);
+}
+.sub-readout__min {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+.sub-meter {
+  margin-bottom: var(--space-6);
+}
+
+.pdd-kpis {
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: var(--space-5);
+}
+.pdd-kpis .kpi__value {
+  font-size: var(--text-lg);
+}
+
+.bucket-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  min-height: 140px;
+  padding: var(--space-4) var(--space-2) 0;
+}
+.bucket-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+.bucket-col__value {
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+.bucket-col__bar {
+  width: 100%;
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  background: var(--surface-brand);
+  min-height: 2px;
+  transition: height var(--duration-slow) var(--ease-out);
+}
+.bucket-col__label {
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  height: 44px;
+}
+
+.faixa-stack {
+  display: flex;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: var(--border-width) solid var(--border-subtle);
+}
+.faixa-seg {
+  height: 100%;
+}
+.faixa-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+.faixa-legend .dot {
+  display: inline-block;
+  width: var(--space-3);
+  height: var(--space-3);
+  border-radius: var(--radius-xs);
+  margin-right: var(--space-2);
+  vertical-align: middle;
+}
+
+.persona-note {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.reconcil-note {
+  font-size: var(--text-2xs);
+  color: var(--text-subtle);
+  margin-top: var(--space-1);
+}
+
+.import-scrim {
+  position: fixed;
+  inset: 0;
+  background: var(--surface-scrim);
+  backdrop-filter: var(--blur-scrim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  z-index: 50;
+}
+
+.import-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.import-jobs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.import-ok {
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--risk-baixo);
+}
+
+.trend-svg {
+  width: 100%;
+  height: 120px;
+  display: block;
+}
+
+.conc-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.conc-row:last-child {
+  margin-bottom: 0;
+}
+.conc-row__label {
+  width: 88px;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-weight: var(--weight-medium);
+}
+.conc-row__val {
+  width: 52px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-strong);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-pill);
+}
+
+/* Miolo copiado do Frame: calar o “grito” e encostar no casco CVPAR. */
+.rcv-app .main {
+  background: var(--surface-page);
+  font-family: var(--font-core);
+  color: var(--text-body);
+  font-size: var(--text-md);
+}
+.rcv-app .main h1 {
+  font-size: var(--text-xl) !important;
+  font-weight: var(--weight-semibold) !important;
+  letter-spacing: var(--tracking-tight) !important;
+  text-transform: none !important;
+  color: var(--text-strong);
+  line-height: var(--leading-snug);
+}
+.rcv-app .main h2,
+.rcv-app .main h3 {
+  font-weight: var(--weight-semibold) !important;
+  letter-spacing: var(--tracking-tight) !important;
+  text-transform: none !important;
+  color: var(--text-strong);
+}
+.rcv-app .main p,
+.rcv-app .main span,
+.rcv-app .main label,
+.rcv-app .main div {
+  letter-spacing: inherit;
+}
+.rcv-app .main [class*="tracking-[0.2em]"]:not(th),
+.rcv-app .main [class*="tracking-[0.15em]"]:not(th),
+.rcv-app .main [class*="tracking-wider"]:not(th),
+.rcv-app .main [class*="tracking-widest"]:not(th) {
+  letter-spacing: var(--tracking-normal) !important;
+}
+.rcv-app .main .text-\[8px\],
+.rcv-app .main .text-\[9px\],
+.rcv-app .main .text-\[10px\],
+.rcv-app .main .text-\[11px\] {
+  font-size: var(--text-xs) !important;
+}
+
+/* Controles: sentença, peso médio, sem tracking aberto */
+.rcv-app .main button,
+.rcv-app .main [role="button"] {
+  text-transform: none !important;
+  letter-spacing: var(--tracking-normal) !important;
+  font-family: var(--font-core);
+}
+.rcv-app .main button:not(.rcv-seg__item),
+.rcv-app .main [role="button"]:not(.rcv-seg__item) {
+  font-weight: var(--weight-medium);
+  border-radius: var(--radius-sm);
+}
+.rcv-app .main button.bg-black,
+.rcv-app .main button[class*="bg-black"] {
+  background: var(--surface-brand) !important;
+  color: var(--text-on-brand) !important;
+}
+.rcv-app .main button.bg-black:hover,
+.rcv-app .main button[class*="hover:bg-black"] {
+  background: var(--surface-brand-hover) !important;
+}
+
+/* Cabeçalhos de tabela (e só eles) ficam em caixa alta, no padrão CVPAR */
+.rcv-app table {
+  font-size: var(--text-sm);
+  font-family: var(--font-core);
+}
+.rcv-app .main thead th,
+.rcv-app .main thead th button {
+  font-size: var(--text-2xs) !important;
+  font-weight: var(--weight-semibold) !important;
+  letter-spacing: var(--tracking-label) !important;
+  text-transform: uppercase !important;
+  color: var(--text-muted);
+  background: var(--surface-inset);
+}
+.rcv-app .main thead th button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  height: auto !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+.rcv-app tbody td {
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  vertical-align: middle;
+}
+.rcv-app tbody tr.is-clickable:hover,
+.rcv-app tbody tr.cursor-pointer:hover {
+  background: var(--surface-hover);
+}
+
+.rcv-app .main .kpi__label,
+.rcv-app .main .rcv-badge {
+  text-transform: uppercase !important;
+  letter-spacing: var(--tracking-label) !important;
+}
+
+.rcv-app .main input,
+.rcv-app .main textarea,
+.rcv-app .main select {
+  font-family: var(--font-core);
+  font-size: var(--text-sm) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: var(--space-4);
+}
+.kpi-grid__pl {
+  grid-column: span 2;
+}
+@media (max-width: 640px) {
+  .kpi-grid__pl {
+    grid-column: span 1;
+  }
+}

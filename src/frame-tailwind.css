@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Tokens HSL usados pelos componentes shadcn copiados do Frame.
+  O preflight do Tailwind está desligado para não apagar o design system CVPAR.
+*/
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 220 13% 18%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 18%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 18%;
+    --primary: 158 100% 12%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 210 10% 96%;
+    --secondary-foreground: 220 13% 18%;
+    --muted: 210 10% 96%;
+    --muted-foreground: 220 10% 55%;
+    --accent: 210 10% 94%;
+    --accent-foreground: 220 13% 18%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 158 80% 24%;
+    --radius: 0.35rem;
+    --success: 142 71% 45%;
+    --warning: 38 92% 50%;
+    --info: 199 89% 48%;
+  }
+
+  [data-theme="dark"] {
+    --background: 220 13% 10%;
+    --foreground: 210 20% 98%;
+    --card: 220 13% 12%;
+    --card-foreground: 210 20% 98%;
+    --popover: 220 13% 12%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 158 45% 42%;
+    --primary-foreground: 220 13% 10%;
+    --secondary: 220 13% 16%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 220 13% 16%;
+    --muted-foreground: 220 10% 65%;
+    --accent: 220 13% 16%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 16%;
+    --input: 220 13% 16%;
+    --ring: 158 45% 42%;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

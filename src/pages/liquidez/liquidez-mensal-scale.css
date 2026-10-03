@@ -1,0 +1,147 @@
+.lma-table-wrap {
+  max-height: calc(100dvh - var(--layout-topbar) - var(--space-12));
+  overflow: auto;
+  isolation: isolate;
+}
+.lma-table-wrap table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.lma-table-wrap thead th {
+  top: 0;
+  z-index: 2;
+}
+.lma-table-wrap tbody tr:not(.lma-section) > th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--surface-card);
+  color: var(--text-strong);
+}
+.lma-table-wrap tbody tr:not(.lma-section):hover > th {
+  background: var(--surface-hover);
+}
+.lma-table-wrap thead th:first-child {
+  left: 0;
+  z-index: 3;
+}
+.lma-table-wrap:focus-visible {
+  outline: var(--space-05) solid var(--border-focus);
+  outline-offset: var(--space-05);
+}
+
+.lma-filters input[aria-label="Buscar fundo"] {
+  min-width: 180px;
+  max-width: 280px;
+  height: var(--control-height);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  color: var(--text-strong);
+  font: inherit;
+  font-size: 12px;
+}
+.lma-filters input[aria-label="Buscar fundo"]:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+.lma-filters button.selected {
+  background: var(--surface-brand-subtle);
+  border-color: var(--border-brand);
+  color: var(--text-brand);
+}
+.lma-filters small {
+  color: var(--text-muted);
+  font-size: 11px;
+}
+.lma-fund-pager {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin: var(--space-3) 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.lma-fund-pager button {
+  min-height: var(--control-height-sm);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  color: var(--text-brand);
+  cursor: pointer;
+}
+.lma-fund-pager button:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.lma-export {
+  position: relative;
+  align-self: end;
+}
+.lma-export-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid var(--border-brand);
+  border-radius: var(--radius-md);
+  background: var(--surface-brand);
+  color: var(--text-on-brand);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.lma-export-trigger:hover:not(:disabled) { background: var(--surface-brand-hover); }
+.lma-export-trigger:disabled { opacity: .55; cursor: not-allowed; }
+.lma-export-trigger:focus-visible,
+.lma-export-menu button:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 2px; }
+.lma-export-trigger svg { width: 16px; height: 16px; }
+.lma-export-trigger svg:last-child { width: 13px; height: 13px; }
+.lma-export-spin { animation: lma-export-spin 1s linear infinite; }
+@keyframes lma-export-spin { to { transform: rotate(360deg); } }
+.lma-export-menu {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  z-index: 20;
+  width: 280px;
+  padding: var(--space-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-lg);
+  color: var(--text-body);
+}
+.lma-export-menu p { margin: var(--space-2) var(--space-3); color: var(--text-muted); font-size: 11px; }
+.lma-export-menu button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--touch-target);
+  padding: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-strong);
+  text-align: left;
+  cursor: pointer;
+}
+.lma-export-menu button:hover { background: var(--surface-brand-subtle); }
+.lma-export-menu button > svg { flex: none; width: 18px; height: 18px; color: var(--text-brand); }
+.lma-export-menu button span { display: grid; gap: var(--space-1); }
+.lma-export-menu button strong { font-size: 12px; }
+.lma-export-menu button small { color: var(--text-muted); font-size: 11px; }
+.lma-export-feedback { margin: 0 0 var(--space-4); color: var(--text-brand); font-size: 12px; }
+@media (max-width: 800px) {
+  .lma-header-controls { flex-wrap: wrap; }
+  .lma-export { margin-left: auto; }
+}

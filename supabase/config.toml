@@ -1,0 +1,181 @@
+project_id = "gwdtyorogmfijleoydvm"
+
+# Portal ainda sem login: as funções do Frame aceitam a anon key.
+# Imports CVM do portal seguem o mesmo padrão para o painel funcionar.
+
+[functions.batch-monitoramento]
+verify_jwt = false
+
+[functions.buscar-descasamento-operacional]
+verify_jwt = false
+
+[functions.buscar-risco-mercado-v2]
+verify_jwt = false
+
+[functions.calcular-credito]
+verify_jwt = false
+
+[functions.calcular-risco-mercado-fundos]
+verify_jwt = false
+
+[functions.calculo-risco-liquidez]
+verify_jwt = false
+
+[functions.check-enquadramento]
+verify_jwt = false
+
+[functions.consolidar-exposicao]
+verify_jwt = false
+
+[functions.consultar-cnpj-receita]
+verify_jwt = false
+
+[functions.importar-cadastro-partes]
+verify_jwt = false
+
+[functions.importar-fundo-regras]
+verify_jwt = false
+
+[functions.importar-historico-manual]
+verify_jwt = false
+
+[functions.importar-informe-diario-cvm]
+verify_jwt = false
+
+[functions.import-btg-xml]
+verify_jwt = false
+
+[functions.import-caixa-fluxo-financeiro]
+verify_jwt = false
+
+[functions.import-carteira-finvest]
+verify_jwt = false
+
+[functions.import-credito-estoque]
+verify_jwt = false
+
+[functions.import-cvm-informe-diario]
+verify_jwt = false
+
+[functions.import-cvm-informe-mensal]
+  verify_jwt = false
+
+[functions.import-liquidity-position]
+  verify_jwt = true
+
+[functions.import-liquidity-monthly-cvm]
+  verify_jwt = true
+
+[functions.calculate-liquidity-monthly]
+  verify_jwt = true
+
+[functions.import-cvm-registro]
+verify_jwt = false
+
+[functions.import-despesas-fundo]
+verify_jwt = false
+
+[functions.import-estoque-fidc]
+verify_jwt = false
+
+[functions.import-fidc-informe-mensal]
+verify_jwt = false
+
+[functions.import-fip-informe-quadrimestral]
+verify_jwt = false
+
+[functions.import-fundos-caracteristicas]
+verify_jwt = false
+
+[functions.import-matriz-anbima]
+verify_jwt = false
+
+[functions.import-passivo-de-para]
+verify_jwt = false
+
+[functions.import-passivo-fundos]
+verify_jwt = false
+
+[functions.import-resgates-movimentacoes]
+verify_jwt = false
+
+[functions.import-sinqia-passivo]
+verify_jwt = false
+
+[functions.import-sinqia-xml]
+verify_jwt = false
+
+[functions.import-titulo-rf-fluxo]
+verify_jwt = false
+
+[functions.import-xml]
+verify_jwt = false
+
+[functions.import-xml-auto]
+verify_jwt = false
+
+[functions.monitoramento-cron-admin]
+verify_jwt = false
+
+[functions.process-rentabilidade-snapshot-v2-queue]
+verify_jwt = false
+
+[functions.propagar-cadastro-partes]
+verify_jwt = false
+
+[functions.rebuild-rentabilidade-snapshot-v2]
+verify_jwt = false
+
+[functions.rentabilidade-cron-admin]
+verify_jwt = false
+
+[functions.rules-classe]
+verify_jwt = false
+
+[functions.rules-fidc-concentracao]
+verify_jwt = false
+
+[functions.rules-fidc-estrutura]
+verify_jwt = false
+
+[functions.rules-liquidity]
+verify_jwt = false
+
+[functions.rules-pl]
+verify_jwt = false
+
+[functions.rules-relational]
+verify_jwt = false
+
+[functions.rules-tributario]
+verify_jwt = false
+
+[functions.rules-tributario-art4]
+verify_jwt = false
+
+[functions.rules-tributario-art4-fidc]
+verify_jwt = false
+
+[functions.send-desenquadramento-notification]
+verify_jwt = false
+
+[functions.send-liquidez-notification]
+verify_jwt = false
+
+[functions.send-rentabilidade-report]
+verify_jwt = false
+
+[functions.send-rentabilidade-report-auto]
+verify_jwt = false
+
+[functions.snapshot-credito-mensal]
+verify_jwt = false
+
+[functions.sync-ativos-carteira]
+verify_jwt = false
+
+[functions.validar-cessao-elegibilidade]
+verify_jwt = false
+
+[functions.xml-import-cron-admin]
+verify_jwt = false

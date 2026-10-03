@@ -1,0 +1,12 @@
+:root{
+--font-core:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+--font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+/* Escala — 13px é o corpo de tabela; 14px o corpo de interface */
+--text-2xs:11px;--text-xs:12px;--text-sm:13px;--text-md:14px;--text-lg:16px;--text-xl:18px;
+--text-2xl:20px;--text-3xl:24px;--text-4xl:30px;--text-5xl:38px;--text-6xl:48px;
+--leading-tight:1.15;--leading-snug:1.3;--leading-normal:1.45;--leading-relaxed:1.6;
+--weight-regular:400;--weight-medium:500;--weight-semibold:600;--weight-bold:700;
+/* Rótulos e cabeçalhos de coluna: caixa alta, tracking aberto */
+--tracking-label:0.06em;--tracking-tight:-0.015em;--tracking-normal:0em;
+--numeric-tabular:tabular-nums;
+}

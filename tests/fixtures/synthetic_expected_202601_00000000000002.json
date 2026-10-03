@@ -1,0 +1,937 @@
+{
+  "result": {
+    "methodology": "cvpar_fidc_mensal@2026.2",
+    "referenceMonth": "2026-01-01",
+    "cnpj": "00000000000002",
+    "metrics": {
+      "pl": {
+        "value": 6000,
+        "source": "CVM · TAB_IV_A_VL_PL",
+        "status": "apurado"
+      },
+      "creditGross": {
+        "value": 3106,
+        "source": "CVM · TAB_I2A + TAB_I2B + campos configurados + reversão PDD",
+        "status": "aproximado",
+        "note": "Composição do relatório CVPAR observada; validar inclusão de cotas FIDC/outros valores para outras gestoras."
+      },
+      "pdd": {
+        "value": -30,
+        "source": "CVM · TAB_I2A11 + TAB_I2B11",
+        "status": "apurado"
+      },
+      "overdue": {
+        "value": 72,
+        "source": "CVM · TAB_V_B + TAB_VI_B",
+        "status": "aproximado",
+        "note": "Total agregado; a base de vencidos da administradora pode divergir."
+      },
+      "creditToPl": {
+        "value": 0.5176666666666667,
+        "source": "Derivado · DC bruto / PL",
+        "status": "aproximado"
+      },
+      "pddToCredit": {
+        "value": -0.009658725048293626,
+        "source": "Derivado · PDD / DC bruto",
+        "status": "aproximado"
+      },
+      "overdueToCredit": {
+        "value": 0.0231809401159047,
+        "source": "Derivado · vencidos CVM / DC bruto",
+        "status": "aproximado"
+      },
+      "overdueToPl": {
+        "value": 0.012,
+        "source": "Derivado · vencidos CVM / PL",
+        "status": "aproximado"
+      },
+      "creditPerforming": {
+        "value": 3034,
+        "source": "Derivado · DC bruto menos vencidos CVM",
+        "status": "aproximado",
+        "note": "A base de vencidos pode divergir da posição da administradora."
+      },
+      "creditDirectGross": {
+        "value": 3030,
+        "source": "CVM · TAB_I2A + TAB_I2B + reversão PDD",
+        "status": "apurado"
+      },
+      "fidcUnits": {
+        "value": 48,
+        "source": "CVM · TAB_I2H + TAB_I2I",
+        "status": "apurado"
+      },
+      "otherCreditVm": {
+        "value": 28,
+        "source": "CVM · TAB_I2C1…C4 + TAB_I2C6",
+        "status": "apurado"
+      },
+      "creditNetPdd": {
+        "value": 3076,
+        "source": "Derivado · DC bruto + PDD (negativa)",
+        "status": "aproximado",
+        "note": "Corrige o rótulo 'líquido' da planilha, cuja fórmula de julho repete o bruto."
+      },
+      "creditNetPddToPl": {
+        "value": 0.5126666666666667,
+        "source": "Derivado · (DC bruto + PDD) / PL",
+        "status": "aproximado",
+        "note": "A fórmula do Excel em julho divide DC bruto pelo PL e não desconta a PDD."
+      },
+      "pddToPl": {
+        "value": -0.005,
+        "source": "Derivado · PDD / PL",
+        "status": "aproximado"
+      },
+      "publicBonds": {
+        "value": 220,
+        "source": "CVM · TAB_I2D + TAB_I2F",
+        "status": "apurado"
+      },
+      "fundUnits": {
+        "value": 100,
+        "source": "CVM · TAB_I2C5",
+        "status": "apurado"
+      },
+      "fundUnitsToPl": {
+        "value": 0.016666666666666666,
+        "source": "Derivado · cotas de fundos / PL",
+        "status": "aproximado"
+      },
+      "cash": {
+        "value": 50,
+        "source": "CVM · TAB_I1",
+        "status": "apurado"
+      },
+      "cashToPl": {
+        "value": 0.008333333333333333,
+        "source": "Derivado · tesouraria / PL",
+        "status": "aproximado"
+      },
+      "inflow": {
+        "value": 200,
+        "source": "CVM · TAB_X_4 Captações no Mês",
+        "status": "apurado"
+      },
+      "redemptions": {
+        "value": -50,
+        "source": "CVM · TAB_X_4 resgates + amortizações",
+        "status": "aproximado",
+        "note": "O informe pode omitir saídas da lâmina da administradora."
+      },
+      "redemptionsRequested": {
+        "value": 20,
+        "source": "CVM · TAB_X_4 Resgates Solicitados",
+        "status": "aproximado",
+        "note": "Demanda declarada; confirmar calendário de cotização e pagamento."
+      },
+      "netFlows": {
+        "value": 150,
+        "source": "Derivado · captações + saídas TAB_X_4",
+        "status": "aproximado",
+        "note": "Conferir lançamentos da lâmina fora do informe."
+      },
+      "subordination": {
+        "value": 0.3333333333333333,
+        "source": "CVM · TAB_X_2 cotas subordinadas / TAB_IV PL",
+        "status": "aproximado",
+        "note": "Inclui mezanino conforme configuração; conferir regulamento e base exata."
+      },
+      "subordinationMinimum": {
+        "value": null,
+        "source": "Cadastro do fundo · mínimo configurado",
+        "status": "indisponivel",
+        "note": "Confirmar vigência do regulamento e regra por classe antes de tratar como limite oficial."
+      },
+      "subordinationHeadroom": {
+        "value": null,
+        "source": "Derivado · subordinação apurada − mínimo configurado",
+        "status": "indisponivel",
+        "note": "Diferença indicativa, sem decisão automática de enquadramento."
+      },
+      "seniorTrancheValue": {
+        "value": 4000,
+        "source": "CVM · TAB_X_2 quantidade × valor da cota, subclasses sênior",
+        "status": "apurado"
+      },
+      "mezzanineTrancheValue": {
+        "value": 1000,
+        "source": "CVM · TAB_X_2 quantidade × valor da cota, subclasses mezanino",
+        "status": "apurado"
+      },
+      "juniorTrancheValue": {
+        "value": 1000,
+        "source": "CVM · TAB_X_2 quantidade × valor da cota, subclasses subordinada júnior",
+        "status": "apurado"
+      },
+      "administrationExpense": {
+        "value": -20,
+        "source": "Carteira diária · CPR",
+        "status": "aproximado",
+        "note": "Posição de despesa a pagar; confirmar competência do fluxo mensal."
+      },
+      "custodyExpense": {
+        "value": -4,
+        "source": "Carteira diária · CPR",
+        "status": "aproximado"
+      },
+      "managementExpense": {
+        "value": -8,
+        "source": "Carteira diária · CPR",
+        "status": "aproximado"
+      },
+      "otherNegativeExpenses": {
+        "value": -6,
+        "source": "Carteira diária · CPR",
+        "status": "aproximado"
+      },
+      "cprBalance": {
+        "value": -36,
+        "source": "Carteira diária · CPR",
+        "status": "apurado"
+      },
+      "cprCvm": {
+        "value": 30,
+        "source": "CVM · TAB_I4 + TAB_I3 − TAB_III",
+        "status": "aproximado",
+        "note": "Saldo residual de outros ativos/derivativos/passivo; não é a abertura de despesas por natureza."
+      },
+      "immediateLiquidity": {
+        "value": 370,
+        "source": "Derivado · caixa + títulos públicos/compromissadas + FIF",
+        "status": "aproximado",
+        "note": "Disponibilidade contábil, sujeita a prazo de resgate e negociação."
+      },
+      "acquisitions": {
+        "value": 600,
+        "source": "CVM · TAB_VII_A1_2 + TAB_VII_A2_2",
+        "status": "apurado",
+        "note": "Aquisições com e sem aquisição substancial de risco."
+      },
+      "acquisitionCount": {
+        "value": 24,
+        "source": "CVM · TAB_VII_A1_1 + TAB_VII_A2_1",
+        "status": "apurado"
+      },
+      "repurchaseCvm": {
+        "value": 14,
+        "source": "CVM · TAB_VII_D_2",
+        "status": "aproximado",
+        "note": "Recompra agregada; não substitui a apuração por títulos liquidados."
+      },
+      "repurchaseToPl": {
+        "value": 0.0023333333333333335,
+        "source": "Derivado · recompra agregada CVM / PL",
+        "status": "aproximado"
+      },
+      "cedentListedTop1": {
+        "value": 0.22,
+        "source": "CVM · TAB_I2A12/I2B12 percentual declarado",
+        "status": "aproximado",
+        "note": "A lista da CVM contém até 9 cedentes por grupo e pode estar incompleta."
+      },
+      "debtorTop1": {
+        "value": 0.02666666666666667,
+        "source": "CVM · maior VALOR da TAB_VIII / PL",
+        "status": "aproximado",
+        "note": "A TAB_VIII lista até 25 devedores; conferir consolidação por CPF/CNPJ no estoque."
+      },
+      "debtorTop5": {
+        "value": 0.05,
+        "source": "CVM · cinco maiores VALOR da TAB_VIII / PL",
+        "status": "aproximado"
+      },
+      "debtorTop10": {
+        "value": 0.05,
+        "source": "CVM · dez maiores VALOR da TAB_VIII / PL",
+        "status": "aproximado",
+        "note": "Se a lista tiver menos de dez registros, o valor é apenas o total dos registros informados."
+      },
+      "debtorTop15": {
+        "value": 0.05,
+        "source": "CVM · quinze maiores VALOR da TAB_VIII / PL",
+        "status": "aproximado",
+        "note": "Se a lista tiver menos de quinze registros, o valor é apenas o total dos registros informados."
+      },
+      "overdue120": {
+        "value": 36,
+        "source": "CVM · TAB_V/VI_B5…B10",
+        "status": "apurado"
+      },
+      "overdue90": {
+        "value": 42,
+        "source": "CVM · TAB_V/VI_B4…B10",
+        "status": "apurado"
+      },
+      "due30": {
+        "value": 6,
+        "source": "CVM · TAB_V/VI_A1",
+        "status": "aproximado",
+        "note": "Faixa de vencimento dos DC, não fluxo de caixa projetado."
+      },
+      "due90": {
+        "value": 36,
+        "source": "CVM · TAB_V/VI_A1…A3",
+        "status": "aproximado",
+        "note": "Soma das faixas de vencimento, sem ajuste para atraso e pré-pagamento."
+      },
+      "immediatePlusDue30ToPl": {
+        "value": 0.06266666666666666,
+        "source": "Derivado · (liquidez imediata contábil + DC a vencer em 30 dias) / PL",
+        "status": "aproximado",
+        "note": "Não é índice de cobertura de resgates ou projeção de caixa disponível."
+      },
+      "averageMaturityCalendarDays": {
+        "value": 500.45454545454544,
+        "source": "CVM · TAB_V/VI_A1…A10 ponderadas pelos pontos médios",
+        "status": "aproximado",
+        "note": "Faixa >1080 dias usa 1080 como limite inferior; não substitui cálculo título a título."
+      },
+      "averageMaturityBusinessDays": {
+        "value": 345.51930261519306,
+        "source": "Derivado · dias corridos × 252/365",
+        "status": "aproximado",
+        "note": "Conversão aproximada; não usa calendário de feriados."
+      },
+      "cessionRateAnnual": {
+        "value": 0.14,
+        "source": "CVM · TAB_IX compra média ponderada por TAB_VII",
+        "status": "aproximado",
+        "note": "Exclui taxas ausentes e fora de (0; 300]% a.a.; não equivale à taxa contrato a contrato."
+      },
+      "cessionRateMonthly": {
+        "value": 0.010978851950173452,
+        "source": "Derivado · (1 + taxa a.a.)^(1/12) − 1",
+        "status": "aproximado"
+      }
+    },
+    "maturityCvm": [
+      {
+        "label": "Até 30 dias",
+        "value": 6
+      },
+      {
+        "label": "31–60 dias",
+        "value": 12
+      },
+      {
+        "label": "61–90 dias",
+        "value": 18
+      },
+      {
+        "label": "91–120 dias",
+        "value": 24
+      },
+      {
+        "label": "121–150 dias",
+        "value": 30
+      },
+      {
+        "label": "151–180 dias",
+        "value": 36
+      },
+      {
+        "label": "181–360 dias",
+        "value": 42
+      },
+      {
+        "label": "361–720 dias",
+        "value": 48
+      },
+      {
+        "label": "721–1080 dias",
+        "value": 54
+      },
+      {
+        "label": ">1080 dias",
+        "value": 60
+      }
+    ],
+    "overdueCvm": [
+      {
+        "label": "Até 30 dias",
+        "value": 6
+      },
+      {
+        "label": "31–60 dias",
+        "value": 6
+      },
+      {
+        "label": "61–90 dias",
+        "value": 6
+      },
+      {
+        "label": "91–120 dias",
+        "value": 6
+      },
+      {
+        "label": "121–150 dias",
+        "value": 6
+      },
+      {
+        "label": "151–180 dias",
+        "value": 6
+      },
+      {
+        "label": "181–360 dias",
+        "value": 6
+      },
+      {
+        "label": "361–720 dias",
+        "value": 6
+      },
+      {
+        "label": "721–1080 dias",
+        "value": 6
+      },
+      {
+        "label": ">1080 dias",
+        "value": 6
+      }
+    ],
+    "gaps": [
+      "Estoque individual por título: necessário para prazo médio, faixas até 5 dias, 6–30 dias e previsão de liquidação CVPAR.",
+      "Títulos liquidados/recomprados: necessário para indicadores de recompra.",
+      "Base de cedentes completa: Informe lista no máximo 9 por grupo; Top 5/10/15 não é fechado sem estoque.",
+      "Base de sacados: TAB_VIII lista até 25 valores, sem identificador; confirmar consolidação por devedor no estoque.",
+      "Cronograma de amortização/resgate, passivo de cotistas e premissas de mercado: necessários para cobertura e stress de liquidez.",
+      "Regulamento vigente por fundo/classe: necessário para limite mínimo de subordinação."
+    ],
+    "evidence": {
+      "tables": [
+        "tab_I",
+        "tab_III",
+        "tab_IV",
+        "tab_IX",
+        "tab_V",
+        "tab_VI",
+        "tab_VII",
+        "tab_VIII",
+        "tab_X_2",
+        "tab_X_4"
+      ],
+      "positionDate": "2026-01-31"
+    }
+  },
+  "reportRows": [
+    {
+      "id": "Despesas e CPR | Taxa de administração",
+      "value": -20,
+      "status": "aproximado",
+      "source": "Carteira diária · CPR",
+      "note": "Posição de despesa a pagar; confirmar competência do fluxo mensal."
+    },
+    {
+      "id": "Despesas e CPR | Taxa de custódia",
+      "value": -4,
+      "status": "aproximado",
+      "source": "Carteira diária · CPR",
+      "note": "Carteira diária"
+    },
+    {
+      "id": "Despesas e CPR | Taxa de gestão",
+      "value": -8,
+      "status": "aproximado",
+      "source": "Carteira diária · CPR",
+      "note": "Carteira diária"
+    },
+    {
+      "id": "Despesas e CPR | Outras despesas",
+      "value": -6,
+      "status": "aproximado",
+      "source": "Carteira diária · CPR",
+      "note": "Net Report por natureza"
+    },
+    {
+      "id": "Despesas e CPR | CPR residual do informe",
+      "value": 30,
+      "status": "aproximado",
+      "source": "CVM · TAB_I4 + TAB_I3 − TAB_III",
+      "note": "Saldo residual de outros ativos/derivativos/passivo; não é a abertura de despesas por natureza."
+    },
+    {
+      "id": "Movimentação | Entradas / captações",
+      "value": 200,
+      "status": "apurado",
+      "source": "CVM · TAB_X_4 Captações no Mês",
+      "note": null
+    },
+    {
+      "id": "Movimentação | Saídas / resgates e amortizações",
+      "value": -50,
+      "status": "aproximado",
+      "source": "CVM · TAB_X_4 resgates + amortizações",
+      "note": "O informe pode omitir saídas da lâmina da administradora."
+    },
+    {
+      "id": "Movimentação | Movimentação líquida",
+      "value": 150,
+      "status": "aproximado",
+      "source": "Derivado · captações + saídas TAB_X_4",
+      "note": "Conferir lançamentos da lâmina fora do informe."
+    },
+    {
+      "id": "Alocação de ativos | Patrimônio líquido",
+      "value": 6000,
+      "status": "apurado",
+      "source": "CVM · TAB_IV_A_VL_PL",
+      "note": null
+    },
+    {
+      "id": "Alocação de ativos | DC total bruto",
+      "value": 3106,
+      "status": "aproximado",
+      "source": "CVM · TAB_I2A + TAB_I2B + campos configurados + reversão PDD",
+      "note": "Composição do relatório CVPAR observada; validar inclusão de cotas FIDC/outros valores para outras gestoras."
+    },
+    {
+      "id": "Alocação de ativos | DC direto bruto",
+      "value": 3030,
+      "status": "apurado",
+      "source": "CVM · TAB_I2A + TAB_I2B + reversão PDD",
+      "note": null
+    },
+    {
+      "id": "Alocação de ativos | Cotas FIDC",
+      "value": 48,
+      "status": "apurado",
+      "source": "CVM · TAB_I2H + TAB_I2I",
+      "note": null
+    },
+    {
+      "id": "Alocação de ativos | Outros VM de crédito",
+      "value": 28,
+      "status": "apurado",
+      "source": "CVM · TAB_I2C1…C4 + TAB_I2C6",
+      "note": null
+    },
+    {
+      "id": "Alocação de ativos | DC a vencer · estimativa",
+      "value": 3034,
+      "status": "aproximado",
+      "source": "Derivado · DC bruto menos vencidos CVM",
+      "note": "A base de vencidos pode divergir da posição da administradora."
+    },
+    {
+      "id": "Alocação de ativos | DC vencidos",
+      "value": 72,
+      "status": "aproximado",
+      "source": "CVM · TAB_V_B + TAB_VI_B",
+      "note": "Total agregado; a base de vencidos da administradora pode divergir."
+    },
+    {
+      "id": "Alocação de ativos | PDD",
+      "value": -30,
+      "status": "apurado",
+      "source": "CVM · TAB_I2A11 + TAB_I2B11",
+      "note": null
+    },
+    {
+      "id": "Alocação de ativos | Títulos públicos / compromissadas",
+      "value": 220,
+      "status": "apurado",
+      "source": "CVM · TAB_I2D + TAB_I2F",
+      "note": null
+    },
+    {
+      "id": "Alocação de ativos | Cotas de FIF / liquidez",
+      "value": 100,
+      "status": "apurado",
+      "source": "CVM · TAB_I2C5",
+      "note": null
+    },
+    {
+      "id": "Alocação de ativos | Tesouraria",
+      "value": 50,
+      "status": "apurado",
+      "source": "CVM · TAB_I1",
+      "note": null
+    },
+    {
+      "id": "Indicadores de alocação | DC bruto / PL",
+      "value": 0.5176666666666667,
+      "status": "aproximado",
+      "source": "Derivado · DC bruto / PL",
+      "note": null
+    },
+    {
+      "id": "Indicadores de alocação | PDD / PL",
+      "value": -0.005,
+      "status": "aproximado",
+      "source": "Derivado · PDD / PL",
+      "note": null
+    },
+    {
+      "id": "Indicadores de alocação | DC líquido de PDD / PL · fórmula corrigida",
+      "value": 0.5126666666666667,
+      "status": "aproximado",
+      "source": "Derivado · (DC bruto + PDD) / PL",
+      "note": "A fórmula do Excel em julho divide DC bruto pelo PL e não desconta a PDD."
+    },
+    {
+      "id": "Indicadores de alocação | Liquidez imediata contábil",
+      "value": 370,
+      "status": "aproximado",
+      "source": "Derivado · caixa + títulos públicos/compromissadas + FIF",
+      "note": "Disponibilidade contábil, sujeita a prazo de resgate e negociação."
+    },
+    {
+      "id": "Indicadores de alocação | Liquidez imediata + DC ≤ 30 d / PL",
+      "value": 0.06266666666666666,
+      "status": "aproximado",
+      "source": "Derivado · (liquidez imediata contábil + DC a vencer em 30 dias) / PL",
+      "note": "Não é índice de cobertura de resgates ou projeção de caixa disponível."
+    },
+    {
+      "id": "Prazo e aquisições | Prazo médio estimado · dias corridos",
+      "value": 500.45454545454544,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A1…A10 ponderadas pelos pontos médios",
+      "note": "Faixa >1080 dias usa 1080 como limite inferior; não substitui cálculo título a título."
+    },
+    {
+      "id": "Prazo e aquisições | Prazo médio estimado · dias úteis",
+      "value": 345.51930261519306,
+      "status": "aproximado",
+      "source": "Derivado · dias corridos × 252/365",
+      "note": "Conversão aproximada; não usa calendário de feriados."
+    },
+    {
+      "id": "Prazo e aquisições | Aquisições com e sem risco",
+      "value": 600,
+      "status": "apurado",
+      "source": "CVM · TAB_VII_A1_2 + TAB_VII_A2_2",
+      "note": "Aquisições com e sem aquisição substancial de risco."
+    },
+    {
+      "id": "Prazo e aquisições | Quantidade de aquisições",
+      "value": 24,
+      "status": "apurado",
+      "source": "CVM · TAB_VII_A1_1 + TAB_VII_A2_1",
+      "note": null
+    },
+    {
+      "id": "Prazo e aquisições | Taxa de cessão estimada · a.a.",
+      "value": 0.14,
+      "status": "aproximado",
+      "source": "CVM · TAB_IX compra média ponderada por TAB_VII",
+      "note": "Exclui taxas ausentes e fora de (0; 300]% a.a.; não equivale à taxa contrato a contrato."
+    },
+    {
+      "id": "Inadimplência | Vencidos / DC",
+      "value": 0.0231809401159047,
+      "status": "aproximado",
+      "source": "Derivado · vencidos CVM / DC bruto",
+      "note": null
+    },
+    {
+      "id": "Inadimplência | Vencidos / PL",
+      "value": 0.012,
+      "status": "aproximado",
+      "source": "Derivado · vencidos CVM / PL",
+      "note": null
+    },
+    {
+      "id": "Inadimplência | Vencidos > 90 dias",
+      "value": 42,
+      "status": "apurado",
+      "source": "CVM · TAB_V/VI_B4…B10",
+      "note": null
+    },
+    {
+      "id": "Inadimplência | Vencidos > 120 dias",
+      "value": 36,
+      "status": "apurado",
+      "source": "CVM · TAB_V/VI_B5…B10",
+      "note": null
+    },
+    {
+      "id": "Faixas de vencidos | Vencidos até 5 dias",
+      "value": null,
+      "status": "indisponivel",
+      "source": null,
+      "note": "Estoque individual não disponível no informe"
+    },
+    {
+      "id": "Faixas de vencidos | Vencidos de 6 a 30 dias",
+      "value": null,
+      "status": "indisponivel",
+      "source": null,
+      "note": "Informe agrega em até 30 dias"
+    },
+    {
+      "id": "Faixas de vencidos | CVM · Até 30 dias",
+      "value": 6,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_B1",
+      "note": "Faixa agregada do informe."
+    },
+    {
+      "id": "Faixas de vencidos | CVM · 31–60 dias",
+      "value": 6,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_B2",
+      "note": "Faixa agregada do informe."
+    },
+    {
+      "id": "Faixas de vencidos | CVM · 61–90 dias",
+      "value": 6,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_B3",
+      "note": "Faixa agregada do informe."
+    },
+    {
+      "id": "Faixas de vencidos | CVM · 91–120 dias",
+      "value": 6,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_B4",
+      "note": "Faixa agregada do informe."
+    },
+    {
+      "id": "Faixas de vencidos | CVM · 121–150 dias",
+      "value": 6,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_B5",
+      "note": "Faixa agregada do informe."
+    },
+    {
+      "id": "Faixas de vencidos | CVM · 151–180 dias",
+      "value": 6,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_B6",
+      "note": "Faixa agregada do informe."
+    },
+    {
+      "id": "Faixas de vencidos | CVM · 181–360 dias",
+      "value": 6,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_B7",
+      "note": "Faixa agregada do informe."
+    },
+    {
+      "id": "Faixas de vencidos | CVM · 361–720 dias",
+      "value": 6,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_B8",
+      "note": "Faixa agregada do informe."
+    },
+    {
+      "id": "Faixas de vencidos | CVM · 721–1080 dias",
+      "value": 6,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_B9",
+      "note": "Faixa agregada do informe."
+    },
+    {
+      "id": "Faixas de vencidos | CVM · >1080 dias",
+      "value": 6,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_B10",
+      "note": "Faixa agregada do informe."
+    },
+    {
+      "id": "Vencimentos | DC a vencer ≤ 30 dias",
+      "value": 6,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A1",
+      "note": "Faixa de vencimento dos DC, não fluxo de caixa projetado."
+    },
+    {
+      "id": "Vencimentos | DC a vencer ≤ 90 dias",
+      "value": 36,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A1…A3",
+      "note": "Soma das faixas de vencimento, sem ajuste para atraso e pré-pagamento."
+    },
+    {
+      "id": "Vencimento contratual dos DC · CVM | Previsão de caixa até 5 dias",
+      "value": null,
+      "status": "indisponivel",
+      "source": null,
+      "note": "Estoque e cronograma de recebimento"
+    },
+    {
+      "id": "Vencimento contratual dos DC · CVM | Previsão de caixa de 6–30 dias",
+      "value": null,
+      "status": "indisponivel",
+      "source": null,
+      "note": "Informe só mostra até 30 dias agregado"
+    },
+    {
+      "id": "Vencimento contratual dos DC · CVM | DC a vencer · Até 30 dias",
+      "value": 6,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A1",
+      "note": "Vencimento contratual, não caixa projetado."
+    },
+    {
+      "id": "Vencimento contratual dos DC · CVM | DC a vencer · 31–60 dias",
+      "value": 12,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A2",
+      "note": "Vencimento contratual, não caixa projetado."
+    },
+    {
+      "id": "Vencimento contratual dos DC · CVM | DC a vencer · 61–90 dias",
+      "value": 18,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A3",
+      "note": "Vencimento contratual, não caixa projetado."
+    },
+    {
+      "id": "Vencimento contratual dos DC · CVM | DC a vencer · 91–120 dias",
+      "value": 24,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A4",
+      "note": "Vencimento contratual, não caixa projetado."
+    },
+    {
+      "id": "Vencimento contratual dos DC · CVM | DC a vencer · 121–150 dias",
+      "value": 30,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A5",
+      "note": "Vencimento contratual, não caixa projetado."
+    },
+    {
+      "id": "Vencimento contratual dos DC · CVM | DC a vencer · 151–180 dias",
+      "value": 36,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A6",
+      "note": "Vencimento contratual, não caixa projetado."
+    },
+    {
+      "id": "Vencimento contratual dos DC · CVM | DC a vencer · 181–360 dias",
+      "value": 42,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A7",
+      "note": "Vencimento contratual, não caixa projetado."
+    },
+    {
+      "id": "Vencimento contratual dos DC · CVM | DC a vencer · 361–720 dias",
+      "value": 48,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A8",
+      "note": "Vencimento contratual, não caixa projetado."
+    },
+    {
+      "id": "Vencimento contratual dos DC · CVM | DC a vencer · 721–1080 dias",
+      "value": 54,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A9",
+      "note": "Vencimento contratual, não caixa projetado."
+    },
+    {
+      "id": "Vencimento contratual dos DC · CVM | DC a vencer · >1080 dias",
+      "value": 60,
+      "status": "aproximado",
+      "source": "CVM · TAB_V/VI_A10",
+      "note": "Vencimento contratual, não caixa projetado."
+    },
+    {
+      "id": "Concentração | Maior cedente listado",
+      "value": 0.22,
+      "status": "aproximado",
+      "source": "CVM · TAB_I2A12/I2B12 percentual declarado",
+      "note": "A lista da CVM contém até 9 cedentes por grupo e pode estar incompleta."
+    },
+    {
+      "id": "Concentração | Top 5/10/15 cedentes",
+      "value": null,
+      "status": "indisponivel",
+      "source": null,
+      "note": "Estoque completo por cedente"
+    },
+    {
+      "id": "Concentração | Maior sacado / PL",
+      "value": 0.02666666666666667,
+      "status": "aproximado",
+      "source": "CVM · maior VALOR da TAB_VIII / PL",
+      "note": "A TAB_VIII lista até 25 devedores; conferir consolidação por CPF/CNPJ no estoque."
+    },
+    {
+      "id": "Concentração | Top 5 sacados / PL",
+      "value": 0.05,
+      "status": "aproximado",
+      "source": "CVM · cinco maiores VALOR da TAB_VIII / PL",
+      "note": null
+    },
+    {
+      "id": "Concentração | Top 10 sacados / PL",
+      "value": 0.05,
+      "status": "aproximado",
+      "source": "CVM · dez maiores VALOR da TAB_VIII / PL",
+      "note": "Se a lista tiver menos de dez registros, o valor é apenas o total dos registros informados."
+    },
+    {
+      "id": "Concentração | Top 15 sacados / PL",
+      "value": 0.05,
+      "status": "aproximado",
+      "source": "CVM · quinze maiores VALOR da TAB_VIII / PL",
+      "note": "Se a lista tiver menos de quinze registros, o valor é apenas o total dos registros informados."
+    },
+    {
+      "id": "Recompra | Recompra agregada CVM",
+      "value": 14,
+      "status": "aproximado",
+      "source": "CVM · TAB_VII_D_2",
+      "note": "Recompra agregada; não substitui a apuração por títulos liquidados."
+    },
+    {
+      "id": "Recompra | Recompra / liquidados",
+      "value": null,
+      "status": "indisponivel",
+      "source": null,
+      "note": "Arquivo de títulos liquidados do Portal FIDC"
+    },
+    {
+      "id": "Recompra | Baixa por depósito do cedente",
+      "value": null,
+      "status": "indisponivel",
+      "source": null,
+      "note": "Arquivo de títulos liquidados do Portal FIDC"
+    },
+    {
+      "id": "Subordinação | Cotas seniores",
+      "value": 4000,
+      "status": "apurado",
+      "source": "CVM · TAB_X_2 quantidade × valor da cota, subclasses sênior",
+      "note": null
+    },
+    {
+      "id": "Subordinação | Cotas mezanino",
+      "value": 1000,
+      "status": "apurado",
+      "source": "CVM · TAB_X_2 quantidade × valor da cota, subclasses mezanino",
+      "note": null
+    },
+    {
+      "id": "Subordinação | Cotas subordinadas",
+      "value": 1000,
+      "status": "apurado",
+      "source": "CVM · TAB_X_2 quantidade × valor da cota, subclasses subordinada júnior",
+      "note": null
+    },
+    {
+      "id": "Subordinação | Índice apurado",
+      "value": 0.3333333333333333,
+      "status": "aproximado",
+      "source": "CVM · TAB_X_2 cotas subordinadas / TAB_IV PL",
+      "note": "Inclui mezanino conforme configuração; conferir regulamento e base exata."
+    },
+    {
+      "id": "Subordinação | Mínimo parametrizado",
+      "value": null,
+      "status": "indisponivel",
+      "source": "Cadastro do fundo · mínimo configurado",
+      "note": "Confirmar vigência do regulamento e regra por classe antes de tratar como limite oficial."
+    },
+    {
+      "id": "Subordinação | Folga indicativa",
+      "value": null,
+      "status": "indisponivel",
+      "source": "Derivado · subordinação apurada − mínimo configurado",
+      "note": "Diferença indicativa, sem decisão automática de enquadramento."
+    }
+  ]
+}

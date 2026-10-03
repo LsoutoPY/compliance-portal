@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Risco CVPAR — Liquidez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--font-core:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}
+:root{
+/* Verde Cofre — cor institucional (600 = marca) */
+--teal-25:#F2F7F6;--teal-50:#E4EFED;--teal-100:#C6DCD9;--teal-200:#9DC2BE;--teal-300:#6FA5A0;--teal-400:#44837E;--teal-500:#1F615E;--teal-600:#0F3D3E;--teal-700:#0C3233;--teal-800:#092728;--teal-900:#061B1C;
+/* Neutros — cinza levemente esverdeado, para tabelas densas */
+--neutral-0:#FFFFFF;--neutral-25:#FAFBFB;--neutral-50:#F4F6F6;--neutral-100:#E9ECEC;--neutral-200:#D8DDDD;--neutral-300:#BCC4C4;--neutral-400:#94A0A0;--neutral-500:#6E7C7C;--neutral-600:#556262;--neutral-700:#3E4A4A;--neutral-800:#283131;--neutral-900:#18201F;--neutral-950:#0D1413;
+/* Areia — destaque sóbrio, uso pontual (selos, marcadores de relatório) */
+--sand-50:#FBF7F0;--sand-100:#F5EEE1;--sand-300:#DCC79B;--sand-500:#B4884A;--sand-700:#7E5C2C;
+/* Semânticos primitivos */
+--green-50:#E3F2EC;--green-500:#1B9670;--green-600:#15795A;--green-700:#0F5A43;
+--amber-50:#FDF0DA;--amber-500:#D89412;--amber-600:#B27508;--amber-700:#8A5A06;
+--orange-50:#FBEADF;--orange-500:#E2691A;--orange-600:#C2540C;--orange-700:#93400A;
+--red-50:#FBE9EA;--red-500:#CC2A3A;--red-600:#A81F2D;--red-700:#801722;
+--blue-50:#E6EFF7;--blue-500:#2276B5;--blue-600:#1B5E8F;--blue-700:#14466B;
+/* Séries de gráfico — ordem fixa de plotagem */
+--series-1:#0F3D3E;--series-2:#44837E;--series-3:#B4884A;--series-4:#1B5E8F;--series-5:#A81F2D;--series-6:#94A0A0;
+}
+:root{
+--font-core:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+--font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+/* Escala — 13px é o corpo de tabela; 14px o corpo de interface */
+--text-2xs:11px;--text-xs:12px;--text-sm:13px;--text-md:14px;--text-lg:16px;--text-xl:18px;
+--text-2xl:20px;--text-3xl:24px;--text-4xl:30px;--text-5xl:38px;--text-6xl:48px;
+--leading-tight:1.15;--leading-snug:1.3;--leading-normal:1.45;--leading-relaxed:1.6;
+--weight-regular:400;--weight-medium:500;--weight-semibold:600;--weight-bold:700;
+/* Rótulos e cabeçalhos de coluna: caixa alta, tracking aberto */
+--tracking-label:0.06em;--tracking-tight:-0.015em;--tracking-normal:0em;
+--numeric-tabular:tabular-nums;
+}
+:root{
+/* Base 4px. Densidade equilibrada: linhas de tabela usam --space-3, cards --space-5. */
+--space-0:0px;--space-05:2px;--space-1:4px;--space-2:6px;--space-3:8px;--space-4:12px;--space-5:16px;--space-6:20px;--space-7:24px;--space-8:32px;--space-9:40px;--space-10:48px;--space-12:64px;--space-14:80px;
+--layout-sidenav:248px;--layout-sidenav-collapsed:64px;--layout-topbar:56px;--layout-gutter:24px;--layout-gutter-mobile:16px;--layout-max:1600px;
+--row-height:40px;--row-height-dense:32px;--control-height:36px;--control-height-sm:28px;--control-height-lg:44px;--touch-target:44px;
+}
+:root{
+--radius-xs:3px;--radius-sm:5px;--radius-md:8px;--radius-lg:12px;--radius-xl:16px;--radius-pill:999px;
+--border-width:1px;--border-width-strong:1.5px;--rule-width:1px;
+}
+:root{
+/* Sombras com matiz do Verde Cofre, nunca cinza puro */
+--shadow-none:none;
+--shadow-xs:0 1px 1px rgba(9,39,40,.04);
+--shadow-sm:0 1px 2px rgba(9,39,40,.06),0 1px 3px rgba(9,39,40,.04);
+--shadow-md:0 2px 4px rgba(9,39,40,.06),0 6px 16px rgba(9,39,40,.06);
+--shadow-lg:0 8px 24px rgba(9,39,40,.10),0 2px 6px rgba(9,39,40,.06);
+--shadow-overlay:0 24px 64px rgba(6,27,28,.22);
+--shadow-inset:inset 0 1px 0 rgba(255,255,255,.6);
+--ring-focus:0 0 0 3px rgba(68,131,126,.35);
+--ring-danger:0 0 0 3px rgba(168,31,45,.28);
+--blur-scrim:blur(3px);--blur-panel:blur(12px);
+}
+:root{
+--duration-instant:80ms;--duration-fast:120ms;--duration-base:180ms;--duration-slow:240ms;--duration-panel:320ms;
+--ease-standard:cubic-bezier(.2,0,.2,1);--ease-out:cubic-bezier(0,0,.2,1);--ease-in:cubic-bezier(.4,0,1,1);
+--transition-control:background-color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard),color var(--duration-fast) var(--ease-standard),box-shadow var(--duration-fast) var(--ease-standard);
+}
+:root{
+--surface-page:var(--neutral-50);--surface-card:var(--neutral-0);--surface-raised:var(--neutral-0);--surface-sunken:var(--neutral-100);--surface-inset:var(--neutral-25);
+--surface-hover:var(--neutral-50);--surface-active:var(--neutral-100);--surface-selected:var(--teal-50);
+--surface-brand:var(--teal-600);--surface-brand-hover:var(--teal-700);--surface-brand-active:var(--teal-800);--surface-brand-subtle:var(--teal-50);
+--surface-nav:var(--teal-800);--surface-nav-item-active:rgba(255,255,255,.10);
+--surface-overlay:var(--neutral-0);--surface-scrim:rgba(6,27,28,.45);
+--surface-positive:var(--green-50);--surface-warning:var(--amber-50);--surface-attention:var(--orange-50);--surface-negative:var(--red-50);--surface-info:var(--blue-50);
+--text-strong:var(--neutral-900);--text-body:var(--neutral-700);--text-muted:var(--neutral-500);--text-subtle:var(--neutral-400);
+--text-inverse:var(--neutral-0);--text-on-brand:var(--neutral-0);--text-brand:var(--teal-600);--text-link:var(--teal-600);--text-link-hover:var(--teal-500);
+--text-positive:var(--green-700);--text-warning:var(--amber-700);--text-attention:var(--orange-700);--text-negative:var(--red-600);--text-info:var(--blue-600);
+--border-subtle:var(--neutral-100);--border-default:var(--neutral-200);--border-strong:var(--neutral-300);--border-brand:var(--teal-600);--border-focus:var(--teal-400);--border-negative:var(--red-500);
+--grid-line:var(--neutral-100);--grid-line-strong:var(--neutral-200);
+/* Escala de severidade — a mesma ordem em badge, tabela e gráfico */
+--risk-baixo:var(--green-600);--risk-baixo-surface:var(--green-50);
+--risk-moderado:var(--amber-600);--risk-moderado-surface:var(--amber-50);
+--risk-alto:var(--orange-600);--risk-alto-surface:var(--orange-50);
+--risk-critico:var(--red-600);--risk-critico-surface:var(--red-50);
+}
+[data-theme="dark"]{
+--surface-page:#0B1211;--surface-card:#121A19;--surface-raised:#17201F;--surface-sunken:#0E1615;--surface-inset:#101817;
+--surface-hover:#1A2423;--surface-active:#202B2A;--surface-selected:#14302E;
+--surface-brand:var(--teal-500);--surface-brand-hover:var(--teal-400);--surface-brand-active:var(--teal-300);--surface-brand-subtle:#13302E;
+--surface-nav:#0E1817;--surface-nav-item-active:rgba(255,255,255,.08);
+--surface-overlay:#17201F;--surface-scrim:rgba(3,10,10,.62);
+--surface-positive:#0F2A22;--surface-warning:#2C2110;--surface-attention:#2E1C0E;--surface-negative:#2C1315;--surface-info:#112536;
+--text-strong:#EDF1F0;--text-body:#C3CDCC;--text-muted:#8D9A99;--text-subtle:#6E7C7B;
+--text-inverse:var(--neutral-900);--text-on-brand:#04100F;--text-brand:var(--teal-200);--text-link:var(--teal-200);--text-link-hover:var(--teal-100);
+--text-positive:#5FCBA4;--text-warning:#E0AC4A;--text-attention:#EE8B4C;--text-negative:#EE7C84;--text-info:#68AEE2;
+--border-subtle:#1D2726;--border-default:#26302F;--border-strong:#36423F;--border-brand:var(--teal-400);--border-focus:var(--teal-300);--border-negative:#CC2A3A;
+--grid-line:#1D2726;--grid-line-strong:#26302F;
+--risk-baixo:#5FCBA4;--risk-baixo-surface:#0F2A22;
+--risk-moderado:#E0AC4A;--risk-moderado-surface:#2C2110;
+--risk-alto:#EE8B4C;--risk-alto-surface:#2E1C0E;
+--risk-critico:#EE7C84;--risk-critico-surface:#2C1315;
+--series-1:#6FA5A0;--series-2:#9DC2BE;--series-3:#DCC79B;--series-4:#68AEE2;--series-5:#EE7C84;--series-6:#8D9A99;
+--shadow-sm:0 1px 2px rgba(0,0,0,.4);--shadow-md:0 2px 6px rgba(0,0,0,.4),0 8px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 28px rgba(0,0,0,.45);--shadow-overlay:0 24px 64px rgba(0,0,0,.6);--shadow-inset:inset 0 1px 0 rgba(255,255,255,.04);
+}
+@media (prefers-color-scheme: dark){
+:root:not([data-theme="light"]){
+--surface-page:#0B1211;--surface-card:#121A19;--surface-raised:#17201F;--surface-sunken:#0E1615;--surface-inset:#101817;
+--surface-hover:#1A2423;--surface-active:#202B2A;--surface-selected:#14302E;
+--surface-brand:var(--teal-500);--surface-brand-hover:var(--teal-400);--surface-brand-active:var(--teal-300);--surface-brand-subtle:#13302E;
+--surface-nav:#0E1817;--surface-nav-item-active:rgba(255,255,255,.08);
+--surface-overlay:#17201F;--surface-scrim:rgba(3,10,10,.62);
+--surface-positive:#0F2A22;--surface-warning:#2C2110;--surface-attention:#2E1C0E;--surface-negative:#2C1315;--surface-info:#112536;
+--text-strong:#EDF1F0;--text-body:#C3CDCC;--text-muted:#8D9A99;--text-subtle:#6E7C7B;
+--text-inverse:var(--neutral-900);--text-on-brand:#04100F;--text-brand:var(--teal-200);--text-link:var(--teal-200);--text-link-hover:var(--teal-100);
+--text-positive:#5FCBA4;--text-warning:#E0AC4A;--text-attention:#EE8B4C;--text-negative:#EE7C84;--text-info:#68AEE2;
+--border-subtle:#1D2726;--border-default:#26302F;--border-strong:#36423F;--border-brand:var(--teal-400);--border-focus:var(--teal-300);--border-negative:#CC2A3A;
+--grid-line:#1D2726;--grid-line-strong:#26302F;
+--risk-baixo:#5FCBA4;--risk-baixo-surface:#0F2A22;
+--risk-moderado:#E0AC4A;--risk-moderado-surface:#2C2110;
+--risk-alto:#EE8B4C;--risk-alto-surface:#2E1C0E;
+--risk-critico:#EE7C84;--risk-critico-surface:#2C1315;
+--series-1:#6FA5A0;--series-2:#9DC2BE;--series-3:#DCC79B;--series-4:#68AEE2;--series-5:#EE7C84;--series-6:#8D9A99;
+--shadow-sm:0 1px 2px rgba(0,0,0,.4);--shadow-md:0 2px 6px rgba(0,0,0,.4),0 8px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 28px rgba(0,0,0,.45);--shadow-overlay:0 24px 64px rgba(0,0,0,.6);--shadow-inset:inset 0 1px 0 rgba(255,255,255,.04);
+}
+}
+/* Estados de interação dos componentes Risco CVPAR.
+   Regra: cor e sombra mudam no hover; no press o elemento escurece e desloca 1px — nunca escala. */
+.rcv-reset{font-family:var(--font-core);box-sizing:border-box}
+*,*::before,*::after{box-sizing:border-box}
+
+/* ---------- Button ---------- */
+.rcv-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);font-family:var(--font-core);font-weight:var(--weight-medium);font-size:var(--text-md);line-height:1;height:var(--control-height);padding:0 var(--space-5);border-radius:var(--radius-sm);border:var(--border-width) solid transparent;cursor:pointer;transition:var(--transition-control),transform var(--duration-instant) var(--ease-standard);white-space:nowrap;text-decoration:none}
+.rcv-btn:focus-visible{outline:none;box-shadow:var(--ring-focus)}
+.rcv-btn:active:not(:disabled){transform:translateY(1px)}
+.rcv-btn:disabled{cursor:not-allowed;opacity:.45}
+.rcv-btn--sm{height:var(--control-height-sm);font-size:var(--text-sm);padding:0 var(--space-4)}
+.rcv-btn--lg{height:var(--control-height-lg);font-size:var(--text-lg);padding:0 var(--space-6)}
+.rcv-btn--primary{background:var(--surface-brand);color:var(--text-on-brand);box-shadow:var(--shadow-xs)}
+.rcv-btn--primary:hover:not(:disabled){background:var(--surface-brand-hover)}
+.rcv-btn--primary:active:not(:disabled){background:var(--surface-brand-active)}
+.rcv-btn--secondary{background:var(--surface-card);color:var(--text-strong);border-color:var(--border-default);box-shadow:var(--shadow-xs)}
+.rcv-btn--secondary:hover:not(:disabled){background:var(--surface-hover);border-color:var(--border-strong)}
+.rcv-btn--secondary:active:not(:disabled){background:var(--surface-active)}
+.rcv-btn--ghost{background:transparent;color:var(--text-body)}
+.rcv-btn--ghost:hover:not(:disabled){background:var(--surface-hover);color:var(--text-strong)}
+.rcv-btn--danger{background:var(--red-600);color:#fff}
+.rcv-btn--danger:hover:not(:disabled){background:var(--red-700)}
+.rcv-btn--danger:focus-visible{box-shadow:var(--ring-danger)}
+.rcv-btn--block{width:100%}
+
+/* ---------- IconButton ---------- */
+.rcv-iconbtn{display:inline-flex;align-items:center;justify-content:center;width:var(--control-height);height:var(--control-height);border-radius:var(--radius-sm);border:var(--border-width) solid transparent;background:transparent;color:var(--text-muted);cursor:pointer;transition:var(--transition-control)}
+.rcv-iconbtn:hover:not(:disabled){background:var(--surface-hover);color:var(--text-strong)}
+.rcv-iconbtn:active:not(:disabled){background:var(--surface-active)}
+.rcv-iconbtn:focus-visible{outline:none;box-shadow:var(--ring-focus)}
+.rcv-iconbtn:disabled{opacity:.4;cursor:not-allowed}
+.rcv-iconbtn--sm{width:var(--control-height-sm);height:var(--control-height-sm)}
+.rcv-iconbtn--lg{width:var(--control-height-lg);height:var(--control-height-lg)}
+.rcv-iconbtn--secondary{background:var(--surface-card);border-color:var(--border-default);color:var(--text-body)}
+.rcv-iconbtn--primary{background:var(--surface-brand);color:var(--text-on-brand)}
+.rcv-iconbtn--primary:hover:not(:disabled){background:var(--surface-brand-hover);color:var(--text-on-brand)}
+.rcv-iconbtn[aria-pressed="true"]{background:var(--surface-selected);color:var(--text-brand)}
+
+/* ---------- Card ---------- */
+.rcv-card{background:var(--surface-card);border:var(--border-width) solid var(--border-subtle);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);transition:box-shadow var(--duration-base) var(--ease-standard),border-color var(--duration-base) var(--ease-standard)}
+.rcv-card--interactive{cursor:pointer}
+.rcv-card--interactive:hover{box-shadow:var(--shadow-md);border-color:var(--border-default)}
+.rcv-card__head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) var(--space-5) 0}
+.rcv-card__title{margin:0;font-size:var(--text-md);font-weight:var(--weight-semibold);color:var(--text-strong);letter-spacing:var(--tracking-tight)}
+.rcv-card__subtitle{margin:2px 0 0;font-size:var(--text-xs);color:var(--text-muted)}
+.rcv-card__body{padding:var(--space-5)}
+.rcv-card__foot{padding:var(--space-4) var(--space-5);border-top:var(--rule-width) solid var(--border-subtle);font-size:var(--text-xs);color:var(--text-muted)}
+
+/* ---------- Campos ---------- */
+.rcv-field{display:flex;flex-direction:column;gap:var(--space-2)}
+.rcv-field__label{font-size:var(--text-xs);font-weight:var(--weight-medium);color:var(--text-body)}
+.rcv-field__req{color:var(--text-negative);margin-left:2px}
+.rcv-field__hint{font-size:var(--text-xs);color:var(--text-muted)}
+.rcv-field__error{font-size:var(--text-xs);color:var(--text-negative)}
+.rcv-inputwrap{display:flex;align-items:center;gap:var(--space-3);height:var(--control-height);padding:0 var(--space-4);background:var(--surface-card);border:var(--border-width) solid var(--border-default);border-radius:var(--radius-sm);transition:var(--transition-control)}
+.rcv-inputwrap:hover{border-color:var(--border-strong)}
+.rcv-inputwrap:focus-within{border-color:var(--border-focus);box-shadow:var(--ring-focus)}
+.rcv-inputwrap--sm{height:var(--control-height-sm);padding:0 var(--space-3)}
+.rcv-inputwrap--error{border-color:var(--border-negative)}
+.rcv-inputwrap--error:focus-within{box-shadow:var(--ring-danger)}
+.rcv-inputwrap--disabled{background:var(--surface-sunken);opacity:.7;pointer-events:none}
+.rcv-input{flex:1;min-width:0;border:none;background:transparent;font-family:var(--font-core);font-size:var(--text-md);color:var(--text-strong);outline:none;padding:0}
+.rcv-input::placeholder{color:var(--text-subtle)}
+.rcv-input--numeric{font-family:var(--font-mono);font-variant-numeric:var(--numeric-tabular);text-align:right}
+.rcv-select{appearance:none;flex:1;border:none;background:transparent;font-family:var(--font-core);font-size:var(--text-md);color:var(--text-strong);outline:none;cursor:pointer}
+
+/* ---------- Checkbox / Switch ---------- */
+.rcv-check{display:flex;align-items:flex-start;gap:var(--space-3);cursor:pointer;min-height:var(--space-6)}
+.rcv-check__box{flex:none;width:16px;height:16px;margin-top:1px;border:var(--border-width-strong) solid var(--border-strong);border-radius:var(--radius-xs);background:var(--surface-card);display:flex;align-items:center;justify-content:center;transition:var(--transition-control)}
+.rcv-check:hover .rcv-check__box{border-color:var(--border-brand)}
+.rcv-check input{position:absolute;opacity:0;width:0;height:0}
+.rcv-check input:checked+.rcv-check__box,.rcv-check input:indeterminate+.rcv-check__box{background:var(--surface-brand);border-color:var(--surface-brand)}
+.rcv-check input:focus-visible+.rcv-check__box{box-shadow:var(--ring-focus)}
+.rcv-check__mark{width:10px;height:10px;background:var(--text-on-brand)}
+.rcv-check__label{font-size:var(--text-md);color:var(--text-strong);line-height:var(--leading-snug)}
+.rcv-check__desc{font-size:var(--text-xs);color:var(--text-muted);margin-top:2px}
+.rcv-switch{display:inline-flex;align-items:center;gap:var(--space-3);cursor:pointer}
+.rcv-switch__track{position:relative;flex:none;width:34px;height:20px;border-radius:var(--radius-pill);background:var(--neutral-300);transition:background-color var(--duration-base) var(--ease-standard)}
+.rcv-switch__knob{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:var(--shadow-xs);transition:transform var(--duration-base) var(--ease-standard)}
+.rcv-switch input{position:absolute;opacity:0;width:0;height:0}
+.rcv-switch input:checked+.rcv-switch__track{background:var(--surface-brand)}
+.rcv-switch input:checked+.rcv-switch__track .rcv-switch__knob{transform:translateX(14px)}
+.rcv-switch input:focus-visible+.rcv-switch__track{box-shadow:var(--ring-focus)}
+
+/* ---------- SegmentedControl ---------- */
+.rcv-seg{display:inline-flex;padding:2px;gap:2px;background:var(--surface-sunken);border-radius:var(--radius-sm);border:var(--border-width) solid var(--border-subtle)}
+.rcv-seg__item{display:inline-flex;align-items:center;gap:var(--space-2);height:28px;padding:0 var(--space-4);border:none;background:transparent;border-radius:var(--radius-xs);font-family:var(--font-core);font-size:var(--text-sm);font-weight:var(--weight-medium);color:var(--text-muted);cursor:pointer;transition:var(--transition-control);white-space:nowrap}
+.rcv-seg__item:hover{color:var(--text-strong)}
+.rcv-seg__item[aria-selected="true"]{background:var(--surface-card);color:var(--text-strong);box-shadow:var(--shadow-xs)}
+.rcv-seg--lg .rcv-seg__item{height:36px;font-size:var(--text-md)}
+
+/* ---------- Tabs / Breadcrumbs ---------- */
+.rcv-tabs{display:flex;gap:var(--space-6);border-bottom:var(--rule-width) solid var(--border-subtle);overflow-x:auto;scrollbar-width:none}
+.rcv-tabs::-webkit-scrollbar{display:none}
+.rcv-tab{display:inline-flex;align-items:center;gap:var(--space-2);padding:0 0 var(--space-4);margin-bottom:-1px;border:none;background:none;font-family:var(--font-core);font-size:var(--text-md);font-weight:var(--weight-medium);color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;transition:var(--transition-control);white-space:nowrap}
+.rcv-tab:hover{color:var(--text-strong)}
+.rcv-tab[aria-selected="true"]{color:var(--text-brand);border-bottom-color:var(--border-brand)}
+.rcv-tab__count{font-family:var(--font-mono);font-size:var(--text-2xs);padding:1px var(--space-2);border-radius:var(--radius-pill);background:var(--surface-sunken);color:var(--text-muted)}
+.rcv-crumbs{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);color:var(--text-muted);flex-wrap:wrap}
+.rcv-crumbs button{border:none;background:none;padding:0;font:inherit;color:var(--text-link);cursor:pointer}
+.rcv-crumbs button:hover{color:var(--text-link-hover);text-decoration:underline}
+
+/* ---------- SideNav ---------- */
+.rcv-nav{display:flex;flex-direction:column;background:var(--surface-nav);color:#fff;width:var(--layout-sidenav);flex:none;height:100%;transition:width var(--duration-panel) var(--ease-standard)}
+.rcv-nav--collapsed{width:var(--layout-sidenav-collapsed)}
+.rcv-nav__section{padding:var(--space-5) var(--space-4) var(--space-2);font-size:var(--text-2xs);text-transform:uppercase;letter-spacing:var(--tracking-label);color:rgba(255,255,255,.44)}
+.rcv-nav__item{display:flex;align-items:center;gap:var(--space-4);width:100%;padding:0 var(--space-4);height:var(--row-height);border:none;background:transparent;color:rgba(255,255,255,.76);font-family:var(--font-core);font-size:var(--text-md);cursor:pointer;border-radius:var(--radius-sm);transition:var(--transition-control);text-align:left}
+.rcv-nav__item:hover{background:rgba(255,255,255,.06);color:#fff}
+.rcv-nav__item[aria-current="page"]{background:var(--surface-nav-item-active);color:#fff;font-weight:var(--weight-medium);box-shadow:inset 2px 0 0 var(--teal-200)}
+.rcv-nav__badge{margin-left:auto;font-family:var(--font-mono);font-size:var(--text-2xs);padding:1px 6px;border-radius:var(--radius-pill);background:rgba(255,255,255,.12)}
+
+/* ---------- Badge / RiskBadge ---------- */
+.rcv-badge{display:inline-flex;align-items:center;gap:var(--space-2);height:20px;padding:0 var(--space-3);border-radius:var(--radius-xs);font-size:var(--text-2xs);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-label);text-transform:uppercase;white-space:nowrap;border:var(--border-width) solid transparent}
+.rcv-badge--md{height:24px;padding:0 var(--space-4);font-size:var(--text-xs)}
+.rcv-badge__dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* ---------- Tabela ---------- */
+.rcv-table{width:100%;border-collapse:separate;border-spacing:0;font-size:var(--text-sm);font-family:var(--font-core)}
+.rcv-table th{position:sticky;top:0;z-index:1;background:var(--surface-inset);text-align:left;font-size:var(--text-2xs);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-label);text-transform:uppercase;color:var(--text-muted);padding:var(--space-3) var(--space-4);border-bottom:var(--rule-width) solid var(--grid-line-strong);white-space:nowrap}
+.rcv-table td{padding:var(--space-3) var(--space-4);border-bottom:var(--rule-width) solid var(--grid-line);color:var(--text-body);height:var(--row-height);vertical-align:middle}
+.rcv-table--dense td{height:var(--row-height-dense);padding:var(--space-2) var(--space-4)}
+.rcv-table tbody tr{transition:background-color var(--duration-fast) var(--ease-standard)}
+.rcv-table tbody tr.is-clickable{cursor:pointer}
+.rcv-table tbody tr.is-clickable:hover{background:var(--surface-hover)}
+.rcv-table tbody tr.is-open{background:var(--surface-selected)}
+.rcv-table .num{font-family:var(--font-mono);font-variant-numeric:var(--numeric-tabular);text-align:right;color:var(--text-strong)}
+.rcv-table tfoot td{font-weight:var(--weight-semibold);color:var(--text-strong);background:var(--surface-inset);border-top:var(--border-width-strong) solid var(--grid-line-strong)}
+.rcv-table__drill{padding:0 !important;background:var(--surface-inset)}
+.rcv-table__drillinner{padding:var(--space-5)}
+
+/* ---------- Tooltip / Dialog / Toast ---------- */
+.rcv-tip{position:relative;display:inline-flex}
+.rcv-tip__bubble{position:absolute;z-index:40;background:var(--neutral-900);color:var(--neutral-0);font-size:var(--text-xs);line-height:var(--leading-snug);padding:var(--space-3) var(--space-4);border-radius:var(--radius-sm);box-shadow:var(--shadow-lg);max-width:260px;pointer-events:none;opacity:0;transform:translateY(2px);transition:opacity var(--duration-fast) var(--ease-standard),transform var(--duration-fast) var(--ease-standard)}
+.rcv-tip:hover .rcv-tip__bubble,.rcv-tip:focus-within .rcv-tip__bubble{opacity:1;transform:translateY(0)}
+.rcv-scrim{position:absolute;inset:0;background:var(--surface-scrim);backdrop-filter:var(--blur-scrim);display:flex;align-items:center;justify-content:center;padding:var(--space-6);z-index:50}
+.rcv-dialog{background:var(--surface-overlay);border-radius:var(--radius-lg);box-shadow:var(--shadow-overlay);border:var(--border-width) solid var(--border-subtle);width:100%;max-width:520px;max-height:100%;display:flex;flex-direction:column;animation:rcv-rise var(--duration-slow) var(--ease-out)}
+@keyframes rcv-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.rcv-dialog__head{display:flex;align-items:flex-start;gap:var(--space-4);padding:var(--space-6) var(--space-6) var(--space-4)}
+.rcv-dialog__body{padding:0 var(--space-6) var(--space-6);overflow:auto;font-size:var(--text-md);color:var(--text-body);line-height:var(--leading-normal)}
+.rcv-dialog__foot{display:flex;justify-content:flex-end;gap:var(--space-3);padding:var(--space-5) var(--space-6);border-top:var(--rule-width) solid var(--border-subtle);background:var(--surface-inset);border-radius:0 0 var(--radius-lg) var(--radius-lg)}
+.rcv-toast{display:flex;align-items:flex-start;gap:var(--space-4);padding:var(--space-4) var(--space-5);background:var(--surface-overlay);border:var(--border-width) solid var(--border-subtle);border-left:3px solid var(--border-brand);border-radius:var(--radius-sm);box-shadow:var(--shadow-lg);max-width:420px;animation:rcv-rise var(--duration-base) var(--ease-out)}
+
+/* ---------- ProgressMeter / EmptyState ---------- */
+.rcv-meter{width:100%}
+.rcv-meter__track{position:relative;height:6px;border-radius:var(--radius-pill);background:var(--surface-sunken);overflow:hidden}
+.rcv-meter__fill{height:100%;border-radius:var(--radius-pill);transition:width var(--duration-slow) var(--ease-out)}
+.rcv-meter__mark{position:absolute;top:-3px;width:var(--border-width-strong);height:12px;background:var(--text-subtle)}
+.rcv-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--space-4);padding:var(--space-10) var(--space-6);color:var(--text-muted)}
+
+/* ---------- utilitários de layout usados pelos UI kits ---------- */
+.rcv-app{display:flex;height:100%;background:var(--surface-page);color:var(--text-body);font-family:var(--font-core);font-size:var(--text-md)}
+.rcv-scroll{overflow:auto;scrollbar-width:thin}
+.rcv-kpi-grid{display:grid;gap:var(--space-5);grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+a{color:var(--text-link);text-decoration:none}
+a:hover{color:var(--text-link-hover);text-decoration:underline}
+
+html,body{height:100%;margin:0}
+body{-webkit-font-smoothing:antialiased}
+.topbar{height:var(--layout-topbar);flex:none;display:flex;align-items:center;gap:var(--space-6);padding:0 var(--space-7);background:var(--surface-card);border-bottom:var(--rule-width) solid var(--border-subtle)}
+.topbar__title{font-size:var(--text-xl);font-weight:var(--weight-semibold);color:var(--text-strong);letter-spacing:var(--tracking-tight)}
+.topbar__spacer{flex:1}
+.main{padding:var(--space-7);max-width:var(--layout-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-6)}
+.kpi{padding:var(--space-5)}
+.kpi__label{font-size:var(--text-2xs);text-transform:uppercase;letter-spacing:var(--tracking-label);color:var(--text-muted);font-weight:var(--weight-semibold)}
+.kpi__value{font-family:var(--font-mono);font-variant-numeric:var(--numeric-tabular);font-size:var(--text-2xl);color:var(--text-strong);font-weight:var(--weight-semibold);margin-top:var(--space-2)}
+.kpi__delta{font-size:var(--text-xs);margin-top:var(--space-2);display:flex;align-items:center;gap:4px}
+.row2{display:grid;grid-template-columns:1.3fr 1fr;gap:var(--space-6)}
+.row2b{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)}
+@media(max-width:980px){.row2,.row2b{grid-template-columns:1fr}}
+.subhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4)}
+.bucket-bar{display:flex;align-items:flex-end;gap:6px;height:140px;padding:0 var(--space-2)}
+.bucket-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.bucket-col__bar{width:100%;border-radius:4px 4px 0 0;background:var(--surface-brand);min-height:2px;transition:height var(--duration-slow) var(--ease-out)}
+.bucket-col__label{font-size:10px;color:var(--text-muted);writing-mode:vertical-rl;transform:rotate(180deg);height:44px}
+.faixa-stack{display:flex;height:28px;border-radius:var(--radius-sm);overflow:hidden;border:var(--border-width) solid var(--border-subtle)}
+.faixa-seg{height:100%}
+.faixa-legend{display:flex;flex-wrap:wrap;gap:var(--space-4);margin-top:var(--space-4);font-size:var(--text-xs);color:var(--text-muted)}
+.faixa-legend span.dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.persona-note{font-size:var(--text-xs);color:var(--text-muted);display:flex;align-items:center;gap:6px}
+.icon{width:16px;height:16px;flex:none}
+.trend-svg{width:100%;height:120px;display:block}
+.conc-row{display:flex;align-items:center;gap:var(--space-4);margin-bottom:var(--space-4)}
+.conc-row__label{width:56px;font-size:var(--text-xs);color:var(--text-muted);font-weight:var(--weight-medium)}
+.conc-row__val{width:52px;text-align:right;font-family:var(--font-mono);font-size:var(--text-sm);color:var(--text-strong)}
+.imp-hidden{display:none !important}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:99px}
+
+</style>
+</head>
+<body class="rcv-reset">
+<div class="rcv-app">
+
+  <nav class="rcv-nav" id="sidenav">
+    <div style="height:var(--layout-topbar);display:flex;align-items:center;gap:var(--space-3);padding:0 var(--space-5);border-bottom:1px solid rgba(255,255,255,.08)">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2 3 6v6c0 5 4 8.5 9 10 5-1.5 9-5 9-10V6l-9-4Z"/></svg>
+      <div>
+        <div style="font-weight:600;font-size:14px;line-height:1.1">Risco CVPAR</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.5)">Portal de Compliance</div>
+      </div>
+    </div>
+    <div class="rcv-nav__section">Risco</div>
+    <button class="rcv-nav__item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 3 5-7"/></svg>Mercado</button>
+    <button class="rcv-nav__item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 10h20"/><rect x="2" y="5" width="20" height="14" rx="2"/></svg>Crédito</button>
+    <button class="rcv-nav__item" aria-current="page"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg>Liquidez<span class="rcv-nav__badge">novo</span></button>
+    <div class="rcv-nav__section">Compliance</div>
+    <button class="rcv-nav__item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Enquadramento</button>
+    <button class="rcv-nav__item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>Relatórios</button>
+    <div style="flex:1"></div>
+    <div style="padding:var(--space-5);border-top:1px solid rgba(255,255,255,.08);font-size:11px;color:rgba(255,255,255,.45)">
+      Dados de exemplo — importados da planilha mensal (Jan–Jul/2026)
+    </div>
+  </nav>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+    <header class="topbar">
+      <div>
+        <div class="rcv-crumbs"><span>Risco</span><span>/</span><span>Liquidez</span></div>
+        <div class="topbar__title">Liquidez</div>
+      </div>
+      <div class="topbar__spacer"></div>
+
+      <div class="rcv-field" style="width:170px">
+        <select class="rcv-select" id="fundSelect" style="border:1px solid var(--border-default);border-radius:var(--radius-sm);height:var(--control-height);padding:0 var(--space-4)"></select>
+      </div>
+      <div class="rcv-field" style="width:150px">
+        <select class="rcv-select" id="monthSelect" style="border:1px solid var(--border-default);border-radius:var(--radius-sm);height:var(--control-height);padding:0 var(--space-4)"></select>
+      </div>
+
+      <div class="rcv-seg" id="personaSeg" role="tablist">
+        <button class="rcv-seg__item" data-persona="risco" aria-selected="true">Risco</button>
+        <button class="rcv-seg__item" data-persona="compliance" aria-selected="false">Compliance</button>
+      </div>
+
+      <button class="rcv-btn rcv-btn--secondary rcv-btn--sm" id="themeToggle" title="Alternar tema">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+
+      <button class="rcv-btn rcv-btn--primary rcv-btn--sm" id="importBtn">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4"/></svg>
+        Importar arquivo
+      </button>
+    </header>
+
+    <main class="rcv-scroll main">
+
+      <div class="persona-note" id="personaNote"></div>
+
+      <div class="rcv-kpi-grid" id="kpiRow"></div>
+
+      <div class="row2">
+        <div class="rcv-card">
+          <div class="rcv-card__head">
+            <div>
+              <h3 class="rcv-card__title">Índice de Subordinação</h3>
+              <p class="rcv-card__subtitle">Atual vs. mínimo regulamentar — histórico do fundo no ano</p>
+            </div>
+            <span class="rcv-badge rcv-badge--md" id="subBadge"></span>
+          </div>
+          <div class="rcv-card__body">
+            <div style="display:flex;align-items:baseline;gap:var(--space-4);margin-bottom:var(--space-4)">
+              <span style="font-family:var(--font-mono);font-size:var(--text-4xl);font-weight:600;color:var(--text-strong)" id="subValue"></span>
+              <span style="font-size:var(--text-sm);color:var(--text-muted)" id="subMin"></span>
+            </div>
+            <div class="rcv-meter" style="margin-bottom:var(--space-6)">
+              <div class="rcv-meter__track">
+                <div class="rcv-meter__fill" id="subFill"></div>
+                <div class="rcv-meter__mark" id="subMark"></div>
+              </div>
+            </div>
+            <svg class="trend-svg" id="subTrend" viewBox="0 0 560 120" preserveAspectRatio="none"></svg>
+          </div>
+        </div>
+
+        <div class="rcv-card">
+          <div class="rcv-card__head">
+            <div>
+              <h3 class="rcv-card__title">Inadimplência · PDD</h3>
+              <p class="rcv-card__subtitle">Faixas de vencimento (% do total vencido)</p>
+            </div>
+          </div>
+          <div class="rcv-card__body">
+            <div class="rcv-kpi-grid" style="grid-template-columns:1fr 1fr;margin-bottom:var(--space-5)">
+              <div>
+                <div class="kpi__label">PDD / PL</div>
+                <div class="kpi__value" id="pddPl" style="font-size:var(--text-lg)"></div>
+              </div>
+              <div>
+                <div class="kpi__label">Vencidos / DC</div>
+                <div class="kpi__value" id="vencDc" style="font-size:var(--text-lg)"></div>
+              </div>
+            </div>
+            <div class="faixa-stack" id="faixaStack"></div>
+            <div class="faixa-legend" id="faixaLegend"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rcv-card">
+        <div class="rcv-card__head">
+          <div>
+            <h3 class="rcv-card__title">Previsão de Liquidação de Caixa dos DCs</h3>
+            <p class="rcv-card__subtitle">% do volume total de FIDCs, por faixa de prazo</p>
+          </div>
+        </div>
+        <div class="rcv-card__body">
+          <div class="bucket-bar" id="bucketBar"></div>
+        </div>
+      </div>
+
+      <div class="row2b">
+        <div class="rcv-card">
+          <div class="rcv-card__head"><h3 class="rcv-card__title">Concentração de Cedentes</h3></div>
+          <div class="rcv-card__body" id="concCedentes"></div>
+        </div>
+        <div class="rcv-card">
+          <div class="rcv-card__head"><h3 class="rcv-card__title">Concentração de Sacados</h3></div>
+          <div class="rcv-card__body" id="concSacados"></div>
+        </div>
+      </div>
+
+      <div class="row2b">
+        <div class="rcv-card">
+          <div class="rcv-card__head"><h3 class="rcv-card__title">Despesas Mensais</h3></div>
+          <table class="rcv-table" id="despesasTable"><tbody></tbody></table>
+        </div>
+        <div class="rcv-card">
+          <div class="rcv-card__head"><h3 class="rcv-card__title">Movimentação · Recompra</h3></div>
+          <table class="rcv-table" id="movTable"><tbody></tbody></table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+const DATA = [{"fund": "CVPAR EDUC", "month": 1, "reference_month": "2026-01-01", "despesa_taxa_administracao": -18979.56, "despesa_taxa_custodia": -2108.82, "despesa_taxa_gestao": -168707.14, "despesa_selic_anbid_cetip_bovespa_anbima": -1709.64, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": -10000, "mov_entradas": 0, "mov_captacoes_liquidas": -10000, "pl": 103355622.35523939, "volume_dc_total": 94829387.27000001, "volume_dc_vencidos": 0, "volume_dc_a_vencer": 94829387.27000001, "titulos_publicos_compromissadas": 42535435.91, "despesas_cpr": -42669471.11000001, "ativos_liquidez_rf_zeragem": 0.08378876879551188, "saldo_tesouraria": 2.2247459282832493e-06, "prazo_medio_dc_dias_uteis": 491.7395211335884, "prazo_medio_dc_dias_corridos": 718.8709122515373, "aquisicoes_no_mes": 52000000.07, "taxa_cessao_dc": 0.008249345700964158, "taxa_cessao_du": 0.00843373723529555, "indice_pdd_sobre_dc": 0, "indice_pdd_sobre_pl": 0, "valor_vencidos_total": 0, "vencidos_pct_dc": 0, "vencidos_pct_pl": 0, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0, "faixa_vencidos_6_30d": 0, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 90373393.50113595, "prev_liq_ate_5d": 8660270.285239391, "prev_liq_6_30d": 592500.2158723718, "prev_liq_31_60d": 1161787.631745251, "prev_liq_61_90d": 569474.1844203112, "prev_liq_91_120d": 977009.6025175918, "prev_liq_121_180d": 1618076.6642060543, "prev_liq_181_240d": 1177196.3343185554, "prev_liq_241_300d": 2108434.078134492, "prev_liq_301_365d": 6550298.363752404, "prev_liq_acima_365d": 66958346.14092953, "baixa_deposito_cedente": 0, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 5151180.3100000005, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0, "indice_subordinacao": 0.11050877025327493, "min_subordination": 0.05}, {"fund": "CVPAR I", "month": 1, "reference_month": "2026-01-01", "despesa_taxa_administracao": -46405.76, "despesa_taxa_custodia": -105466.99, "despesa_taxa_gestao": -2087732.4, "despesa_selic_anbid_cetip_bovespa_anbima": -20979.56, "despesa_resgate_amortizacao_iof": -90854.75, "despesa_outras": 1452.85, "mov_saidas": -8749029.67, "mov_entradas": 26159476.3, "mov_captacoes_liquidas": 17410446.630000003, "pl": 442536297.358063, "volume_dc_total": 409330133.39044636, "volume_dc_vencidos": 8236766.4399999995, "volume_dc_a_vencer": 401093366.95044637, "titulos_publicos_compromissadas": 3658406.5399999996, "despesas_cpr": -5920452.6899999995, "ativos_liquidez_rf_zeragem": 0.08062666637884223, "saldo_tesouraria": 8.962202702190928e-07, "prazo_medio_dc_dias_uteis": 102.51084868687072, "prazo_medio_dc_dias_corridos": 151.54257274535118, "aquisicoes_no_mes": 60241110.11, "taxa_cessao_dc": 0.021106151603903157, "taxa_cessao_du": 0.022170040767831318, "indice_pdd_sobre_dc": -0.0005189280794956437, "indice_pdd_sobre_pl": -0.00047998977997534386, "valor_vencidos_total": 8236905.8, "vencidos_pct_dc": 0.02012289134878592, "vencidos_pct_pl": 0.01861294960249417, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0.2500082518850707, "faixa_vencidos_6_30d": 0.5076845409595433, "faixa_vencidos_31_60d": 0.24230720715538595, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 362867699.6235101, "prev_liq_ate_5d": 54982691.487616666, "prev_liq_6_30d": 146382379.6859599, "prev_liq_31_60d": 50384041.36514022, "prev_liq_61_90d": 19530842.704315756, "prev_liq_91_120d": 7443748.321115988, "prev_liq_121_180d": 21679165.44677728, "prev_liq_181_240d": 39804506.53640457, "prev_liq_241_300d": 11307853.648453433, "prev_liq_301_365d": 302848.41960452165, "prev_liq_acima_365d": 11049622.008121807, "baixa_deposito_cedente": 239239.21999999997, "baixa_recompra": 1685679.22, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 42095403.70999997, "indice_recompra_pct_liquidados": 0.043727949864628635, "indice_recompra_pct_pl": 0.004349741369220429, "indice_subordinacao": 0.24907883770464387, "min_subordination": 0.15}, {"fund": "CVPAR II", "month": 1, "reference_month": "2026-01-01", "despesa_taxa_administracao": -46371.59, "despesa_taxa_custodia": -5152.4, "despesa_taxa_gestao": -463716, "despesa_selic_anbid_cetip_bovespa_anbima": -30174.73, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": -13429579.42, "mov_entradas": 13135386.23, "mov_captacoes_liquidas": -294193.1899999995, "pl": 208717854.79435447, "volume_dc_total": 159724588.9336736, "volume_dc_vencidos": 8731153.913952019, "volume_dc_a_vencer": 150993435.01972157, "titulos_publicos_compromissadas": 389521.56, "despesas_cpr": -494175.79, "ativos_liquidez_rf_zeragem": 0.23725341413398, "saldo_tesouraria": 2.2041238419840424e-06, "prazo_medio_dc_dias_uteis": 66.54965877642582, "prazo_medio_dc_dias_corridos": 99.14306685040663, "aquisicoes_no_mes": 35331075.070000075, "taxa_cessao_dc": 0.02471130863935679, "taxa_cessao_du": 0.02570563611332162, "indice_pdd_sobre_dc": -0.0026393155419235812, "indice_pdd_sobre_pl": -0.0020197773229097154, "valor_vencidos_total": 8731153.909999998, "vencidos_pct_dc": 0.05466380579401993, "vencidos_pct_pl": 0.04183232871285798, "vencidos_acima_120d": 220253.53, "faixa_vencidos_ate_5d": 0.34181320713884894, "faixa_vencidos_6_30d": 0.5729732887047458, "faixa_vencidos_31_60d": 0.059987339061807934, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0.02522616509459745, "volume_total_fidcs": 200802946.1384954, "prev_liq_ate_5d": 59579134.97800504, "prev_liq_6_30d": 61079758.50226034, "prev_liq_31_60d": 28007066.960930698, "prev_liq_61_90d": 10554610.892140768, "prev_liq_91_120d": 15677422.52392036, "prev_liq_121_180d": 18082405.44302834, "prev_liq_181_240d": 4802760.761122881, "prev_liq_241_300d": 1918785.6470869412, "prev_liq_301_365d": 637040.6799999999, "prev_liq_acima_365d": 463959.74999999994, "baixa_deposito_cedente": 1040479.9599999996, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 55095653.949999996, "indice_recompra_pct_liquidados": 0.018534941534594177, "indice_recompra_pct_pl": 0.0049851027887631546, "indice_subordinacao": 0.4247236187900504, "min_subordination": 0.4}, {"fund": "CVPAR NC", "month": 1, "reference_month": "2026-01-01", "despesa_taxa_administracao": -18000, "despesa_taxa_custodia": -2000, "despesa_taxa_gestao": -34974.11, "despesa_selic_anbid_cetip_bovespa_anbima": -11037.8, "despesa_resgate_amortizacao_iof": -11356.84, "despesa_outras": 0, "mov_saidas": -26953.54, "mov_entradas": 7120000, "mov_captacoes_liquidas": 7093046.46, "pl": 45892795.569999985, "volume_dc_total": 45961541.69999999, "volume_dc_vencidos": 0, "volume_dc_a_vencer": 45961541.69999999, "titulos_publicos_compromissadas": 0, "despesas_cpr": -73925.94, "ativos_liquidez_rf_zeragem": 8.957811240175014e-05, "saldo_tesouraria": 2.3289494281727415e-05, "prazo_medio_dc_dias_uteis": 420.9755982938295, "prazo_medio_dc_dias_corridos": 615.7387657071848, "aquisicoes_no_mes": 7027549.16, "taxa_cessao_dc": 0.003289533673484257, "taxa_cessao_du": 0.0033651004367230546, "indice_pdd_sobre_dc": 0, "indice_pdd_sobre_pl": 0, "valor_vencidos_total": 0, "vencidos_pct_dc": 0, "vencidos_pct_pl": 0, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0, "faixa_vencidos_6_30d": 0, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 33275095.321935304, "prev_liq_ate_5d": 4110.99, "prev_liq_6_30d": 0, "prev_liq_31_60d": 0, "prev_liq_61_90d": 0, "prev_liq_91_120d": 0, "prev_liq_121_180d": 0, "prev_liq_181_240d": 0, "prev_liq_241_300d": 4754569.3107417645, "prev_liq_301_365d": 7716814.208609485, "prev_liq_acima_365d": 20799600.812584054, "baixa_deposito_cedente": 0, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 0, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0, "indice_subordinacao": 0.20693067097023624, "min_subordination": 0.1}, {"fund": "CVPAR EDUC", "month": 2, "reference_month": "2026-02-01", "despesa_taxa_administracao": -17520, "despesa_taxa_custodia": -1946.67, "despesa_taxa_gestao": -148677.3, "despesa_selic_anbid_cetip_bovespa_anbima": -3165.53, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": -56.78, "mov_entradas": 15000, "mov_captacoes_liquidas": 14943.22, "pl": 104912829.35374856, "volume_dc_total": 101278526.52408688, "volume_dc_vencidos": 0, "volume_dc_a_vencer": 101278526.52408688, "titulos_publicos_compromissadas": 28466041.43, "despesas_cpr": -28583761.580000006, "ativos_liquidez_rf_zeragem": 0.03576123466283806, "saldo_tesouraria": 2.008048027087859e-06, "prazo_medio_dc_dias_uteis": 482.7014440876098, "prazo_medio_dc_dias_corridos": 703.8837001138924, "aquisicoes_no_mes": 19697000.360000025, "taxa_cessao_dc": 0.011177058720841727, "taxa_cessao_du": 0.011549127708218145, "indice_pdd_sobre_dc": 0, "indice_pdd_sobre_pl": 0, "valor_vencidos_total": 0, "vencidos_pct_dc": 0, "vencidos_pct_pl": 0, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0, "faixa_vencidos_6_30d": 0, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 134319369.8935578, "prev_liq_ate_5d": 32361386.909661688, "prev_liq_6_30d": 1206470.6941802476, "prev_liq_31_60d": 4835873.083032275, "prev_liq_61_90d": 4110305.652869875, "prev_liq_91_120d": 1020860.5698987357, "prev_liq_121_180d": 1323390.3900241936, "prev_liq_181_240d": 1670103.066704934, "prev_liq_241_300d": 2510431.5791166555, "prev_liq_301_365d": 8808668.232711708, "prev_liq_acima_365d": 76471879.71535747, "baixa_deposito_cedente": 0, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 0, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0, "indice_subordinacao": 0.11204424526683064, "min_subordination": 0.05}, {"fund": "CVPAR I", "month": 2, "reference_month": "2026-02-01", "despesa_taxa_administracao": -41165.99, "despesa_taxa_custodia": -94569.12, "despesa_taxa_gestao": -1587732.4, "despesa_selic_anbid_cetip_bovespa_anbima": -21998.420000000002, "despesa_resgate_amortizacao_iof": -13306.43, "despesa_outras": 0, "mov_saidas": -7368368.21, "mov_entradas": 3730000, "mov_captacoes_liquidas": -3638368.21, "pl": 444579203.91376597, "volume_dc_total": 428460962.5677678, "volume_dc_vencidos": 7217518.46, "volume_dc_a_vencer": 421243444.1077678, "titulos_publicos_compromissadas": 1901490.73, "despesas_cpr": -505214.57999999984, "ativos_liquidez_rf_zeragem": 0.033283375123565946, "saldo_tesouraria": 7.670174335598095e-08, "prazo_medio_dc_dias_uteis": 98.9988071138873, "prazo_medio_dc_dias_corridos": 144.9021369480761, "aquisicoes_no_mes": 43466251.93000003, "taxa_cessao_dc": 0.02290656091683979, "taxa_cessao_du": 0.02366723538816297, "indice_pdd_sobre_dc": -0.00017543096470104072, "indice_pdd_sobre_pl": -0.00016907070627302588, "valor_vencidos_total": 7217518.46, "vencidos_pct_dc": 0.016845218329215785, "vencidos_pct_pl": 0.01623449409343035, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0.010938453491672816, "faixa_vencidos_6_30d": 0.9890615465083271, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 273406805.3712126, "prev_liq_ate_5d": 27838991.975998193, "prev_liq_6_30d": 83592853.96248646, "prev_liq_31_60d": 42807692.08854393, "prev_liq_61_90d": 12919591.319788607, "prev_liq_91_120d": 18910977.580285028, "prev_liq_121_180d": 45325908.82233508, "prev_liq_181_240d": 29782947.432119213, "prev_liq_241_300d": 872531.1074543733, "prev_liq_301_365d": 307756.3153623085, "prev_liq_acima_365d": 11047554.766839448, "baixa_deposito_cedente": 233968.8, "baixa_recompra": 1422042.96, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 25434815.650000002, "indice_recompra_pct_liquidados": 0.06112813517791334, "indice_recompra_pct_pl": 0.0037248970384166076, "indice_subordinacao": 0.24907883770464387, "min_subordination": 0.15}, {"fund": "CVPAR II", "month": 2, "reference_month": "2026-02-01", "despesa_taxa_administracao": -40441.52, "despesa_taxa_custodia": -4493.48, "despesa_taxa_gestao": -404415.17, "despesa_selic_anbid_cetip_bovespa_anbima": -18030.83, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": -18039.89, "mov_saidas": 0, "mov_entradas": 0, "mov_captacoes_liquidas": 0, "pl": 211831874.33556724, "volume_dc_total": 160819099.50899145, "volume_dc_vencidos": 7016131.26395202, "volume_dc_a_vencer": 153802968.24503943, "titulos_publicos_compromissadas": 417875.9, "despesas_cpr": 552561.45, "ativos_liquidez_rf_zeragem": 0.23927106369405154, "saldo_tesouraria": 2.6762733501660394e-06, "prazo_medio_dc_dias_uteis": 66.29162185867398, "prazo_medio_dc_dias_corridos": 97.37283726966439, "aquisicoes_no_mes": 47067397.52000001, "taxa_cessao_dc": 0.024848673213403664, "taxa_cessao_du": 0.02615347071535252, "indice_pdd_sobre_dc": -0.0040011873089988515, "indice_pdd_sobre_pl": -0.0030376322827634058, "valor_vencidos_total": 6857231.78, "vencidos_pct_dc": 0.04263941161800008, "vencidos_pct_pl": 0.03237110468624433, "vencidos_acima_120d": 220253.53, "faixa_vencidos_ate_5d": 0.2238290696949433, "faixa_vencidos_6_30d": 0.40598008049248113, "faixa_vencidos_31_60d": 0.30368929574085357, "faixa_vencidos_61_90d": 0.03438166414144455, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0.032119889930277375, "volume_total_fidcs": 192167767.68385297, "prev_liq_ate_5d": 60112287.25389999, "prev_liq_6_30d": 40879819.42745778, "prev_liq_31_60d": 36020485.63399003, "prev_liq_61_90d": 15749223.618280334, "prev_liq_91_120d": 12209211.154660959, "prev_liq_121_180d": 19032824.604713775, "prev_liq_181_240d": 5657840.03258644, "prev_liq_241_300d": 1727126.1082636963, "prev_liq_301_365d": 349954.9, "prev_liq_acima_365d": 428994.94999999995, "baixa_deposito_cedente": 643848.81, "baixa_recompra": 2950313.23, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 43607842.25, "indice_recompra_pct_liquidados": 0.07614426747470643, "indice_recompra_pct_pl": 0.016967050172564748, "indice_subordinacao": 0.4259230920208043, "min_subordination": 0.4}, {"fund": "CVPAR NC", "month": 2, "reference_month": "2026-02-01", "despesa_taxa_administracao": -18767.59, "despesa_taxa_custodia": -2085.29, "despesa_taxa_gestao": -33037.87, "despesa_selic_anbid_cetip_bovespa_anbima": -2780.3300000000004, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": -321.76, "mov_entradas": 85000, "mov_captacoes_liquidas": 84678.24, "pl": 46636353.21, "volume_dc_total": 46683372.22, "volume_dc_vencidos": 0, "volume_dc_a_vencer": 46683372.22, "titulos_publicos_compromissadas": 4066.6, "despesas_cpr": -2053859.85, "ativos_liquidez_rf_zeragem": 0, "saldo_tesouraria": 0.04294448648207243, "prazo_medio_dc_dias_uteis": 402.9473092885894, "prazo_medio_dc_dias_corridos": 587.697748183403, "aquisicoes_no_mes": 0, "taxa_cessao_dc": 0, "taxa_cessao_du": 0, "indice_pdd_sobre_dc": 0, "indice_pdd_sobre_pl": 0, "valor_vencidos_total": 0, "vencidos_pct_dc": 0, "vencidos_pct_pl": 0, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0, "faixa_vencidos_6_30d": 0, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 35766800.284671575, "prev_liq_ate_5d": 2006840.84, "prev_liq_6_30d": 0, "prev_liq_31_60d": 0, "prev_liq_61_90d": 0, "prev_liq_91_120d": 0, "prev_liq_121_180d": 0, "prev_liq_181_240d": 1109945.9630441878, "prev_liq_241_300d": 4620712.645391289, "prev_liq_301_365d": 7566265.075019096, "prev_liq_acima_365d": 20463035.761217006, "baixa_deposito_cedente": 0, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 0, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0, "indice_subordinacao": 0.24390179843052773, "min_subordination": 0.1}, {"fund": "CVPAR EDUC", "month": 3, "reference_month": "2026-03-01", "despesa_taxa_administracao": -20683.6, "despesa_taxa_custodia": -2298.16, "despesa_taxa_gestao": -183854.29, "despesa_selic_anbid_cetip_bovespa_anbima": -4046.27, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": -94.64, "mov_entradas": 25000, "mov_captacoes_liquidas": 24905.36, "pl": 105848323.55750917, "volume_dc_total": 87768647.58320542, "volume_dc_vencidos": 874858.33, "volume_dc_a_vencer": 86893789.25320542, "titulos_publicos_compromissadas": 938629.31, "despesas_cpr": -208867.64, "ativos_liquidez_rf_zeragem": 0.1638715344875503, "saldo_tesouraria": 4.144704283026661e-05, "prazo_medio_dc_dias_uteis": 501.7626280808853, "prazo_medio_dc_dias_corridos": 731.8848919295872, "aquisicoes_no_mes": 15000000.01, "taxa_cessao_dc": 0.002758775761000143, "taxa_cessao_du": 0.0028221328774418633, "indice_pdd_sobre_dc": 0, "indice_pdd_sobre_pl": 0, "valor_vencidos_total": 874858.33, "vencidos_pct_dc": 0.009967777265459478, "vencidos_pct_pl": 0.008265207238021816, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0, "faixa_vencidos_6_30d": 0, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 105404762.76653153, "prev_liq_ate_5d": 18474338.504303746, "prev_liq_6_30d": 3381730.0844427524, "prev_liq_31_60d": 5816198.225558202, "prev_liq_61_90d": 615798.363078905, "prev_liq_91_120d": 1008930.7824908118, "prev_liq_121_180d": 1323877.3073757659, "prev_liq_181_240d": 1982733.0020533516, "prev_liq_241_300d": 2512718.4177926797, "prev_liq_301_365d": 2407164.5671920027, "prev_liq_acima_365d": 67881273.51224332, "baixa_deposito_cedente": 210318.72000000003, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 153285.72, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0.001986982060095929, "indice_subordinacao": 0.10554859512195439, "min_subordination": 0.05}, {"fund": "CVPAR I", "month": 3, "reference_month": "2026-03-01", "despesa_taxa_administracao": -51722.44, "despesa_taxa_custodia": -119809.87, "despesa_taxa_gestao": -1087732.4, "despesa_selic_anbid_cetip_bovespa_anbima": -23240.38, "despesa_resgate_amortizacao_iof": -18631.78, "despesa_outras": 0, "mov_saidas": -10460552.95, "mov_entradas": 38220000, "mov_captacoes_liquidas": 27759447.05, "pl": 479387904.25329137, "volume_dc_total": 432492840.8331398, "volume_dc_vencidos": 12448385.22, "volume_dc_a_vencer": 420044455.61313975, "titulos_publicos_compromissadas": 1938713.1400000001, "despesas_cpr": -1772714.2199999997, "ativos_liquidez_rf_zeragem": 0.09750000816761446, "saldo_tesouraria": 4.870794567996171e-07, "prazo_medio_dc_dias_uteis": 122.00416841087987, "prazo_medio_dc_dias_corridos": 178.88639463362514, "aquisicoes_no_mes": 60276720.980000034, "taxa_cessao_dc": 0.02150239063097748, "taxa_cessao_du": 0.022315288297458602, "indice_pdd_sobre_dc": -2.6575191343882483e-05, "indice_pdd_sobre_pl": -2.3975531918984767e-05, "valor_vencidos_total": 12448385.219999999, "vencidos_pct_dc": 0.028782870014726358, "vencidos_pct_pl": 0.025967249297601632, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0.9191440092661272, "faixa_vencidos_6_30d": 0.08080734105045635, "faixa_vencidos_31_60d": 4.864968341652911e-05, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 292776719.3893728, "prev_liq_ate_5d": 59932250.61015149, "prev_liq_6_30d": 51897133.33549228, "prev_liq_31_60d": 38494554.21392784, "prev_liq_61_90d": 9551824.67376488, "prev_liq_91_120d": 20409476.83143734, "prev_liq_121_180d": 53391796.682951316, "prev_liq_181_240d": 37222622.86408866, "prev_liq_241_300d": 2249537.9502027677, "prev_liq_301_365d": 2483522.7003958235, "prev_liq_acima_365d": 17143999.526960444, "baixa_deposito_cedente": 589976.3000000002, "baixa_recompra": 762710.31, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 48580931.35000002, "indice_recompra_pct_liquidados": 0.027089697587777194, "indice_recompra_pct_pl": 0.0028216953285606665, "indice_subordinacao": 0.2752139574918897, "min_subordination": 0.15}, {"fund": "CVPAR II", "month": 3, "reference_month": "2026-03-01", "despesa_taxa_administracao": -50909.72, "despesa_taxa_custodia": -5656.64, "despesa_taxa_gestao": -509097.17, "despesa_selic_anbid_cetip_bovespa_anbima": -12142.01, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": -15200, "mov_entradas": 4015200, "mov_captacoes_liquidas": 4000000, "pl": 220242011.16864678, "volume_dc_total": 169031095.31021574, "volume_dc_vencidos": 4059590.2639520196, "volume_dc_a_vencer": 164971505.04626372, "titulos_publicos_compromissadas": 458486.39, "despesas_cpr": -268173.92000000004, "ativos_liquidez_rf_zeragem": 0.23426819326909634, "saldo_tesouraria": 5.37227204619914e-07, "prazo_medio_dc_dias_uteis": 57.648659491919425, "prazo_medio_dc_dias_corridos": 85.09899056021304, "aquisicoes_no_mes": 44994163.06000007, "taxa_cessao_dc": 0.022923151108749356, "taxa_cessao_du": 0.024238520103326885, "indice_pdd_sobre_dc": -0.0034030009031435046, "indice_pdd_sobre_pl": -0.0026117313719930565, "valor_vencidos_total": 4059590.26, "vencidos_pct_dc": 0.0240168251442115, "vencidos_pct_pl": 0.018432406417190923, "vencidos_acima_120d": 220253.53, "faixa_vencidos_ate_5d": 0.1923702861578942, "faixa_vencidos_6_30d": 0.611259533862415, "faixa_vencidos_31_60d": 0.06129387057894853, "faixa_vencidos_61_90d": 0.015307702506902754, "faixa_vencidos_91_120d": 0.06551349347261465, "faixa_vencidos_acima_120d": 0.05425511342122493, "volume_total_fidcs": 204065827.41905528, "prev_liq_ate_5d": 67092875.612955235, "prev_liq_6_30d": 60305196.60680956, "prev_liq_31_60d": 26781803.445678454, "prev_liq_61_90d": 13370130.452905603, "prev_liq_91_120d": 17214115.21787886, "prev_liq_121_180d": 13563602.40534893, "prev_liq_181_240d": 2820005.5067546032, "prev_liq_241_300d": 1759290.4007240643, "prev_liq_301_365d": 599875.86, "prev_liq_acima_365d": 558931.91, "baixa_deposito_cedente": 846933.11, "baixa_recompra": 34996.270000000004, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 36823383.61999999, "indice_recompra_pct_liquidados": 0.02339005593190541, "indice_recompra_pct_pl": 0.004004364904408164, "indice_subordinacao": 0.42909496742781417, "min_subordination": 0.4}, {"fund": "CVPAR NC", "month": 3, "reference_month": "2026-03-01", "despesa_taxa_administracao": -18767.59, "despesa_taxa_custodia": -2085.29, "despesa_taxa_gestao": -41562.74, "despesa_selic_anbid_cetip_bovespa_anbima": -3567.5, "despesa_resgate_amortizacao_iof": -7571.22, "despesa_outras": 0, "mov_saidas": -7798.35, "mov_entradas": 2060000, "mov_captacoes_liquidas": 2052201.65, "pl": 49489520.24, "volume_dc_total": 49538930.99, "volume_dc_vencidos": 0, "volume_dc_a_vencer": 49538930.99, "titulos_publicos_compromissadas": 4002.76, "despesas_cpr": -72406.73999999999, "ativos_liquidez_rf_zeragem": 0.00022025612588561235, "saldo_tesouraria": 0.00016352674183854645, "prazo_medio_dc_dias_uteis": 390.5487146219886, "prazo_medio_dc_dias_corridos": 569.7028738626219, "aquisicoes_no_mes": 2000000.04, "taxa_cessao_dc": 0.002758597520913675, "taxa_cessao_du": 0.0028181876577704212, "indice_pdd_sobre_dc": 0, "indice_pdd_sobre_pl": 0, "valor_vencidos_total": 0, "vencidos_pct_dc": 0, "vencidos_pct_pl": 0, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0, "faixa_vencidos_6_30d": 0, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 35936323.363765895, "prev_liq_ate_5d": 22995.989999999998, "prev_liq_6_30d": 0, "prev_liq_31_60d": 0, "prev_liq_61_90d": 0, "prev_liq_91_120d": 0, "prev_liq_121_180d": 0, "prev_liq_181_240d": 2247268.852527477, "prev_liq_241_300d": 7905966.2788341595, "prev_liq_301_365d": 7508437.329048678, "prev_liq_acima_365d": 18251654.91335558, "baixa_deposito_cedente": 0, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 0, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0, "indice_subordinacao": 0.24390179843052773, "min_subordination": 0.1}, {"fund": "CVPAR EDUC", "month": 4, "reference_month": "2026-04-01", "despesa_taxa_administracao": -19057.53, "despesa_taxa_custodia": -2117.53, "despesa_taxa_gestao": -169400.32, "despesa_selic_anbid_cetip_bovespa_anbima": -4804.59, "despesa_resgate_amortizacao_iof": -3785.61, "despesa_outras": 0, "mov_saidas": -4277.73, "mov_entradas": 1130000, "mov_captacoes_liquidas": 1125722.27, "pl": 108419807.0833717, "volume_dc_total": 90120393.9339595, "volume_dc_vencidos": 571072.9199999999, "volume_dc_a_vencer": 89549321.0139595, "titulos_publicos_compromissadas": 686973.2, "despesas_cpr": -201018.19, "ativos_liquidez_rf_zeragem": 0.1642972574717317, "saldo_tesouraria": 3.51577825357025e-06, "prazo_medio_dc_dias_uteis": 507.73927628631066, "prazo_medio_dc_dias_corridos": 739.736291124199, "aquisicoes_no_mes": 5017561.48, "taxa_cessao_dc": 0.0031945275968148223, "taxa_cessao_du": 0.0032636277858806295, "indice_pdd_sobre_dc": 0, "indice_pdd_sobre_pl": 0, "valor_vencidos_total": 571072.9199999999, "vencidos_pct_dc": 0.006336777893120218, "vencidos_pct_pl": 0.005267237927852623, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0, "faixa_vencidos_6_30d": 0, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 90246259.22901195, "prev_liq_ate_5d": 904101.07, "prev_liq_6_30d": 5172689.586170109, "prev_liq_31_60d": 1248541.3295594174, "prev_liq_61_90d": 743102.7970583139, "prev_liq_91_120d": 1008555.368903528, "prev_liq_121_180d": 1323145.0038807697, "prev_liq_181_240d": 2298239.2769979006, "prev_liq_241_300d": 2511495.70259079, "prev_liq_301_365d": 2404438.9514355175, "prev_liq_acima_365d": 72631950.14241561, "baixa_deposito_cedente": 410524.28000000014, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 2776437.05, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0.0037864324890775616, "indice_subordinacao": 0.1129389073156696, "min_subordination": 0.05}, {"fund": "CVPAR I", "month": 4, "reference_month": "2026-04-01", "despesa_taxa_administracao": -49295.81, "despesa_taxa_custodia": -115744.25, "despesa_taxa_gestao": -2087732.4, "despesa_selic_anbid_cetip_bovespa_anbima": -24354.2, "despesa_resgate_amortizacao_iof": -11356.84, "despesa_outras": 0, "mov_saidas": -29829717.2, "mov_entradas": 31009193.61, "mov_captacoes_liquidas": 1179476.4100000001, "pl": 490140222.1621231, "volume_dc_total": 452460556.5222014, "volume_dc_vencidos": 218426.27, "volume_dc_a_vencer": 452242130.25220144, "titulos_publicos_compromissadas": 2178516.56, "despesas_cpr": -2588052.23, "ativos_liquidez_rf_zeragem": 0.07772658020569542, "saldo_tesouraria": 9.200428359271438e-07, "prazo_medio_dc_dias_uteis": 117.92088101468181, "prazo_medio_dc_dias_corridos": 172.4560343859818, "aquisicoes_no_mes": 66725738.90999997, "taxa_cessao_dc": 0.02285956614962075, "taxa_cessao_du": 0.023635393131470686, "indice_pdd_sobre_dc": -1.806329829680738e-05, "indice_pdd_sobre_pl": -1.667467722593199e-05, "valor_vencidos_total": 218426.31, "vencidos_pct_dc": 0.00048275215784313833, "vencidos_pct_pl": 0.0004456404516986394, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0.03353336875946858, "faixa_vencidos_6_30d": 0.962032229542311, "faixa_vencidos_31_60d": 0.004434401698220329, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 271460215.54676914, "prev_liq_ate_5d": 14841285.802426053, "prev_liq_6_30d": 57712484.115773074, "prev_liq_31_60d": 39324086.80090801, "prev_liq_61_90d": 15102255.889369063, "prev_liq_91_120d": 12345272.921901494, "prev_liq_121_180d": 59872857.14669721, "prev_liq_181_240d": 47326846.196703255, "prev_liq_241_300d": 5889212.77048077, "prev_liq_301_365d": 10860984.508278511, "prev_liq_acima_365d": 8184929.39423169, "baixa_deposito_cedente": 295304.89999999997, "baixa_recompra": 71790.1, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 36293461.839999996, "indice_recompra_pct_liquidados": 0.010013350359137644, "indice_recompra_pct_pl": 0.0007489591414894663, "indice_subordinacao": 0.26585249595986493, "min_subordination": 0.15}, {"fund": "CVPAR II", "month": 4, "reference_month": "2026-04-01", "despesa_taxa_administracao": -47621.81, "despesa_taxa_custodia": -5291.31, "despesa_taxa_gestao": -476217.85, "despesa_selic_anbid_cetip_bovespa_anbima": -20430.21, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": 0, "mov_entradas": 0, "mov_captacoes_liquidas": 0, "pl": 224205897.83018142, "volume_dc_total": 172860923.81600648, "volume_dc_vencidos": 4613047.44395202, "volume_dc_a_vencer": 168247876.37205446, "titulos_publicos_compromissadas": 876206.47, "despesas_cpr": -443183.58999999997, "ativos_liquidez_rf_zeragem": 0.2296507375696865, "saldo_tesouraria": 2.838952972067251e-06, "prazo_medio_dc_dias_uteis": 60.08765823061291, "prazo_medio_dc_dias_corridos": 87.99925530353411, "aquisicoes_no_mes": 62306713.939999975, "taxa_cessao_dc": 0.024851662888680202, "taxa_cessao_du": 0.025905571962618276, "indice_pdd_sobre_dc": -0.0033421965314436395, "indice_pdd_sobre_pl": -0.0025768063444860387, "valor_vencidos_total": 4613047.72, "vencidos_pct_dc": 0.02668646920405295, "vencidos_pct_pl": 0.020575050721877198, "vencidos_acima_120d": 220253.53, "faixa_vencidos_ate_5d": 0.6552454653558191, "faixa_vencidos_6_30d": 0.20870284862346927, "faixa_vencidos_31_60d": 0.022168192528474427, "faixa_vencidos_61_90d": 0.025233669163084227, "faixa_vencidos_91_120d": 0.04090405117248603, "faixa_vencidos_acima_120d": 0.047745773156667025, "volume_total_fidcs": 155446361.44914877, "prev_liq_ate_5d": 10396619.860858489, "prev_liq_6_30d": 52355222.961896345, "prev_liq_31_60d": 40950956.94799978, "prev_liq_61_90d": 15411436.937336277, "prev_liq_91_120d": 12439559.804174265, "prev_liq_121_180d": 16230628.662068667, "prev_liq_181_240d": 4863451.444814963, "prev_liq_241_300d": 1826162.1300000001, "prev_liq_301_365d": 611120.99, "prev_liq_acima_365d": 361201.71, "baixa_deposito_cedente": 1367280.9899999993, "baixa_recompra": 156775.86, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 56991544.85000001, "indice_recompra_pct_liquidados": 0.02604530767390193, "indice_recompra_pct_pl": 0.006797576980576818, "indice_subordinacao": 0.4313028101670396, "min_subordination": 0.4}, {"fund": "CVPAR NC", "month": 4, "reference_month": "2026-04-01", "despesa_taxa_administracao": -18767.59, "despesa_taxa_custodia": -2085.29, "despesa_taxa_gestao": -39598.65, "despesa_selic_anbid_cetip_bovespa_anbima": -4281.54, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": -246.06, "mov_entradas": 65000, "mov_captacoes_liquidas": 64753.94, "pl": 50300718.81, "volume_dc_total": 50348520.2, "volume_dc_vencidos": 0, "volume_dc_a_vencer": 49538930.99, "titulos_publicos_compromissadas": 4104.39, "despesas_cpr": -64368.83, "ativos_liquidez_rf_zeragem": 0.0002190115819539717, "saldo_tesouraria": 2.8759231164553608e-05, "prazo_medio_dc_dias_uteis": 370.4994040839294, "prazo_medio_dc_dias_corridos": 539.6312096479368, "aquisicoes_no_mes": 0, "taxa_cessao_dc": 0, "taxa_cessao_du": 0, "indice_pdd_sobre_dc": 0, "indice_pdd_sobre_pl": 0, "valor_vencidos_total": 0, "vencidos_pct_dc": 0, "vencidos_pct_pl": 0, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0, "faixa_vencidos_6_30d": 0, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 36495122.97058229, "prev_liq_ate_5d": 4104.39, "prev_liq_6_30d": 0, "prev_liq_31_60d": 0, "prev_liq_61_90d": 0, "prev_liq_91_120d": 0, "prev_liq_121_180d": 0, "prev_liq_181_240d": 5008744.121601832, "prev_liq_241_300d": 6217345.352000696, "prev_liq_301_365d": 7581534.377147885, "prev_liq_acima_365d": 17683394.729831886, "baixa_deposito_cedente": 0, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 0, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0, "indice_subordinacao": 0.24581983185381048, "min_subordination": 0.1}, {"fund": "CVPAR EDUC", "month": 5, "reference_month": "2026-05-01", "despesa_taxa_administracao": -19586.58, "despesa_taxa_custodia": -2176.3, "despesa_taxa_gestao": -174102.96, "despesa_selic_anbid_cetip_bovespa_anbima": -5522.7, "despesa_resgate_amortizacao_iof": -11356.84, "despesa_outras": 0, "mov_saidas": -11735.4, "mov_entradas": 3100000, "mov_captacoes_liquidas": 3088264.6, "pl": 112987395.67634392, "volume_dc_total": 112189568.2983357, "volume_dc_vencidos": 0, "volume_dc_a_vencer": 112189568.2983357, "titulos_publicos_compromissadas": 856157.22, "despesas_cpr": -187766.87, "ativos_liquidez_rf_zeragem": 0.001141210550401238, "saldo_tesouraria": 4.377656437155655e-06, "prazo_medio_dc_dias_uteis": 516.9799687719498, "prazo_medio_dc_dias_corridos": 753.4975893674572, "aquisicoes_no_mes": 23444632.07, "taxa_cessao_dc": 0.0045736245262134306, "taxa_cessao_du": 0.00466126899475577, "indice_pdd_sobre_dc": 0, "indice_pdd_sobre_pl": 0, "valor_vencidos_total": 0, "vencidos_pct_dc": 0, "vencidos_pct_pl": 0, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0, "faixa_vencidos_6_30d": 0, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 111852302.87428105, "prev_liq_ate_5d": 3465187.8699999996, "prev_liq_6_30d": 1589145.3008437748, "prev_liq_31_60d": 1655811.754472648, "prev_liq_61_90d": 751643.8064321887, "prev_liq_91_120d": 594186.8267913796, "prev_liq_121_180d": 1736053.3569586442, "prev_liq_181_240d": 2618497.2930978113, "prev_liq_241_300d": 2509759.288528541, "prev_liq_301_365d": 2452326.9025447206, "prev_liq_acima_365d": 94479690.47461134, "baixa_deposito_cedente": 163462.96999999997, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 1396051.5099999995, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0.001446736328610007, "indice_subordinacao": 0.13575749635191733, "min_subordination": 0.05}, {"fund": "CVPAR I", "month": 5, "reference_month": "2026-05-01", "despesa_taxa_administracao": -49785.18, "despesa_taxa_custodia": -117212.43, "despesa_taxa_gestao": -1087732.4, "despesa_selic_anbid_cetip_bovespa_anbima": -25482.300000000003, "despesa_resgate_amortizacao_iof": -15521.01, "despesa_outras": 0, "mov_saidas": -8405877.52, "mov_entradas": 8603814.5, "mov_captacoes_liquidas": 197936.98000000045, "pl": 496900808.3884732, "volume_dc_total": 448747387.05238944, "volume_dc_vencidos": 3152741.79, "volume_dc_a_vencer": 445594645.2623894, "titulos_publicos_compromissadas": 7345011.79, "despesas_cpr": -1745571.1099999999, "ativos_liquidez_rf_zeragem": 0.08599247720015392, "saldo_tesouraria": 1.4885667069024602e-06, "prazo_medio_dc_dias_uteis": 121.3015116736444, "prazo_medio_dc_dias_corridos": 177.1713958421312, "aquisicoes_no_mes": 38054112.88000005, "taxa_cessao_dc": 0.02348866426641498, "taxa_cessao_du": 0.023834531457538114, "indice_pdd_sobre_dc": -0.0003932957719470698, "indice_pdd_sobre_pl": -0.0003551824569824832, "valor_vencidos_total": 3152741.83, "vencidos_pct_dc": 0.007025649443239945, "vencidos_pct_pl": 0.006344811231490714, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0.11809680908759979, "faixa_vencidos_6_30d": 0.8815959694359117, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0.0003072214764886093, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 262861554.1771899, "prev_liq_ate_5d": 14615436.64100912, "prev_liq_6_30d": 55899828.838308185, "prev_liq_31_60d": 27782432.63972941, "prev_liq_61_90d": 13891780.584076962, "prev_liq_91_120d": 43842146.480823465, "prev_liq_121_180d": 52376469.9625467, "prev_liq_181_240d": 33373427.194702517, "prev_liq_241_300d": 2533650.847083359, "prev_liq_301_365d": 13292973.392145809, "prev_liq_acima_365d": 5253407.596764363, "baixa_deposito_cedente": 1283393.24, "baixa_recompra": 736913.7000000001, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 50514343.660000026, "indice_recompra_pct_liquidados": 0.03845665512049678, "indice_recompra_pct_pl": 0.004065815361726156, "indice_subordinacao": 0.26384150328444994, "min_subordination": 0.15}, {"fund": "CVPAR II", "month": 5, "reference_month": "2026-05-01", "despesa_taxa_administracao": -48398.63, "despesa_taxa_custodia": -5377.64, "despesa_taxa_gestao": -483986.28, "despesa_selic_anbid_cetip_bovespa_anbima": -14642.23, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": 0, "mov_entradas": 0, "mov_captacoes_liquidas": 0, "pl": 227940977.9180214, "volume_dc_total": 172410743.44944897, "volume_dc_vencidos": 3175026.79395202, "volume_dc_a_vencer": 169235716.65549695, "titulos_publicos_compromissadas": 433601.37, "despesas_cpr": -42018.520000000135, "ativos_liquidez_rf_zeragem": 0.24463857932831873, "saldo_tesouraria": 2.0224533746003226e-08, "prazo_medio_dc_dias_uteis": 53.43202709950548, "prazo_medio_dc_dias_corridos": 78.27678202684353, "aquisicoes_no_mes": 43965878.60999995, "taxa_cessao_dc": 0.02385911833497077, "taxa_cessao_du": 0.02433295737814614, "indice_pdd_sobre_dc": -0.0036222220698393258, "indice_pdd_sobre_pl": -0.002739788192997066, "valor_vencidos_total": 2954773.5400000005, "vencidos_pct_dc": 0.017137989668644653, "vencidos_pct_pl": 0.012962888757381219, "vencidos_acima_120d": 281240.68, "faixa_vencidos_ate_5d": 0.47527196280497347, "faixa_vencidos_6_30d": 0.2489773920203712, "faixa_vencidos_31_60d": 0.18056883980354038, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0.09518180537111481, "volume_total_fidcs": 154035398.76637533, "prev_liq_ate_5d": 13537534.92770209, "prev_liq_6_30d": 59468920.90868855, "prev_liq_31_60d": 29016623.038762193, "prev_liq_61_90d": 23482364.954186924, "prev_liq_91_120d": 12027018.734759863, "prev_liq_121_180d": 9727428.084885105, "prev_liq_181_240d": 4398837.57739061, "prev_liq_241_300d": 1682789.16, "prev_liq_301_365d": 367681.94999999995, "prev_liq_acima_365d": 326199.43, "baixa_deposito_cedente": 1096127.25, "baixa_recompra": 2330805.8099999996, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 44239602.399999976, "indice_recompra_pct_liquidados": 0.07189389845368051, "indice_recompra_pct_pl": 0.015034300068820844, "indice_subordinacao": 0.43285442744527575, "min_subordination": 0.4}, {"fund": "CVPAR NC", "month": 5, "reference_month": "2026-05-01", "despesa_taxa_administracao": -18767.59, "despesa_taxa_custodia": -2085.29, "despesa_taxa_gestao": -40257.65, "despesa_selic_anbid_cetip_bovespa_anbima": -4496.4, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": -306.62, "mov_entradas": 81000, "mov_captacoes_liquidas": 80693.38, "pl": 51122458.800000004, "volume_dc_total": 51153409.03, "volume_dc_vencidos": 0, "volume_dc_a_vencer": 51153409.03, "titulos_publicos_compromissadas": 4095.1, "despesas_cpr": -50652.19, "ativos_liquidez_rf_zeragem": 0.00021777688830569315, "saldo_tesouraria": 8.75069412741157e-05, "prazo_medio_dc_dias_uteis": 350.45005774959566, "prazo_medio_dc_dias_corridos": 510.5594937406563, "aquisicoes_no_mes": 0, "taxa_cessao_dc": 0, "taxa_cessao_du": 0, "indice_pdd_sobre_dc": 0, "indice_pdd_sobre_pl": 0, "valor_vencidos_total": 0, "vencidos_pct_dc": 0, "vencidos_pct_pl": 0, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0, "faixa_vencidos_6_30d": 0, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 38847296.3751534, "prev_liq_ate_5d": 4095.1, "prev_liq_6_30d": 0, "prev_liq_31_60d": 0, "prev_liq_61_90d": 0, "prev_liq_91_120d": 0, "prev_liq_121_180d": 1172615.4432934294, "prev_liq_181_240d": 6641167.368864315, "prev_liq_241_300d": 7410348.223984043, "prev_liq_301_365d": 8145482.154757721, "prev_liq_acima_365d": 15473588.084253892, "baixa_deposito_cedente": 0, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 0, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0, "indice_subordinacao": 0.2478227559352057, "min_subordination": 0.1}, {"fund": "CVPAR EDUC", "month": 6, "reference_month": "2026-06-01", "despesa_taxa_administracao": -21346.93, "despesa_taxa_custodia": -2371.89, "despesa_taxa_gestao": -189750.34, "despesa_selic_anbid_cetip_bovespa_anbima": -6355.16, "despesa_resgate_amortizacao_iof": -94.64, "despesa_outras": 0, "mov_saidas": -454.26, "mov_entradas": 120000, "mov_captacoes_liquidas": 119545.74, "pl": 114697401.93726063, "volume_dc_total": 106926561.93397687, "volume_dc_vencidos": 174063.04, "volume_dc_a_vencer": 106752498.89397687, "titulos_publicos_compromissadas": 240453.88, "despesas_cpr": -319183.95, "ativos_liquidez_rf_zeragem": 0.06842217226137814, "saldo_tesouraria": 3.2488530141583415e-05, "prazo_medio_dc_dias_uteis": 564.1620395425543, "prazo_medio_dc_dias_corridos": 821.301671219771, "aquisicoes_no_mes": 25071288.939999998, "taxa_cessao_dc": 0.003674809361235221, "taxa_cessao_du": 0.003740023025409581, "indice_pdd_sobre_dc": -1.8720044522108135e-05, "indice_pdd_sobre_pl": -1.745174664980565e-05, "valor_vencidos_total": 174063.03999999998, "vencidos_pct_dc": 0.0016278746538907457, "vencidos_pct_pl": 0.0015175848542342074, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0.1655108976609854, "faixa_vencidos_6_30d": 0.8344891023390147, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 105722445.09579256, "prev_liq_ate_5d": 158284.06, "prev_liq_6_30d": 590556.4642007676, "prev_liq_31_60d": 400989.90470704925, "prev_liq_61_90d": 315458.0913825479, "prev_liq_91_120d": 173693.73369784222, "prev_liq_121_180d": 515600.8840747649, "prev_liq_181_240d": 507729.23844212457, "prev_liq_241_300d": 499521.1381642756, "prev_liq_301_365d": 666927.6204483592, "prev_liq_acima_365d": 101893683.96067484, "baixa_deposito_cedente": 167343.28999999998, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 3950077.9100000006, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0.0014589980869099076, "indice_subordinacao": 0.13488633888780932, "min_subordination": 0.05}, {"fund": "CVPAR I", "month": 6, "reference_month": "2026-06-01", "despesa_taxa_administracao": -52902.75, "despesa_taxa_custodia": -124957.97, "despesa_taxa_gestao": -587732.4, "despesa_selic_anbid_cetip_bovespa_anbima": -26673.819999999996, "despesa_resgate_amortizacao_iof": -5502.35, "despesa_outras": 0, "mov_saidas": -11626700.69, "mov_entradas": 25139000, "mov_captacoes_liquidas": 13512299.31, "pl": 518028566.0364465, "volume_dc_total": 482805987.3135811, "volume_dc_vencidos": 9322059.35, "volume_dc_a_vencer": 473483927.9635811, "titulos_publicos_compromissadas": 1431047.9500000002, "despesas_cpr": -964103.1499999999, "ativos_liquidez_rf_zeragem": 0.06939409042229575, "saldo_tesouraria": 9.277442046819228e-06, "prazo_medio_dc_dias_uteis": 144.11019225826712, "prazo_medio_dc_dias_corridos": 209.31237484602983, "aquisicoes_no_mes": 64657651.47000001, "taxa_cessao_dc": 0.019625464253332642, "taxa_cessao_du": 0.019677894481294617, "indice_pdd_sobre_dc": -0.0024798640477968256, "indice_pdd_sobre_pl": -0.0023112493953002643, "valor_vencidos_total": 9322059.350000001, "vencidos_pct_dc": 0.01930808563884969, "vencidos_pct_pl": 0.017995261190565572, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0.07869325998230207, "faixa_vencidos_6_30d": 0.29867829472679763, "faixa_vencidos_31_60d": 0.6225245422836746, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0.00010390300722554399, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 282954876.8277132, "prev_liq_ate_5d": 16962061.128693815, "prev_liq_6_30d": 39681070.97473057, "prev_liq_31_60d": 25990948.795238614, "prev_liq_61_90d": 46039439.514842324, "prev_liq_91_120d": 24288878.01002964, "prev_liq_121_180d": 57650800.02016886, "prev_liq_181_240d": 23485817.434092116, "prev_liq_241_300d": 11402999.175255938, "prev_liq_301_365d": 14588344.335414743, "prev_liq_acima_365d": 22864517.43924659, "baixa_deposito_cedente": 1944597.8999999987, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 37715215.78000002, "indice_recompra_pct_liquidados": 0.049031947444085865, "indice_recompra_pct_pl": 0.0037538429876146718, "indice_subordinacao": 0.2739092163239189, "min_subordination": 0.15}, {"fund": "CVPAR II", "month": 6, "reference_month": "2026-06-01", "despesa_taxa_administracao": -34545.35, "despesa_taxa_custodia": -3838.36, "despesa_taxa_gestao": -517229.98, "despesa_selic_anbid_cetip_bovespa_anbima": -16064.68, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": -22818.42, "mov_saidas": 0, "mov_entradas": 0, "mov_captacoes_liquidas": 0, "pl": 232043949.55496615, "volume_dc_total": 163822093.6116584, "volume_dc_vencidos": 5998349.71395202, "volume_dc_a_vencer": 157823743.89770636, "titulos_publicos_compromissadas": 1175264.06, "despesas_cpr": -836552.5799999996, "ativos_liquidez_rf_zeragem": 0.29703151064915456, "saldo_tesouraria": 1.6537556817834606e-05, "prazo_medio_dc_dias_uteis": 63.75728990815488, "prazo_medio_dc_dias_corridos": 91.34764747840813, "aquisicoes_no_mes": 70780488.23000008, "taxa_cessao_dc": 0.02387062473642781, "taxa_cessao_du": 0.023691105920471342, "indice_pdd_sobre_dc": -0.0063792241141620255, "indice_pdd_sobre_pl": -0.004503706526303754, "valor_vencidos_total": 5998349.709999999, "vencidos_pct_dc": 0.03661502290539111, "vencidos_pct_pl": 0.025850058669937958, "vencidos_acima_120d": 455412.88, "faixa_vencidos_ate_5d": 0.1546765785351318, "faixa_vencidos_6_30d": 0.41363745862693296, "faixa_vencidos_31_60d": 0.21873900046417938, "faixa_vencidos_61_90d": 0.1370239332044547, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0.07592302916930131, "volume_total_fidcs": 146381946.8630109, "prev_liq_ate_5d": 7869407.198171895, "prev_liq_6_30d": 42677695.628835134, "prev_liq_31_60d": 47771086.93676225, "prev_liq_61_90d": 17368129.106922783, "prev_liq_91_120d": 10537853.826634403, "prev_liq_121_180d": 6780514.07857506, "prev_liq_181_240d": 9300214.917109426, "prev_liq_241_300d": 3956961.85, "prev_liq_301_365d": 120083.32, "prev_liq_acima_365d": 0, "baixa_deposito_cedente": 1439259.0099999988, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 79273903.62999995, "indice_recompra_pct_liquidados": 0.017831775672320496, "indice_recompra_pct_pl": 0.006202527636511676, "indice_subordinacao": 0.4347965261256126, "min_subordination": 0.4}, {"fund": "CVPAR NC", "month": 6, "reference_month": "2026-06-01", "despesa_taxa_administracao": -18767.59, "despesa_taxa_custodia": -2085.29, "despesa_taxa_gestao": -42967.28, "despesa_selic_anbid_cetip_bovespa_anbima": -5747, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": -246.06, "mov_entradas": 65000, "mov_captacoes_liquidas": 64753.94, "pl": 51990254.18, "volume_dc_total": 52023277.46, "volume_dc_vencidos": 0, "volume_dc_a_vencer": 52023277.46, "titulos_publicos_compromissadas": 3983.8, "despesas_cpr": -55113.11, "ativos_liquidez_rf_zeragem": 0.0002164926903613765, "saldo_tesouraria": 0.00013176546466347745, "prazo_medio_dc_dias_uteis": 329.39820553312813, "prazo_medio_dc_dias_corridos": 478.48413634618515, "aquisicoes_no_mes": 0, "taxa_cessao_dc": 0, "taxa_cessao_du": 0, "indice_pdd_sobre_dc": 0, "indice_pdd_sobre_pl": 0, "valor_vencidos_total": 0, "vencidos_pct_dc": 0, "vencidos_pct_pl": 0, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0, "faixa_vencidos_6_30d": 0, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 37708655.53236975, "prev_liq_ate_5d": 3983.8, "prev_liq_6_30d": 0, "prev_liq_31_60d": 0, "prev_liq_61_90d": 0, "prev_liq_91_120d": 0, "prev_liq_121_180d": 2367341.261842924, "prev_liq_181_240d": 8304456.016331801, "prev_liq_241_300d": 5641479.595443295, "prev_liq_301_365d": 8152660.751794282, "prev_liq_acima_365d": 13238734.10695744, "baixa_deposito_cedente": 0, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 0, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0, "indice_subordinacao": 0.24983535423830852, "min_subordination": 0.1}, {"fund": "CVPAR EDUC", "month": 7, "reference_month": "2026-07-01", "despesa_taxa_administracao": -24713.56, "despesa_taxa_custodia": -2745.98, "despesa_taxa_gestao": -219676.04, "despesa_selic_anbid_cetip_bovespa_anbima": -7281.6900000000005, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": -26499.3, "mov_entradas": 7000000, "mov_captacoes_liquidas": 6973500.7, "pl": 123357518.322516, "volume_dc_total": 116377964.16068384, "volume_dc_vencidos": 89254.25, "volume_dc_a_vencer": 116288709.91068384, "titulos_publicos_compromissadas": 0, "despesas_cpr": -236084.32, "ativos_liquidez_rf_zeragem": 0.058471636507586966, "saldo_tesouraria": 3.4118714912828977e-05, "prazo_medio_dc_dias_uteis": 526.5769704938209, "prazo_medio_dc_dias_corridos": 769.0655242109846, "aquisicoes_no_mes": 8916056.34, "taxa_cessao_dc": 0.015072732628708624, "taxa_cessao_du": 0.015056423706423568, "indice_pdd_sobre_dc": -1.2771232171993225e-05, "indice_pdd_sobre_pl": -1.2048637328404433e-05, "valor_vencidos_total": 174063.03999999998, "vencidos_pct_dc": 0.0014956700888810012, "vencidos_pct_pl": 0.001411045247723899, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0.1655108976609854, "faixa_vencidos_6_30d": 0.8344891023390147, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 114813175.68374096, "prev_liq_ate_5d": 13354.02, "prev_liq_6_30d": 1043051.7956371557, "prev_liq_31_60d": 4460932.805140142, "prev_liq_61_90d": 315666.67483879393, "prev_liq_91_120d": 208004.21328269198, "prev_liq_121_180d": 481763.9704485246, "prev_liq_181_240d": 507950.4162153523, "prev_liq_241_300d": 499690.01923144574, "prev_liq_301_365d": 820022.8306055369, "prev_liq_acima_365d": 106462738.93834132, "baixa_deposito_cedente": 269706.51, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 412412.50000000006, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0.002186380803275056, "indice_subordinacao": 0.1825679051327456, "min_subordination": 0.05}, {"fund": "CVPAR I", "month": 7, "reference_month": "2026-07-01", "despesa_taxa_administracao": -59652.43, "despesa_taxa_custodia": -141992.62, "despesa_taxa_gestao": 0, "despesa_selic_anbid_cetip_bovespa_anbima": -28069.809999999998, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": -7029634.62, "mov_entradas": 1100000, "mov_captacoes_liquidas": -5929634.62, "pl": 521208836.48785424, "volume_dc_total": 480173972.3870103, "volume_dc_vencidos": 8785286.06, "volume_dc_a_vencer": 471388686.3270103, "titulos_publicos_compromissadas": 1763797.5699999998, "despesas_cpr": -620109.7200000002, "ativos_liquidez_rf_zeragem": 0.08167659291370435, "saldo_tesouraria": 2.3245960451559496e-07, "prazo_medio_dc_dias_uteis": 149.07155525958137, "prazo_medio_dc_dias_corridos": 217.74807882077948, "aquisicoes_no_mes": 43434357.24000001, "taxa_cessao_dc": 0.023678660169196827, "taxa_cessao_du": 0.02342105891213998, "indice_pdd_sobre_dc": -0.005580283447434283, "indice_pdd_sobre_pl": -0.0051409467422996015, "valor_vencidos_total": 8785286.06, "vencidos_pct_dc": 0.01829604802677485, "vencidos_pct_pl": 0.01685559692195419, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0.18459480646666615, "faixa_vencidos_6_30d": 0.0012472991687649153, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0.8141578943645689, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 284111654.6318795, "prev_liq_ate_5d": 12954323.427853785, "prev_liq_6_30d": 38154107.593125574, "prev_liq_31_60d": 69601076.63006903, "prev_liq_61_90d": 15282298.003680382, "prev_liq_91_120d": 38023171.77813636, "prev_liq_121_180d": 45457939.51110204, "prev_liq_181_240d": 18582393.92395447, "prev_liq_241_300d": 18469772.332546327, "prev_liq_301_365d": 5020379.259285467, "prev_liq_acima_365d": 22566192.172126036, "baixa_deposito_cedente": 1538565.49, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 48504420.88000001, "indice_recompra_pct_liquidados": 0.030744877586329378, "indice_recompra_pct_pl": 0.00295191750847427, "indice_subordinacao": 0.2630273325978979, "min_subordination": 0.15}, {"fund": "CVPAR II", "month": 7, "reference_month": "2026-07-01", "despesa_taxa_administracao": -58685.18, "despesa_taxa_custodia": -6520.59, "despesa_taxa_gestao": -588189.77, "despesa_selic_anbid_cetip_bovespa_anbima": -17507.2, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": -3700, "mov_saidas": -27478.66, "mov_entradas": 7258726.449999999, "mov_captacoes_liquidas": 7231247.789999999, "pl": 243536184.9386496, "volume_dc_total": 190145658.33695906, "volume_dc_vencidos": 5135927.453952029, "volume_dc_a_vencer": 185009730.88300705, "titulos_publicos_compromissadas": 561542.12, "despesas_cpr": -780292.29, "ativos_liquidez_rf_zeragem": 0.22499359175513878, "saldo_tesouraria": 9.819074732579901e-07, "prazo_medio_dc_dias_uteis": 57.76760867726182, "prazo_medio_dc_dias_corridos": 84.91862186126797, "aquisicoes_no_mes": 62470218.08000005, "taxa_cessao_dc": 0.02130724132944029, "taxa_cessao_du": 0.021438434428980573, "indice_pdd_sobre_dc": -0.006232292340327712, "indice_pdd_sobre_pl": -0.004865984618665724, "valor_vencidos_total": 5135927.45, "vencidos_pct_dc": 0.027010490246895728, "vencidos_pct_pl": 0.02108897062378561, "vencidos_acima_120d": 443692.56, "faixa_vencidos_ate_5d": 0.3456994880252835, "faixa_vencidos_6_30d": 0.36805717534035653, "faixa_vencidos_31_60d": 0.09624548142711789, "faixa_vencidos_61_90d": 0.09924510518543248, "faixa_vencidos_91_120d": 0.004362791378604851, "faixa_vencidos_acima_120d": 0.08638995864320474, "volume_total_fidcs": 162367655.39793152, "prev_liq_ate_5d": 9868235.710450988, "prev_liq_6_30d": 63902951.32858549, "prev_liq_31_60d": 46147255.68281807, "prev_liq_61_90d": 8829387.837425465, "prev_liq_91_120d": 8715952.070021791, "prev_liq_121_180d": 11177804.638629714, "prev_liq_181_240d": 12669911.14, "prev_liq_241_300d": 483190.88999999996, "prev_liq_301_365d": 81852.29999999999, "prev_liq_acima_365d": 491113.7999999998, "baixa_deposito_cedente": 1379854.51, "baixa_recompra": 1319088.4600000002, "recompra_parcial_sem_adiantamento": 3614.85, "outras_liquidacoes": 47279712.150000036, "indice_recompra_pct_liquidados": 0.05407032977137909, "indice_recompra_pct_pl": 0.011097151007275633, "indice_subordinacao": 0.4327709019717143, "min_subordination": 0.4}, {"fund": "CVPAR NC", "month": 7, "reference_month": "2026-07-01", "despesa_taxa_administracao": -18767.59, "despesa_taxa_custodia": -2085.29, "despesa_taxa_gestao": -47870.31, "despesa_selic_anbid_cetip_bovespa_anbima": -6569.08, "despesa_resgate_amortizacao_iof": 0, "despesa_outras": 0, "mov_saidas": -246.06, "mov_entradas": 65000, "mov_captacoes_liquidas": 64753.94, "pl": 52907946.17, "volume_dc_total": 52948182.67, "volume_dc_vencidos": 0, "volume_dc_a_vencer": 52948182.67, "titulos_publicos_compromissadas": 4009.3, "despesas_cpr": -62807.009999999995, "ativos_liquidez_rf_zeragem": 0.00021527503568940747, "saldo_tesouraria": 0.00013554580207965762, "prazo_medio_dc_dias_uteis": 329.39820553312813, "prazo_medio_dc_dias_corridos": 478.48413634618515, "aquisicoes_no_mes": 0, "taxa_cessao_dc": 0, "taxa_cessao_du": 0, "indice_pdd_sobre_dc": 0, "indice_pdd_sobre_pl": 0, "valor_vencidos_total": 0, "vencidos_pct_dc": 0, "vencidos_pct_pl": 0, "vencidos_acima_120d": 0, "faixa_vencidos_ate_5d": 0, "faixa_vencidos_6_30d": 0, "faixa_vencidos_31_60d": 0, "faixa_vencidos_61_90d": 0, "faixa_vencidos_91_120d": 0, "faixa_vencidos_acima_120d": 0, "volume_total_fidcs": 38407202.1206294, "prev_liq_ate_5d": 4009.3, "prev_liq_6_30d": 0, "prev_liq_31_60d": 0, "prev_liq_61_90d": 0, "prev_liq_91_120d": 257495.42747355282, "prev_liq_121_180d": 5269395.282343444, "prev_liq_181_240d": 8072459.856405681, "prev_liq_241_300d": 6214774.515632868, "prev_liq_301_365d": 7606762.631596794, "prev_liq_acima_365d": 10982305.107177056, "baixa_deposito_cedente": 0, "baixa_recompra": 0, "recompra_parcial_sem_adiantamento": 0, "outras_liquidacoes": 0, "indice_recompra_pct_liquidados": 0, "indice_recompra_pct_pl": 0, "indice_subordinacao": 0.251423881532992, "min_subordination": 0.1}];
+const FUNDS = ["CVPAR EDUC", "CVPAR I", "CVPAR II", "CVPAR NC"];
+const MONTHS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"];
+
+let state = { fund: FUNDS[0], month: 7, persona: "risco", theme: "light" };
+
+function fmtBRL(v){
+  if(v===undefined||v===null) return "—";
+  return v.toLocaleString("pt-BR", {style:"currency", currency:"BRL", maximumFractionDigits:0});
+}
+function fmtPct(v, digits){
+  if(v===undefined||v===null) return "—";
+  digits = digits===undefined?2:digits;
+  return (v*100).toLocaleString("pt-BR", {minimumFractionDigits:digits, maximumFractionDigits:digits}) + "%";
+}
+function findRow(fund, month){ return DATA.find(d=>d.fund===fund && d.month===month); }
+function fundHistory(fund){ return DATA.filter(d=>d.fund===fund).sort((a,b)=>a.month-b.month); }
+
+function riskLevel(value, thresholds){
+  // thresholds: [t1, t2] ascending; below t1 = baixo, below t2 = moderado, else alto/critico
+  if(value < thresholds[0]) return "baixo";
+  if(value < thresholds[1]) return "moderado";
+  return "alto";
+}
+const RISK_LABEL = {baixo:"Baixo", moderado:"Moderado", alto:"Alto", critico:"Crítico"};
+function riskBadge(level){
+  return `<span class="rcv-badge rcv-badge--md" style="background:var(--risk-${level}-surface);color:var(--risk-${level})"><span class="rcv-badge__dot"></span>${RISK_LABEL[level]}</span>`;
+}
+
+function populateSelects(){
+  const fs = document.getElementById("fundSelect");
+  fs.innerHTML = FUNDS.map(f=>`<option value="${f}">${f}</option>`).join("");
+  fs.value = state.fund;
+  const ms = document.getElementById("monthSelect");
+  ms.innerHTML = MONTHS.map((m,i)=>`<option value="${i+1}">${m}/2026</option>`).join("");
+  ms.value = state.month;
+}
+
+function renderKpis(row){
+  const kpis = [
+    {label:"Patrimônio Líquido", value: fmtBRL(row.pl)},
+    {label:"Volume em DC (total)", value: fmtBRL(row.volume_dc_total)},
+    {label:"Ativos de Liquidez | RF", value: fmtBRL(row.ativos_liquidez_rf_zeragem)},
+    {label:"Saldo em Tesouraria", value: fmtBRL(row.saldo_tesouraria)},
+    {label:"Captações Líquidas (mês)", value: fmtBRL(row.mov_captacoes_liquidas), delta: row.mov_captacoes_liquidas>=0},
+    {label:"Prazo Médio DC (dias úteis)", value: (row.prazo_medio_dc_dias_uteis||0).toLocaleString("pt-BR",{maximumFractionDigits:0}) + "d"},
+  ];
+  document.getElementById("kpiRow").innerHTML = kpis.map(k=>`
+    <div class="rcv-card kpi">
+      <div class="kpi__label">${k.label}</div>
+      <div class="kpi__value">${k.value}</div>
+    </div>`).join("");
+}
+
+function renderSubordinacao(row, history){
+  const idx = row.indice_subordinacao||0, min = row.min_subordination||0;
+  const margin = idx - min;
+  let level = "baixo";
+  if(margin < 0) level = "critico";
+  else if(margin < min*0.2) level = "moderado";
+  document.getElementById("subBadge").outerHTML = riskBadge(level).replace('class="rcv-badge','id="subBadge" class="rcv-badge');
+  document.getElementById("subValue").textContent = fmtPct(idx,1);
+  document.getElementById("subMin").textContent = "mínimo regulamentar: " + fmtPct(min,1);
+  const pct = Math.min(100, (idx/(Math.max(idx,min)*1.4))*100);
+  const markPct = Math.min(100,(min/(Math.max(idx,min)*1.4))*100);
+  const fill = document.getElementById("subFill");
+  fill.style.width = pct+"%";
+  fill.style.background = level==="critico" ? "var(--risk-critico)" : level==="moderado" ? "var(--risk-moderado)" : "var(--risk-baixo)";
+  document.getElementById("subMark").style.left = markPct+"%";
+
+  // trend svg
+  const w=560,h=120,pad=8;
+  const vals = history.map(h=>h.indice_subordinacao||0);
+  const mins = history.map(h=>h.min_subordination||0);
+  const allv = vals.concat(mins);
+  const vmax = Math.max(...allv)*1.15, vmin = Math.min(0, Math.min(...allv)*0.9);
+  const x = i => pad + i*((w-2*pad)/(history.length-1||1));
+  const y = v => h-pad - ((v-vmin)/(vmax-vmin||1))*(h-2*pad);
+  const linePts = vals.map((v,i)=>`${x(i)},${y(v)}`).join(" ");
+  const minPts = mins.map((v,i)=>`${x(i)},${y(v)}`).join(" ");
+  const dots = vals.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="var(--surface-brand)"/>`).join("");
+  document.getElementById("subTrend").innerHTML = `
+    <polyline points="${minPts}" fill="none" stroke="var(--text-subtle)" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <polyline points="${linePts}" fill="none" stroke="var(--surface-brand)" stroke-width="2.5"/>
+    ${dots}`;
+}
+
+function renderInadimplencia(row){
+  document.getElementById("pddPl").textContent = fmtPct(row.indice_pdd_sobre_pl,2);
+  document.getElementById("vencDc").textContent = fmtPct(row.vencidos_pct_dc,2);
+
+  const faixas = [
+    {label:"Até 5 dias", val: row.faixa_vencidos_ate_5d, color:"var(--series-1)"},
+    {label:"6–30 dias", val: row.faixa_vencidos_6_30d, color:"var(--series-2)"},
+    {label:"31–60 dias", val: row.faixa_vencidos_31_60d, color:"var(--series-3)"},
+    {label:"61–90 dias", val: row.faixa_vencidos_61_90d, color:"var(--series-4)"},
+    {label:"91–120 dias", val: row.faixa_vencidos_91_120d, color:"var(--series-5)"},
+    {label:"Acima de 120 dias", val: row.faixa_vencidos_acima_120d, color:"var(--risk-critico)"},
+  ];
+  const total = faixas.reduce((a,f)=>a+(f.val||0),0) || 1;
+  document.getElementById("faixaStack").innerHTML = faixas.map(f=>{
+    const pct = ((f.val||0)/total)*100;
+    return pct>0.3 ? `<div class="faixa-seg" style="width:${pct}%;background:${f.color}" title="${f.label}: ${fmtBRL(f.val)}"></div>` : "";
+  }).join("");
+  document.getElementById("faixaLegend").innerHTML = faixas.map(f=>
+    `<div><span class="dot" style="background:${f.color}"></span>${f.label} — ${fmtBRL(f.val)}</div>`
+  ).join("");
+}
+
+function renderBuckets(row){
+  const buckets = [
+    {label:"≤5d", val: row.prev_liq_ate_5d},
+    {label:"6-30d", val: row.prev_liq_6_30d},
+    {label:"31-60d", val: row.prev_liq_31_60d},
+    {label:"61-90d", val: row.prev_liq_61_90d},
+    {label:"91-120d", val: row.prev_liq_91_120d},
+    {label:"121-180d", val: row.prev_liq_121_180d},
+    {label:"181-240d", val: row.prev_liq_181_240d},
+    {label:"241-300d", val: row.prev_liq_241_300d},
+    {label:"301-365d", val: row.prev_liq_301_365d},
+    {label:">365d", val: row.prev_liq_acima_365d},
+  ];
+  const max = Math.max(...buckets.map(b=>b.val||0), 1);
+  document.getElementById("bucketBar").innerHTML = buckets.map(b=>{
+    const h = Math.max(2, ((b.val||0)/max)*110);
+    return `<div class="bucket-col">
+      <div style="font-size:10px;color:var(--text-muted);font-family:var(--font-mono)">${fmtBRL(b.val).replace('R$','').trim().length>7?((b.val||0)/1e6).toFixed(1)+'M':fmtBRL(b.val)}</div>
+      <div class="bucket-col__bar" style="height:${h}px"></div>
+      <div class="bucket-col__label">${b.label}</div>
+    </div>`;
+  }).join("");
+}
+
+function concentrationBlock(row, prefix){
+  const items = [
+    {label:"Top 1", val: row[prefix+"_top1"]},
+    {label:"Top 5", val: row[prefix+"_top5"]},
+    {label:"Top 10", val: row[prefix+"_top10"]},
+    {label:"Top 15", val: row[prefix+"_top15"]},
+  ];
+  return items.map(it=>{
+    const pct = Math.min(100,(it.val||0)*100);
+    const level = pct<10?"baixo":pct<25?"moderado":"alto";
+    return `<div class="conc-row">
+      <div class="conc-row__label">${it.label}</div>
+      <div class="rcv-meter" style="flex:1"><div class="rcv-meter__track"><div class="rcv-meter__fill" style="width:${pct}%;background:var(--risk-${level})"></div></div></div>
+      <div class="conc-row__val">${fmtPct(it.val,1)}</div>
+    </div>`;
+  }).join("");
+}
+
+function renderTable(id, rows){
+  document.getElementById(id).querySelector("tbody").innerHTML = rows.map(r=>
+    `<tr><td>${r[0]}</td><td class="num">${r[1]}</td></tr>`
+  ).join("");
+}
+
+function render(){
+  const row = findRow(state.fund, state.month);
+  const history = fundHistory(state.fund).filter(h=>h.month<=state.month);
+  if(!row) return;
+
+  renderKpis(row);
+  renderSubordinacao(row, history.length?history:fundHistory(state.fund));
+  renderInadimplencia(row);
+  renderBuckets(row);
+  document.getElementById("concCedentes").innerHTML = concentrationBlock(row, "conc_cedentes");
+  document.getElementById("concSacados").innerHTML = concentrationBlock(row, "conc_sacados");
+
+  renderTable("despesasTable", [
+    ["Taxa de Administração", fmtBRL(row.despesa_taxa_administracao)],
+    ["Taxa de Custódia", fmtBRL(row.despesa_taxa_custodia)],
+    ["Taxa de Gestão", fmtBRL(row.despesa_taxa_gestao)],
+    ["SELIC/ANBID/CETIP/BOVESPA/ANBIMA", fmtBRL(row.despesa_selic_anbid_cetip_bovespa_anbima)],
+    ["Resgate/Amortização/IOF", fmtBRL(row.despesa_resgate_amortizacao_iof)],
+    ["Outras despesas", fmtBRL(row.despesa_outras)],
+  ]);
+  renderTable("movTable", [
+    ["Entradas", fmtBRL(row.mov_entradas)],
+    ["Saídas", fmtBRL(row.mov_saidas)],
+    ["Captações líquidas", fmtBRL(row.mov_captacoes_liquidas)],
+    ["Baixa por depósito cedente", fmtBRL(row.baixa_deposito_cedente)],
+    ["Baixa por recompra", fmtBRL(row.baixa_recompra)],
+    ["Índice de recompra / PL", fmtPct(row.indice_recompra_pct_pl,2)],
+  ]);
+
+  const note = document.getElementById("personaNote");
+  if(state.persona==="compliance"){
+    note.innerHTML = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Modo compliance: visualização somente leitura. Importação de arquivos disponível apenas para o time de risco.`;
+  } else {
+    note.innerHTML = "";
+  }
+  document.getElementById("importBtn").classList.toggle("imp-hidden", state.persona==="compliance");
+}
+
+document.getElementById("fundSelect").addEventListener("change", e=>{ state.fund=e.target.value; render(); });
+document.getElementById("monthSelect").addEventListener("change", e=>{ state.month=parseInt(e.target.value); render(); });
+document.getElementById("personaSeg").addEventListener("click", e=>{
+  const btn = e.target.closest("button[data-persona]");
+  if(!btn) return;
+  state.persona = btn.dataset.persona;
+  [...document.querySelectorAll("#personaSeg button")].forEach(b=>b.setAttribute("aria-selected", b===btn?"true":"false"));
+  render();
+});
+document.getElementById("themeToggle").addEventListener("click", ()=>{
+  state.theme = state.theme==="light" ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", state.theme);
+});
+
+populateSelects();
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+:root{
+/* Base 4px. Densidade equilibrada: linhas de tabela usam --space-3, cards --space-5. */
+--space-0:0px;--space-05:2px;--space-1:4px;--space-2:6px;--space-3:8px;--space-4:12px;--space-5:16px;--space-6:20px;--space-7:24px;--space-8:32px;--space-9:40px;--space-10:48px;--space-12:64px;--space-14:80px;
+--layout-sidenav:248px;--layout-sidenav-collapsed:64px;--layout-topbar:56px;--layout-gutter:24px;--layout-gutter-mobile:16px;--layout-max:1600px;
+--row-height:40px;--row-height-dense:32px;--control-height:36px;--control-height-sm:28px;--control-height-lg:44px;--touch-target:44px;
+}

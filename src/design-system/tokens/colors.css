@@ -1,0 +1,16 @@
+:root{
+/* Verde Cofre — cor institucional (600 = marca) */
+--teal-25:#F2F7F6;--teal-50:#E4EFED;--teal-100:#C6DCD9;--teal-200:#9DC2BE;--teal-300:#6FA5A0;--teal-400:#44837E;--teal-500:#1F615E;--teal-600:#0F3D3E;--teal-700:#0C3233;--teal-800:#092728;--teal-900:#061B1C;
+/* Neutros — cinza levemente esverdeado, para tabelas densas */
+--neutral-0:#FFFFFF;--neutral-25:#FAFBFB;--neutral-50:#F4F6F6;--neutral-100:#E9ECEC;--neutral-200:#D8DDDD;--neutral-300:#BCC4C4;--neutral-400:#94A0A0;--neutral-500:#6E7C7C;--neutral-600:#556262;--neutral-700:#3E4A4A;--neutral-800:#283131;--neutral-900:#18201F;--neutral-950:#0D1413;
+/* Areia — destaque sóbrio, uso pontual (selos, marcadores de relatório) */
+--sand-50:#FBF7F0;--sand-100:#F5EEE1;--sand-300:#DCC79B;--sand-500:#B4884A;--sand-700:#7E5C2C;
+/* Semânticos primitivos */
+--green-50:#E3F2EC;--green-500:#1B9670;--green-600:#15795A;--green-700:#0F5A43;
+--amber-50:#FDF0DA;--amber-500:#D89412;--amber-600:#B27508;--amber-700:#8A5A06;
+--orange-50:#FBEADF;--orange-500:#E2691A;--orange-600:#C2540C;--orange-700:#93400A;
+--red-50:#FBE9EA;--red-500:#CC2A3A;--red-600:#A81F2D;--red-700:#801722;
+--blue-50:#E6EFF7;--blue-500:#2276B5;--blue-600:#1B5E8F;--blue-700:#14466B;
+/* Séries de gráfico — ordem fixa de plotagem */
+--series-1:#0F3D3E;--series-2:#44837E;--series-3:#B4884A;--series-4:#1B5E8F;--series-5:#A81F2D;--series-6:#94A0A0;
+}

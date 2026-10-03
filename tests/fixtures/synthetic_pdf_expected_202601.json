@@ -1,0 +1,1498 @@
+{
+  "filename": "Liquidez_FIDC_202601_portal.pdf",
+  "pages": 2,
+  "texts": [
+    "RISCO CVPAR  /  RELATÓRIO MENSAL FIDC",
+    "Synthetic 1",
+    "CNPJ 00000000000001  |  2026-01  |  Base do portal  |  cvpar_fidc_mensal@2026.2",
+    "ATENÇÃO: inclui parâmetro local simulado; não salvo no banco.",
+    "RISCO CVPAR  /  RELATÓRIO MENSAL FIDC",
+    "Synthetic 2",
+    "CNPJ 00000000000002  |  2026-01  |  Base do portal  |  cvpar_fidc_mensal@2026.2",
+    "ATENÇÃO: inclui parâmetro local simulado; não salvo no banco.",
+    "Fonte: Informe Mensal CVM. Liquidez contábil e vencimentos não comprovam cobertura de resgates.",
+    "1 / 2",
+    "Fonte: Informe Mensal CVM. Liquidez contábil e vencimentos não comprovam cobertura de resgates.",
+    "2 / 2"
+  ],
+  "tables": [
+    {
+      "head": [
+        [
+          "Indicador",
+          "Valor",
+          "Qualidade",
+          "Origem / ressalva"
+        ]
+      ],
+      "body": [
+        [
+          {
+            "content": "DESPESAS E CPR",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Taxa de administração",
+          "-R$ 10,00",
+          "Aproximado",
+          "Posição de despesa a pagar; confirmar competência do fluxo mensal."
+        ],
+        [
+          "Taxa de custódia",
+          "-R$ 2,00",
+          "Aproximado",
+          "Carteira diária"
+        ],
+        [
+          "Taxa de gestão",
+          "-R$ 4,00",
+          "Aproximado",
+          "Carteira diária"
+        ],
+        [
+          "Outras despesas",
+          "-R$ 3,00",
+          "Aproximado",
+          "Net Report por natureza"
+        ],
+        [
+          "CPR residual do informe",
+          "R$ 15,00",
+          "Aproximado",
+          "Saldo residual de outros ativos/derivativos/passivo; não é a abertura de despesas por natureza."
+        ],
+        [
+          {
+            "content": "MOVIMENTAÇÃO",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Entradas / captações",
+          "R$ 100,00",
+          "Apurado",
+          "CVM · TAB_X_4 Captações no Mês"
+        ],
+        [
+          "Saídas / resgates e amortizações",
+          "-R$ 25,00",
+          "Aproximado",
+          "O informe pode omitir saídas da lâmina da administradora."
+        ],
+        [
+          "Movimentação líquida",
+          "R$ 75,00",
+          "Aproximado",
+          "Conferir lançamentos da lâmina fora do informe."
+        ],
+        [
+          {
+            "content": "ALOCAÇÃO DE ATIVOS",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Patrimônio líquido",
+          "R$ 3.000,00",
+          "Apurado",
+          "CVM · TAB_IV_A_VL_PL"
+        ],
+        [
+          "DC total bruto",
+          "R$ 1.553,00",
+          "Aproximado",
+          "Composição do relatório CVPAR observada; validar inclusão de cotas FIDC/outros valores para outras gestoras."
+        ],
+        [
+          "DC direto bruto",
+          "R$ 1.515,00",
+          "Apurado",
+          "CVM · TAB_I2A + TAB_I2B + reversão PDD"
+        ],
+        [
+          "Cotas FIDC",
+          "R$ 24,00",
+          "Apurado",
+          "CVM · TAB_I2H + TAB_I2I"
+        ],
+        [
+          "Outros VM de crédito",
+          "R$ 14,00",
+          "Apurado",
+          "CVM · TAB_I2C1…C4 + TAB_I2C6"
+        ],
+        [
+          "DC a vencer · estimativa",
+          "R$ 1.517,00",
+          "Aproximado",
+          "A base de vencidos pode divergir da posição da administradora."
+        ],
+        [
+          "DC vencidos",
+          "R$ 36,00",
+          "Aproximado",
+          "Total agregado; a base de vencidos da administradora pode divergir."
+        ],
+        [
+          "PDD",
+          "-R$ 15,00",
+          "Apurado",
+          "CVM · TAB_I2A11 + TAB_I2B11"
+        ],
+        [
+          "Títulos públicos / compromissadas",
+          "R$ 110,00",
+          "Apurado",
+          "CVM · TAB_I2D + TAB_I2F"
+        ],
+        [
+          "Cotas de FIF / liquidez",
+          "R$ 50,00",
+          "Apurado",
+          "CVM · TAB_I2C5"
+        ],
+        [
+          "Tesouraria",
+          "R$ 25,00",
+          "Apurado",
+          "CVM · TAB_I1"
+        ],
+        [
+          {
+            "content": "INDICADORES DE ALOCAÇÃO",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "DC bruto / PL",
+          "51,77%",
+          "Aproximado",
+          "Derivado · DC bruto / PL"
+        ],
+        [
+          "PDD / PL",
+          "-0,5%",
+          "Aproximado",
+          "Derivado · PDD / PL"
+        ],
+        [
+          "DC líquido de PDD / PL · fórmula corrigida",
+          "51,27%",
+          "Aproximado",
+          "A fórmula do Excel em julho divide DC bruto pelo PL e não desconta a PDD."
+        ],
+        [
+          "Liquidez imediata contábil",
+          "R$ 185,00",
+          "Aproximado",
+          "Disponibilidade contábil, sujeita a prazo de resgate e negociação."
+        ],
+        [
+          "Liquidez imediata + DC <= 30 d / PL",
+          "6,27%",
+          "Aproximado",
+          "Não é índice de cobertura de resgates ou projeção de caixa disponível."
+        ],
+        [
+          {
+            "content": "PRAZO E AQUISIÇÕES",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Prazo médio estimado · dias corridos",
+          "500,5 dias",
+          "Aproximado",
+          "Faixa >1080 dias usa 1080 como limite inferior; não substitui cálculo título a título."
+        ],
+        [
+          "Prazo médio estimado · dias úteis",
+          "345,5 dias",
+          "Aproximado",
+          "Conversão aproximada; não usa calendário de feriados."
+        ],
+        [
+          "Aquisições com e sem risco",
+          "R$ 300,00",
+          "Apurado",
+          "Aquisições com e sem aquisição substancial de risco."
+        ],
+        [
+          "Quantidade de aquisições",
+          "12",
+          "Apurado",
+          "CVM · TAB_VII_A1_1 + TAB_VII_A2_1"
+        ],
+        [
+          "Taxa de cessão estimada · a.a.",
+          "14%",
+          "Aproximado",
+          "Exclui taxas ausentes e fora de (0; 300]% a.a.; não equivale à taxa contrato a contrato."
+        ],
+        [
+          {
+            "content": "INADIMPLÊNCIA",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Vencidos / DC",
+          "2,32%",
+          "Aproximado",
+          "Derivado · vencidos CVM / DC bruto"
+        ],
+        [
+          "Vencidos / PL",
+          "1,2%",
+          "Aproximado",
+          "Derivado · vencidos CVM / PL"
+        ],
+        [
+          "Vencidos > 90 dias",
+          "R$ 21,00",
+          "Apurado",
+          "CVM · TAB_V/VI_B4…B10"
+        ],
+        [
+          "Vencidos > 120 dias",
+          "R$ 18,00",
+          "Apurado",
+          "CVM · TAB_V/VI_B5…B10"
+        ],
+        [
+          {
+            "content": "FAIXAS DE VENCIDOS",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Vencidos até 5 dias",
+          "n/d",
+          "Indisponível",
+          "Estoque individual não disponível no informe"
+        ],
+        [
+          "Vencidos de 6 a 30 dias",
+          "n/d",
+          "Indisponível",
+          "Informe agrega em até 30 dias"
+        ],
+        [
+          "CVM · Até 30 dias",
+          "R$ 3,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 31-60 dias",
+          "R$ 3,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 61-90 dias",
+          "R$ 3,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 91-120 dias",
+          "R$ 3,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 121-150 dias",
+          "R$ 3,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 151-180 dias",
+          "R$ 3,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 181-360 dias",
+          "R$ 3,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 361-720 dias",
+          "R$ 3,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 721-1080 dias",
+          "R$ 3,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · >1080 dias",
+          "R$ 3,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          {
+            "content": "VENCIMENTOS",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "DC a vencer <= 30 dias",
+          "R$ 3,00",
+          "Aproximado",
+          "Faixa de vencimento dos DC, não fluxo de caixa projetado."
+        ],
+        [
+          "DC a vencer <= 90 dias",
+          "R$ 18,00",
+          "Aproximado",
+          "Soma das faixas de vencimento, sem ajuste para atraso e pré-pagamento."
+        ],
+        [
+          {
+            "content": "VENCIMENTO CONTRATUAL DOS DC · CVM",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Previsão de caixa até 5 dias",
+          "n/d",
+          "Indisponível",
+          "Estoque e cronograma de recebimento"
+        ],
+        [
+          "Previsão de caixa de 6-30 dias",
+          "n/d",
+          "Indisponível",
+          "Informe só mostra até 30 dias agregado"
+        ],
+        [
+          "DC a vencer · Até 30 dias",
+          "R$ 3,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 31-60 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 61-90 dias",
+          "R$ 9,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 91-120 dias",
+          "R$ 12,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 121-150 dias",
+          "R$ 15,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 151-180 dias",
+          "R$ 18,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 181-360 dias",
+          "R$ 21,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 361-720 dias",
+          "R$ 24,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 721-1080 dias",
+          "R$ 27,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · >1080 dias",
+          "R$ 30,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          {
+            "content": "CONCENTRAÇÃO",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Maior cedente listado",
+          "22%",
+          "Aproximado",
+          "A lista da CVM contém até 9 cedentes por grupo e pode estar incompleta."
+        ],
+        [
+          "Top 5/10/15 cedentes",
+          "n/d",
+          "Indisponível",
+          "Estoque completo por cedente"
+        ],
+        [
+          "Maior sacado / PL",
+          "2,67%",
+          "Aproximado",
+          "A TAB_VIII lista até 25 devedores; conferir consolidação por CPF/CNPJ no estoque."
+        ],
+        [
+          "Top 5 sacados / PL",
+          "5%",
+          "Aproximado",
+          "CVM · cinco maiores VALOR da TAB_VIII / PL"
+        ],
+        [
+          "Top 10 sacados / PL",
+          "5%",
+          "Aproximado",
+          "Se a lista tiver menos de dez registros, o valor é apenas o total dos registros informados."
+        ],
+        [
+          "Top 15 sacados / PL",
+          "5%",
+          "Aproximado",
+          "Se a lista tiver menos de quinze registros, o valor é apenas o total dos registros informados."
+        ],
+        [
+          {
+            "content": "RECOMPRA",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Recompra agregada CVM",
+          "R$ 7,00",
+          "Aproximado",
+          "Recompra agregada; não substitui a apuração por títulos liquidados."
+        ],
+        [
+          "Recompra / liquidados",
+          "n/d",
+          "Indisponível",
+          "Arquivo de títulos liquidados do Portal FIDC"
+        ],
+        [
+          "Baixa por depósito do cedente",
+          "n/d",
+          "Indisponível",
+          "Arquivo de títulos liquidados do Portal FIDC"
+        ],
+        [
+          {
+            "content": "SUBORDINAÇÃO",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Cotas seniores",
+          "R$ 2.000,00",
+          "Apurado",
+          "CVM · TAB_X_2 quantidade x valor da cota, subclasses sênior"
+        ],
+        [
+          "Cotas mezanino",
+          "R$ 500,00",
+          "Apurado",
+          "CVM · TAB_X_2 quantidade x valor da cota, subclasses mezanino"
+        ],
+        [
+          "Cotas subordinadas",
+          "R$ 500,00",
+          "Apurado",
+          "CVM · TAB_X_2 quantidade x valor da cota, subclasses subordinada júnior"
+        ],
+        [
+          "Índice apurado",
+          "33,33%",
+          "Aproximado",
+          "Inclui mezanino conforme configuração; conferir regulamento e base exata."
+        ],
+        [
+          "Mínimo parametrizado",
+          "5%",
+          "Aproximado",
+          "Confirmar vigência do regulamento e regra por classe antes de tratar como limite oficial."
+        ],
+        [
+          "Folga indicativa",
+          "28,33%",
+          "Aproximado",
+          "Diferença indicativa, sem decisão automática de enquadramento."
+        ],
+        [
+          {
+            "content": "LACUNAS DA FONTE",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          {
+            "content": "Estoque individual por título: necessário para prazo médio, faixas até 5 dias, 6-30 dias e previsão de liquidação CVPAR.",
+            "colSpan": 4
+          }
+        ],
+        [
+          {
+            "content": "Títulos liquidados/recomprados: necessário para indicadores de recompra.",
+            "colSpan": 4
+          }
+        ],
+        [
+          {
+            "content": "Base de cedentes completa: Informe lista no máximo 9 por grupo; Top 5/10/15 não é fechado sem estoque.",
+            "colSpan": 4
+          }
+        ],
+        [
+          {
+            "content": "Base de sacados: TAB_VIII lista até 25 valores, sem identificador; confirmar consolidação por devedor no estoque.",
+            "colSpan": 4
+          }
+        ],
+        [
+          {
+            "content": "Cronograma de amortização/resgate, passivo de cotistas e premissas de mercado: necessários para cobertura e stress de liquidez.",
+            "colSpan": 4
+          }
+        ],
+        [
+          {
+            "content": "Regulamento vigente por fundo/classe: necessário para limite mínimo de subordinação.",
+            "colSpan": 4
+          }
+        ]
+      ]
+    },
+    {
+      "head": [
+        [
+          "Indicador",
+          "Valor",
+          "Qualidade",
+          "Origem / ressalva"
+        ]
+      ],
+      "body": [
+        [
+          {
+            "content": "DESPESAS E CPR",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Taxa de administração",
+          "-R$ 20,00",
+          "Aproximado",
+          "Posição de despesa a pagar; confirmar competência do fluxo mensal."
+        ],
+        [
+          "Taxa de custódia",
+          "-R$ 4,00",
+          "Aproximado",
+          "Carteira diária"
+        ],
+        [
+          "Taxa de gestão",
+          "-R$ 8,00",
+          "Aproximado",
+          "Carteira diária"
+        ],
+        [
+          "Outras despesas",
+          "-R$ 6,00",
+          "Aproximado",
+          "Net Report por natureza"
+        ],
+        [
+          "CPR residual do informe",
+          "R$ 30,00",
+          "Aproximado",
+          "Saldo residual de outros ativos/derivativos/passivo; não é a abertura de despesas por natureza."
+        ],
+        [
+          {
+            "content": "MOVIMENTAÇÃO",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Entradas / captações",
+          "R$ 200,00",
+          "Apurado",
+          "CVM · TAB_X_4 Captações no Mês"
+        ],
+        [
+          "Saídas / resgates e amortizações",
+          "-R$ 50,00",
+          "Aproximado",
+          "O informe pode omitir saídas da lâmina da administradora."
+        ],
+        [
+          "Movimentação líquida",
+          "R$ 150,00",
+          "Aproximado",
+          "Conferir lançamentos da lâmina fora do informe."
+        ],
+        [
+          {
+            "content": "ALOCAÇÃO DE ATIVOS",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Patrimônio líquido",
+          "R$ 6.000,00",
+          "Apurado",
+          "CVM · TAB_IV_A_VL_PL"
+        ],
+        [
+          "DC total bruto",
+          "R$ 3.106,00",
+          "Aproximado",
+          "Composição do relatório CVPAR observada; validar inclusão de cotas FIDC/outros valores para outras gestoras."
+        ],
+        [
+          "DC direto bruto",
+          "R$ 3.030,00",
+          "Apurado",
+          "CVM · TAB_I2A + TAB_I2B + reversão PDD"
+        ],
+        [
+          "Cotas FIDC",
+          "R$ 48,00",
+          "Apurado",
+          "CVM · TAB_I2H + TAB_I2I"
+        ],
+        [
+          "Outros VM de crédito",
+          "R$ 28,00",
+          "Apurado",
+          "CVM · TAB_I2C1…C4 + TAB_I2C6"
+        ],
+        [
+          "DC a vencer · estimativa",
+          "R$ 3.034,00",
+          "Aproximado",
+          "A base de vencidos pode divergir da posição da administradora."
+        ],
+        [
+          "DC vencidos",
+          "R$ 72,00",
+          "Aproximado",
+          "Total agregado; a base de vencidos da administradora pode divergir."
+        ],
+        [
+          "PDD",
+          "-R$ 30,00",
+          "Apurado",
+          "CVM · TAB_I2A11 + TAB_I2B11"
+        ],
+        [
+          "Títulos públicos / compromissadas",
+          "R$ 220,00",
+          "Apurado",
+          "CVM · TAB_I2D + TAB_I2F"
+        ],
+        [
+          "Cotas de FIF / liquidez",
+          "R$ 100,00",
+          "Apurado",
+          "CVM · TAB_I2C5"
+        ],
+        [
+          "Tesouraria",
+          "R$ 50,00",
+          "Apurado",
+          "CVM · TAB_I1"
+        ],
+        [
+          {
+            "content": "INDICADORES DE ALOCAÇÃO",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "DC bruto / PL",
+          "51,77%",
+          "Aproximado",
+          "Derivado · DC bruto / PL"
+        ],
+        [
+          "PDD / PL",
+          "-0,5%",
+          "Aproximado",
+          "Derivado · PDD / PL"
+        ],
+        [
+          "DC líquido de PDD / PL · fórmula corrigida",
+          "51,27%",
+          "Aproximado",
+          "A fórmula do Excel em julho divide DC bruto pelo PL e não desconta a PDD."
+        ],
+        [
+          "Liquidez imediata contábil",
+          "R$ 370,00",
+          "Aproximado",
+          "Disponibilidade contábil, sujeita a prazo de resgate e negociação."
+        ],
+        [
+          "Liquidez imediata + DC <= 30 d / PL",
+          "6,27%",
+          "Aproximado",
+          "Não é índice de cobertura de resgates ou projeção de caixa disponível."
+        ],
+        [
+          {
+            "content": "PRAZO E AQUISIÇÕES",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Prazo médio estimado · dias corridos",
+          "500,5 dias",
+          "Aproximado",
+          "Faixa >1080 dias usa 1080 como limite inferior; não substitui cálculo título a título."
+        ],
+        [
+          "Prazo médio estimado · dias úteis",
+          "345,5 dias",
+          "Aproximado",
+          "Conversão aproximada; não usa calendário de feriados."
+        ],
+        [
+          "Aquisições com e sem risco",
+          "R$ 600,00",
+          "Apurado",
+          "Aquisições com e sem aquisição substancial de risco."
+        ],
+        [
+          "Quantidade de aquisições",
+          "24",
+          "Apurado",
+          "CVM · TAB_VII_A1_1 + TAB_VII_A2_1"
+        ],
+        [
+          "Taxa de cessão estimada · a.a.",
+          "14%",
+          "Aproximado",
+          "Exclui taxas ausentes e fora de (0; 300]% a.a.; não equivale à taxa contrato a contrato."
+        ],
+        [
+          {
+            "content": "INADIMPLÊNCIA",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Vencidos / DC",
+          "2,32%",
+          "Aproximado",
+          "Derivado · vencidos CVM / DC bruto"
+        ],
+        [
+          "Vencidos / PL",
+          "1,2%",
+          "Aproximado",
+          "Derivado · vencidos CVM / PL"
+        ],
+        [
+          "Vencidos > 90 dias",
+          "R$ 42,00",
+          "Apurado",
+          "CVM · TAB_V/VI_B4…B10"
+        ],
+        [
+          "Vencidos > 120 dias",
+          "R$ 36,00",
+          "Apurado",
+          "CVM · TAB_V/VI_B5…B10"
+        ],
+        [
+          {
+            "content": "FAIXAS DE VENCIDOS",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Vencidos até 5 dias",
+          "n/d",
+          "Indisponível",
+          "Estoque individual não disponível no informe"
+        ],
+        [
+          "Vencidos de 6 a 30 dias",
+          "n/d",
+          "Indisponível",
+          "Informe agrega em até 30 dias"
+        ],
+        [
+          "CVM · Até 30 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 31-60 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 61-90 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 91-120 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 121-150 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 151-180 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 181-360 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 361-720 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · 721-1080 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          "CVM · >1080 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Faixa agregada do informe."
+        ],
+        [
+          {
+            "content": "VENCIMENTOS",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "DC a vencer <= 30 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Faixa de vencimento dos DC, não fluxo de caixa projetado."
+        ],
+        [
+          "DC a vencer <= 90 dias",
+          "R$ 36,00",
+          "Aproximado",
+          "Soma das faixas de vencimento, sem ajuste para atraso e pré-pagamento."
+        ],
+        [
+          {
+            "content": "VENCIMENTO CONTRATUAL DOS DC · CVM",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Previsão de caixa até 5 dias",
+          "n/d",
+          "Indisponível",
+          "Estoque e cronograma de recebimento"
+        ],
+        [
+          "Previsão de caixa de 6-30 dias",
+          "n/d",
+          "Indisponível",
+          "Informe só mostra até 30 dias agregado"
+        ],
+        [
+          "DC a vencer · Até 30 dias",
+          "R$ 6,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 31-60 dias",
+          "R$ 12,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 61-90 dias",
+          "R$ 18,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 91-120 dias",
+          "R$ 24,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 121-150 dias",
+          "R$ 30,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 151-180 dias",
+          "R$ 36,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 181-360 dias",
+          "R$ 42,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 361-720 dias",
+          "R$ 48,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · 721-1080 dias",
+          "R$ 54,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          "DC a vencer · >1080 dias",
+          "R$ 60,00",
+          "Aproximado",
+          "Vencimento contratual; não é previsão de caixa."
+        ],
+        [
+          {
+            "content": "CONCENTRAÇÃO",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Maior cedente listado",
+          "22%",
+          "Aproximado",
+          "A lista da CVM contém até 9 cedentes por grupo e pode estar incompleta."
+        ],
+        [
+          "Top 5/10/15 cedentes",
+          "n/d",
+          "Indisponível",
+          "Estoque completo por cedente"
+        ],
+        [
+          "Maior sacado / PL",
+          "2,67%",
+          "Aproximado",
+          "A TAB_VIII lista até 25 devedores; conferir consolidação por CPF/CNPJ no estoque."
+        ],
+        [
+          "Top 5 sacados / PL",
+          "5%",
+          "Aproximado",
+          "CVM · cinco maiores VALOR da TAB_VIII / PL"
+        ],
+        [
+          "Top 10 sacados / PL",
+          "5%",
+          "Aproximado",
+          "Se a lista tiver menos de dez registros, o valor é apenas o total dos registros informados."
+        ],
+        [
+          "Top 15 sacados / PL",
+          "5%",
+          "Aproximado",
+          "Se a lista tiver menos de quinze registros, o valor é apenas o total dos registros informados."
+        ],
+        [
+          {
+            "content": "RECOMPRA",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Recompra agregada CVM",
+          "R$ 14,00",
+          "Aproximado",
+          "Recompra agregada; não substitui a apuração por títulos liquidados."
+        ],
+        [
+          "Recompra / liquidados",
+          "n/d",
+          "Indisponível",
+          "Arquivo de títulos liquidados do Portal FIDC"
+        ],
+        [
+          "Baixa por depósito do cedente",
+          "n/d",
+          "Indisponível",
+          "Arquivo de títulos liquidados do Portal FIDC"
+        ],
+        [
+          {
+            "content": "SUBORDINAÇÃO",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          "Cotas seniores",
+          "R$ 4.000,00",
+          "Apurado",
+          "CVM · TAB_X_2 quantidade x valor da cota, subclasses sênior"
+        ],
+        [
+          "Cotas mezanino",
+          "R$ 1.000,00",
+          "Apurado",
+          "CVM · TAB_X_2 quantidade x valor da cota, subclasses mezanino"
+        ],
+        [
+          "Cotas subordinadas",
+          "R$ 1.000,00",
+          "Apurado",
+          "CVM · TAB_X_2 quantidade x valor da cota, subclasses subordinada júnior"
+        ],
+        [
+          "Índice apurado",
+          "33,33%",
+          "Aproximado",
+          "Inclui mezanino conforme configuração; conferir regulamento e base exata."
+        ],
+        [
+          "Mínimo parametrizado",
+          "n/d",
+          "Indisponível",
+          "Confirmar vigência do regulamento e regra por classe antes de tratar como limite oficial."
+        ],
+        [
+          "Folga indicativa",
+          "n/d",
+          "Indisponível",
+          "Diferença indicativa, sem decisão automática de enquadramento."
+        ],
+        [
+          {
+            "content": "LACUNAS DA FONTE",
+            "colSpan": 4,
+            "styles": {
+              "fillColor": [
+                18,
+                93,
+                105
+              ],
+              "textColor": [
+                18,
+                93,
+                105
+              ],
+              "fontStyle": "bold"
+            }
+          }
+        ],
+        [
+          {
+            "content": "Estoque individual por título: necessário para prazo médio, faixas até 5 dias, 6-30 dias e previsão de liquidação CVPAR.",
+            "colSpan": 4
+          }
+        ],
+        [
+          {
+            "content": "Títulos liquidados/recomprados: necessário para indicadores de recompra.",
+            "colSpan": 4
+          }
+        ],
+        [
+          {
+            "content": "Base de cedentes completa: Informe lista no máximo 9 por grupo; Top 5/10/15 não é fechado sem estoque.",
+            "colSpan": 4
+          }
+        ],
+        [
+          {
+            "content": "Base de sacados: TAB_VIII lista até 25 valores, sem identificador; confirmar consolidação por devedor no estoque.",
+            "colSpan": 4
+          }
+        ],
+        [
+          {
+            "content": "Cronograma de amortização/resgate, passivo de cotistas e premissas de mercado: necessários para cobertura e stress de liquidez.",
+            "colSpan": 4
+          }
+        ],
+        [
+          {
+            "content": "Regulamento vigente por fundo/classe: necessário para limite mínimo de subordinação.",
+            "colSpan": 4
+          }
+        ]
+      ]
+    }
+  ]
+}
