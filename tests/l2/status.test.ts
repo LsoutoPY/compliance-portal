@@ -31,4 +31,16 @@ describe("L2 · status da visão geral", () => {
     expect(methodologyStatusForFund("synthetic-fund", "2026-02-01", [assignment, assignment], []).status)
       .toBe("pendente_metodologia");
   });
+  it("só mostra aprovação explícita da execução mais recente", () => {
+    const runs = [run("old", "2026.2", "2026-02-03"), run("new", "2026.2", "2026-02-04")];
+    const approvals = [{ id: "event-1", run_id: "old", decision: "approved" as const, created_at: "2026-02-05" }];
+    expect(methodologyStatusForFund("synthetic-fund", "2026-02-01", [assignment], runs, approvals).status)
+      .toBe("aguardando_revisao");
+    const current = [...approvals, { id: "event-2", run_id: "new", decision: "approved" as const, created_at: "2026-02-06" }];
+    expect(methodologyStatusForFund("synthetic-fund", "2026-02-01", [assignment], runs, current).status)
+      .toBe("aprovado");
+    const returned = [...current, { id: "event-3", run_id: "new", decision: "returned" as const, created_at: "2026-02-07" }];
+    expect(methodologyStatusForFund("synthetic-fund", "2026-02-01", [assignment], runs, returned).status)
+      .toBe("aguardando_revisao");
+  });
 });

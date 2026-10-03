@@ -16,10 +16,18 @@ export interface MethodologyRun {
   result: { gaps?: string[] };
 }
 
+export interface LiquidityReviewEvent {
+  run_id: string;
+  decision: "submitted" | "approved" | "returned";
+  created_at: string;
+  id: string;
+}
+
 export type LiquidityWorkStatus =
   | "pendente_metodologia"
   | "pendente_calculo"
-  | "aguardando_revisao";
+  | "aguardando_revisao"
+  | "aprovado";
 
 export interface FundMethodologyStatus {
   assignment: MethodologyAssignment | null;
@@ -35,6 +43,7 @@ export function methodologyStatusForFund(
   referenceMonth: string,
   assignments: MethodologyAssignment[],
   runs: MethodologyRun[],
+  reviewEvents: LiquidityReviewEvent[] = [],
 ): FundMethodologyStatus {
   const applicable = assignments.filter((item) => item.fund_id === fundId &&
     item.valid_from <= referenceMonth && (item.valid_to === null || item.valid_to >= referenceMonth));
@@ -48,5 +57,11 @@ export function methodologyStatusForFund(
     .sort((a, b) => b.calculated_at.localeCompare(a.calculated_at));
   const run = matching[0] ?? null;
   if (!run) return { assignment, run: null, status: "pendente_calculo", pending: ["Execução ausente para a metodologia vigente."] };
-  return { assignment, run, status: "aguardando_revisao", pending: run.result.gaps ?? [] };
+  const latestDecision = reviewEvents.filter((event) => event.run_id === run.id)
+    .sort((a, b) => b.created_at.localeCompare(a.created_at) || b.id.localeCompare(a.id))[0];
+  return {
+    assignment, run,
+    status: latestDecision?.decision === "approved" ? "aprovado" : "aguardando_revisao",
+    pending: run.result.gaps ?? [],
+  };
 }

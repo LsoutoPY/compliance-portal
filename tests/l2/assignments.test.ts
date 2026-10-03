@@ -11,6 +11,9 @@ describe("L2 · vigência fundo → metodologia", () => {
         create table auth.users (id uuid primary key);
         create table public.funds (id uuid primary key, cnpj_fundo_master text);
         create table public.liquidity_monthly_methodologies (code text, version text, primary key (code, version));
+        create table public.liquidity_monthly_runs (id uuid primary key);
+        insert into auth.users values ('00000000-0000-0000-0000-000000000009');
+        insert into public.liquidity_monthly_runs values ('00000000-0000-0000-0000-000000000010');
         insert into public.funds values
           ('00000000-0000-0000-0000-000000000001', '51864349000102'),
           ('00000000-0000-0000-0000-000000000002', '00000000000002');
@@ -37,6 +40,12 @@ describe("L2 · vigência fundo → metodologia", () => {
           on a.fund_id = f.id and date '2026-07-01' between a.valid_from and coalesce(a.valid_to, 'infinity'::date)
         where a.id is null`);
       expect(unassigned.rows).toEqual([{ cnpj_fundo_master: "00000000000002" }]);
+      const reviewMigration = readFileSync(resolve("supabase/migrations/20261003030000_liquidity_review_events.sql"), "utf8");
+      await pg.exec(reviewMigration.slice(0, reviewMigration.indexOf("alter table public.liquidity_monthly_review_events enable row level security;")));
+      await pg.exec(`insert into public.liquidity_monthly_review_events (run_id, decision, note, actor_id)
+        values ('00000000-0000-0000-0000-000000000010', 'submitted', 'synthetic-review', '00000000-0000-0000-0000-000000000009')`);
+      await expect(pg.exec(`update public.liquidity_monthly_review_events set decision = 'approved'`))
+        .rejects.toThrow("imutável");
     } finally {
       await pg.close();
     }
