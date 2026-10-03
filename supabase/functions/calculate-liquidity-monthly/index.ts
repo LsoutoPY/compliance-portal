@@ -1,5 +1,6 @@
-import { calculateMonthlyFidc, type CvmRow, type CvmTables, type MonthlyMethodology, type PositionEvidence } from "../_shared/liquidity-monthly.ts";
+import { calculateMonthlyFidc, type MonthlyMethodology } from "../_shared/liquidity-monthly.ts";
 import { resolveLiquidityMethodology } from "../_shared/liquidity-methodology.ts";
+import { ManualUploadAdapter } from "../_shared/liquidity-source-adapter.ts";
 import { monthlyCors, monthlyError, requireRiskUser, serviceClient } from "../_shared/monthly-auth.ts";
 
 async function hashInput(value: unknown): Promise<string> {
@@ -57,14 +58,10 @@ Deno.serve(async (req) => {
       .eq("competencia", referenceMonth);
     if (filingError) throw filingError;
     if (!filings?.length) throw new Error("Informe mensal ausente. Use Atualizar dados antes de calcular.");
-    const tables: CvmTables = {};
-    for (const filing of filings) {
-      tables[filing.tabela] = Array.isArray(filing.payload) ? filing.payload as CvmRow[] : [];
-    }
     const lastDate = new Date(Date.UTC(Number(competencia.slice(0, 4)), Number(competencia.slice(5, 7)), 0))
       .toISOString().slice(0, 10);
     const { data: snapshots, error: positionError } = await service.from("liquidity_position_snapshots")
-      .select("id,file_sha256,summary,reference_date,imported_at")
+      .select("id,file_sha256,summary,reference_date,imported_at,file_name,imported_by")
       .eq("cnpj", cnpj)
       .gte("reference_date", referenceMonth)
       .lte("reference_date", lastDate)
@@ -73,7 +70,7 @@ Deno.serve(async (req) => {
       .limit(1);
     if (positionError) throw positionError;
     const snapshot = snapshots?.[0] ?? null;
-    const position = snapshot?.summary as PositionEvidence | null;
+    const { tables, position } = ManualUploadAdapter.fromRecords(filings, snapshot);
     const registered = resolveLiquidityMethodology(methodology.code, methodology.version);
     const result = registered
       ? registered.compute({ tables, referenceMonth, cnpj, position, minimumSubordination: fund.min_subordination_index }, methodology)

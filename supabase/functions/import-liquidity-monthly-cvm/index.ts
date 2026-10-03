@@ -18,7 +18,7 @@ Deno.serve(withCors(async (req) => {
   let ingestLogId: string | null = null;
   const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
   try {
-    await requireRiskUser(req);
+    const userId = await requireRiskUser(req);
     const multipart = req.headers.get("content-type")?.includes("multipart/form-data") ?? false;
     const form = multipart ? await req.formData() : null;
     const input = multipart ? null : await req.json();
@@ -46,7 +46,7 @@ Deno.serve(withCors(async (req) => {
     const sourceOrigin = uploadedFile instanceof File ? `upload:${uploadedFile.name}` : url;
     const { data: syncLog, error: syncLogError } = await supabase
       .from("registry_sync_log")
-      .insert({ dataset: "cvm_inf_mensal_fidc", source_url: sourceOrigin, status: "running" })
+      .insert({ dataset: "cvm_inf_mensal_fidc", source_url: sourceOrigin, status: "running", initiated_by: userId })
       .select()
       .single();
     if (syncLogError || !syncLog) throw syncLogError ?? new Error("Falha ao criar log de importação.");
