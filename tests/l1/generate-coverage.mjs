@@ -4,7 +4,10 @@ import { resolve } from "node:path";
 import { loadReportRows } from "./support.ts";
 
 const rows = loadReportRows();
-const edge = (row) => {
+const independent = new Set(["pl", "pdd", "creditGross", "overdue", "redemptions", "subordination",
+  "debtorTop5", "averageMaturityCalendarDays", "cessionRateAnnual", "subordinationHeadroom"]);
+const edge = (row, index) => {
+  if ([6, 32, 65].includes(index)) return "borda da linha (report-row-edges.test.ts)";
   if (!row.key && !row.bucket) return "lacuna (coverage.test.ts)";
   if (row.bucket) return "faixas/prazo (motor.test.ts)";
   const key = row.key;
@@ -20,11 +23,11 @@ const edge = (row) => {
 const lines = [
   "# L1 — Matriz de cobertura das 74 linhas",
   "",
-  "`G4` = quatro snapshots exatos de `motor.test.ts`; `R` = renderização e contagem de `report-ui.test.tsx`; `P` = 74 linhas por fundo e nomes no `pdf.test.ts`; `E` = teste adicional de borda indicado. `coverage.test.ts` confere todas as identidades e os campos dos JSONs. As sete lacunas têm `n/d` com ressalva, sem cálculo inventado.",
+  "`G4` = quatro snapshots exatos de `motor.test.ts`; `I` = fórmula independente em `independent-formulas.test.ts` (quatro casos); `R` = renderização e contagem de `report-ui.test.tsx`; `P` = 74 linhas por fundo e nomes no `pdf.test.ts`; `E` = teste adicional de borda indicado. `coverage.test.ts` confere todas as identidades e os campos dos JSONs. As sete lacunas têm `n/d` com ressalva, sem cálculo inventado.",
   "",
-  "| # | Seção | Indicador | Tipo | G4 | R | P | E |",
-  "|---:|---|---|---|:---:|:---:|:---:|---|",
+  "| # | Seção | Indicador | Tipo | G4 | I | R | P | E |",
+  "|---:|---|---|---|:---:|:---:|:---:|:---:|---|",
 ];
-rows.forEach((row, index) => lines.push(`| ${index + 1} | ${row.section} | ${row.label} | ${row.key ? "métrica" : row.bucket ? "faixa CVM" : "lacuna"} | ✓ | ✓ | ✓ | ${edge(row)} |`));
+rows.forEach((row, index) => lines.push(`| ${index + 1} | ${row.section} | ${row.label} | ${row.key ? "métrica" : row.bucket ? "faixa CVM" : "lacuna"} | ✓ | ${independent.has(row.key) ? "✓" : "—"} | ✓ | ✓ | ${edge(row, index)} |`));
 lines.push("", "**Sem cobertura estrutural:** nenhum. **Sem cálculo:** 7 lacunas intencionais, listadas como `lacuna` na tabela.", "");
 writeFileSync(resolve("docs/L1_COBERTURA.md"), lines.join("\n"));

@@ -3,10 +3,13 @@ import react from "@vitejs/plugin-react";
 import path from "node:path";
 
 // Used only for the disposable sensitivity check. The source file on disk is never edited.
-const mutations: Record<string, [string, string]> = {
-  midpoint: ["const midpointDays = [15, 45", "const midpointDays = [16, 45"],
-  rate_filter: ["rate <= 300", "rate <= 10"],
-  subordination: ["const included = label.includes(\"subordinada\") &&", "const included = label.includes(\"junior\") &&"],
+const mutations: Record<string, { path: string; before: string; after: string }> = {
+  midpoint: { path: "/supabase/functions/_shared/liquidity-monthly.ts", before: "const midpointDays = [15, 45", after: "const midpointDays = [16, 45" },
+  rate_filter: { path: "/supabase/functions/_shared/liquidity-monthly.ts", before: "rate <= 300", after: "rate <= 10" },
+  subordination: { path: "/supabase/functions/_shared/liquidity-monthly.ts", before: "const included = label.includes(\"subordinada\") &&", after: "const included = label.includes(\"junior\") &&" },
+  csv_delimiter: { path: "/supabase/functions/_shared/cvm-monthly-csv.ts", before: 'char === ";" && !quoted', after: 'char === "," && !quoted' },
+  pdf_header: { path: "/src/lib/liquidityMonthlyExport.ts", before: "RISCO CVPAR  /  RELATÓRIO MENSAL FIDC", after: "RISCO CVPAR  /  CABEÇALHO ALTERADO" },
+  pdf_column: { path: "/src/lib/liquidityMonthlyExport.ts", before: 'head: [["Indicador", "Valor", "Qualidade", "Origem / ressalva"]]', after: 'head: [["Indicador", "Valor", "Origem / ressalva", "Qualidade"]]' },
 };
 const mutation = process.env.L1_MUTATION;
 if (mutation && !mutations[mutation]) throw new Error(`Mutação L1 desconhecida: ${mutation}`);
@@ -16,10 +19,11 @@ export default defineConfig({
     name: "l1-disposable-mutation",
     enforce: "pre",
     transform(code, id) {
-      if (!mutation || !id.replaceAll("\\", "/").endsWith("/supabase/functions/_shared/liquidity-monthly.ts")) return null;
-      const [before, after] = mutations[mutation];
-      if (code.split(before).length !== 2) throw new Error(`Mutação L1 não é única: ${mutation}`);
-      return code.replace(before, after);
+      if (!mutation) return null;
+      const target = mutations[mutation];
+      if (!id.replaceAll("\\", "/").endsWith(target.path)) return null;
+      if (code.split(target.before).length !== 2) throw new Error(`Mutação L1 não é única: ${mutation}`);
+      return code.replace(target.before, target.after);
     },
   }],
   resolve: {

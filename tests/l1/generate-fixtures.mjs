@@ -1,4 +1,7 @@
 // Run explicitly once when establishing the L1 baseline. Tests never call this file.
+if (process.env.L1_UPDATE_SNAPSHOTS !== "1") {
+  throw new Error("Atualização de snapshots L1 exige L1_UPDATE_SNAPSHOTS=1.");
+}
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import JSZip from "jszip";
