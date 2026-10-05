@@ -55,9 +55,9 @@ it("seleciona o último estoque concluído e o último XML da mesma data-base", 
       data_vencimento_ajustada: "2026-08-05", situacao_recebivel: "A vencer", tipo_recebivel: "Duplicata",
       valor_presente: amount, valor_pdd: 0, valor_aquisicao: amount, taxa_cessao: .1 });
     const xml = (file: string, importedAt: string, txadm: number) => [
-      { id: `${file}-1`, arquivo_nome: file, created_at: importedAt, fundo_cnpj: cnpj, fundo_dtposicao: "20260731", section: "despesas", cnpjfundo: null, fundo_patliq: 1000, txadm, saldo: null, valor_padrao: null },
-      { id: `${file}-2`, arquivo_nome: file, created_at: importedAt, fundo_cnpj: cnpj, fundo_dtposicao: "20260731", section: "caixa", cnpjfundo: null, fundo_patliq: 1000, txadm: null, saldo: 20, valor_padrao: 20 },
-      { id: `${file}-3`, arquivo_nome: file, created_at: importedAt, fundo_cnpj: cnpj, fundo_dtposicao: "20260731", section: "titpublico", cnpjfundo: null, fundo_patliq: 1000, txadm: null, saldo: null, valor_padrao: 30 },
+      { id: `${file}-1`, arquivo_nome: file, created_at: importedAt, fundo_cnpj: cnpj, fundo_dtposicao: "20260731", fundo_isin: "SYNTHETIC-CLASS", fundo_nome: "Synthetic subordinada", section: "despesas", cnpjfundo: null, fundo_patliq: 1000, txadm, saldo: null, valor_padrao: null },
+      { id: `${file}-2`, arquivo_nome: file, created_at: importedAt, fundo_cnpj: cnpj, fundo_dtposicao: "20260731", fundo_isin: "SYNTHETIC-CLASS", fundo_nome: "Synthetic subordinada", section: "caixa", cnpjfundo: null, fundo_patliq: 1000, txadm: null, saldo: 20, valor_padrao: 20 },
+      { id: `${file}-3`, arquivo_nome: file, created_at: importedAt, fundo_cnpj: cnpj, fundo_dtposicao: "20260731", fundo_isin: "SYNTHETIC-CLASS", fundo_nome: "Synthetic subordinada", section: "titpublico", cnpjfundo: null, fundo_patliq: 1000, txadm: null, saldo: null, valor_padrao: 30 },
     ];
     const db: Record<string, any[]> = {
       funds: [{ id: "synthetic-fund", cnpj_fundo_master: cnpj, short_name: "Synthetic" }],

@@ -19,6 +19,8 @@ export interface StockReceivable {
 export interface XmlPositionLine {
   fundo_cnpj: string;
   fundo_dtposicao: string | null;
+  fundo_isin: string | null;
+  fundo_nome: string | null;
   section: string;
   cnpjfundo: string | null;
   fundo_patliq: number | null;
@@ -52,6 +54,8 @@ export interface StockXmlResult {
     stockRows: number;
     xmlFileName: string;
     xmlRows: number;
+    xmlPositionName: string | null;
+    xmlIsin: string | null;
   };
 }
 
@@ -109,8 +113,12 @@ export function calculateStockXmlMonthly(input: StockXmlInputs): StockXmlResult 
 
   const gaps: string[] = [];
   const plValues = [...new Set(input.xml.map((row) => numeric(row.fundo_patliq)).filter((value): value is number => value !== null))];
-  const pl = plValues.length === 1 && plValues[0] > 0 ? money(cents(plValues[0])) : null;
-  if (pl === null) gaps.push("PL do cabeçalho XML ausente ou divergente entre linhas.");
+  const classPl = plValues.length === 1 && plValues[0] > 0 ? money(cents(plValues[0])) : null;
+  if (classPl === null) gaps.push("PL da posição XML ausente ou divergente entre linhas.");
+  const xmlNames = [...new Set(input.xml.map((row) => row.fundo_nome).filter((name): name is string => !!name))];
+  const xmlIsins = [...new Set(input.xml.map((row) => row.fundo_isin).filter((isin): isin is string => !!isin))];
+  if (xmlNames.length > 1 || xmlIsins.length > 1) throw new Error("XML mistura classes/posições diferentes.");
+  gaps.push("O XML importado representa uma posição/classe; seu PL não é o PL consolidado do fundo. Razões entre estoque do fundo e PL ou ativos dessa classe ficam indisponíveis.");
   const adminRows = input.xml.filter((row) => row.section === "despesas");
   const administrationRaw = adminRows.length === 1 ? numeric(adminRows[0].txadm) : null;
   const administration = administrationRaw === null ? null : money(cents(administrationRaw));
@@ -195,13 +203,14 @@ export function calculateStockXmlMonthly(input: StockXmlInputs): StockXmlResult 
     ? `${missingDueDate} sem vencimento; ${statusDateMismatch} com divergência situação/data. Valores de faixas são parciais e seguem a situação do estoque.`
     : undefined;
   const concentration = (group: Map<string, number>, top: number): number | null => {
-    if (missingCounterparty || pl === null || !group.size) return null;
-    return ratio(money([...group.values()].sort((a, b) => b - a).slice(0, top).reduce((sum, value) => sum + value, 0)), pl);
+    if (missingCounterparty || !group.size) return null;
+    return ratio(money([...group.values()].sort((a, b) => b - a).slice(0, top).reduce((sum, value) => sum + value, 0)), gross);
   };
   const immediateAccounting = cash !== null && publicBonds !== null ? money(cents(cash) + cents(publicBonds)) : null;
   const metrics: Record<string, MonthlyMetric> = {
-    pl: metric(pl, "XML · fundo_patliq"),
-    administrationExpense: metric(administration, "XML · despesas.txadm", "apurado", "Despesa de administração informada no XML para o mês, em regime de caixa; não é taxa percentual."),
+    pl: metric(null, "PL consolidado do fundo", "indisponivel", "O XML disponível é de uma posição/classe; não cobre todas as classes do fundo."),
+    classPl: metric(classPl, "XML · fundo_patliq da posição/classe", "apurado", "Não usar como denominador do estoque do fundo."),
+    administrationExpense: metric(administration, "XML da posição/classe · despesas.txadm", "apurado", "Valor pago no mês em regime de caixa pela posição informada; não é taxa percentual nem despesa consolidada do fundo."),
     stockGross: metric(gross, "Estoque · soma de valor_presente", "apurado", "Universo bruto do arquivo, não valor contábil reconciliado de DC."),
     pdd: metric(pdd, "Estoque · −soma de valor_pdd"),
     stockNet: metric(net, "Estoque · valor_presente − valor_pdd", "aproximado", "Não equivale necessariamente à posição contábil do XML."),
@@ -220,21 +229,22 @@ export function calculateStockXmlMonthly(input: StockXmlInputs): StockXmlResult 
     averageMaturityBusinessDays: metric(averageMaturity === null ? null : averageMaturity * 252 / 365, "Derivado · dias corridos × 252/365", "aproximado", "Conversão convencional, sem calendário de feriados."),
     cessionRateAnnual: metric(annualRate, "Estoque · taxa_cessao ponderada por valor_aquisicao", "aproximado", "Taxa no arquivo em fração a.a.; só pesos positivos e taxas em (0;300%]."),
     cessionRateMonthly: metric(annualRate === null ? null : Math.pow(1 + annualRate, 1 / 12) - 1, "Derivado · (1 + taxa a.a.)^(1/12) − 1", "aproximado"),
-    cash: metric(cash, "XML · soma de caixa.saldo", "apurado", "Saldo líquido contábil, inclusive valores negativos."),
-    publicBonds: metric(publicBonds, "XML · soma de titpublico.valor_padrao", "apurado", "Posição contábil; prazo de negociação não verificado."),
-    privateBonds: metric(privateBonds, "XML · soma de titprivado.valor_padrao", "apurado", "Pode sobrepor parte do estoque; não somar sem conciliação."),
-    ownFundUnits: metric(ownFundUnits, "XML · cotas com cnpjfundo igual ao fundo", "apurado", "A posição se aproxima do estoque a vencer; é evidência de conciliação, não ativo adicional."),
-    otherFundUnits: metric(otherFundUnits, "XML · cotas de outros CNPJs", "apurado", "Prazo de resgate e liquidez não verificados."),
-    immediateAccounting: metric(immediateAccounting, "Derivado · caixa líquido + títulos públicos", "aproximado", "Saldo contábil assinado, não caixa imediatamente realizável."),
-    stockGrossToPl: metric(ratio(gross, pl), "Derivado · estoque bruto / PL", "aproximado", "O estoque pode superar o PL; razão não mede cobertura."),
-    pddToPl: metric(ratio(pdd, pl), "Derivado · PDD / PL", "aproximado"),
+    cash: metric(cash, "XML da posição/classe · soma de caixa.saldo", "apurado", "Saldo líquido contábil, inclusive valores negativos; não é caixa do fundo consolidado."),
+    publicBonds: metric(publicBonds, "XML da posição/classe · soma de titpublico.valor_padrao", "apurado", "Prazo de negociação não verificado; não é posição consolidada do fundo."),
+    privateBonds: metric(privateBonds, "XML da posição/classe · soma de titprivado.valor_padrao", "apurado", "Pode sobrepor parte do estoque; não somar sem conciliação."),
+    ownFundUnits: metric(ownFundUnits, "XML da posição/classe · cotas com cnpjfundo igual ao fundo", "apurado", "Não comparar diretamente com o estoque do fundo."),
+    otherFundUnits: metric(otherFundUnits, "XML da posição/classe · cotas de outros CNPJs", "apurado", "Prazo de resgate e liquidez não verificados."),
+    immediateAccounting: metric(immediateAccounting, "XML da posição/classe · caixa líquido + títulos públicos", "aproximado", "Saldo contábil assinado da posição, não caixa disponível do fundo."),
+    stockGrossToPl: metric(null, "Estoque do fundo / PL consolidado", "indisponivel", "PL consolidado ausente nas duas fontes."),
+    pddToPl: metric(null, "PDD do fundo / PL consolidado", "indisponivel", "PL consolidado ausente nas duas fontes."),
     overdueToStock: metric(ratio(overdue, gross), "Derivado · vencidos / estoque bruto", "aproximado"),
-    immediatePlusDue30ToPl: metric(due30 === null || immediateAccounting === null ? null : ratio(immediateAccounting + due30, pl), "Derivado · (caixa + títulos públicos + vencimentos até 30 dias) / PL", "aproximado", "Indicador contratual, não cobertura de resgates nem caixa projetado."),
-    ownUnitsVsStockNet: metric(ownFundUnits === null || net === null ? null : money(cents(ownFundUnits) - cents(net)), "Conciliação · cotas do próprio CNPJ no XML − estoque líquido", "aproximado", "Diferença requer validação de critérios contábeis e perímetro."),
+    due30ToStock: metric(ratio(due30, gross), "Estoque do fundo · A vencer até 30 dias / valor presente bruto", "aproximado", "Vencimento contratual, não cobertura de resgates ou caixa projetado."),
+    immediatePlusDue30ToPl: metric(null, "Caixa da classe + vencimentos do fundo / PL consolidado", "indisponivel", "Perímetros diferentes e PL consolidado ausente."),
+    ownUnitsVsStockNet: metric(null, "Cotas da classe − estoque líquido do fundo", "indisponivel", "Perímetros diferentes; conciliação direta inválida."),
   };
   for (const [name, group] of [["debtor", debtor], ["cedent", cedent]] as const) {
     for (const count of [1, 5, 10, 15]) {
-      metrics[`${name}Top${count}`] = metric(concentration(group, count), `Estoque · Top ${count} ${name === "debtor" ? "sacados" : "cedentes"} por documento / PL`, "aproximado", "Consolidação por CPF/CNPJ do arquivo; inclui títulos vencidos.");
+      metrics[`${name}Top${count}`] = metric(concentration(group, count), `Estoque · Top ${count} ${name === "debtor" ? "sacados" : "cedentes"} por documento / estoque bruto`, "aproximado", "Consolidação por CPF/CNPJ do arquivo; inclui títulos vencidos. Não é percentual do PL.");
     }
   }
   for (const [key, explanation] of Object.entries({
@@ -257,6 +267,7 @@ export function calculateStockXmlMonthly(input: StockXmlInputs): StockXmlResult 
     gaps,
     evidence: { tables: ["estoque_fidc", "posicao_carteira"], positionDate: input.referenceDate,
       stockImportId: input.stockImport.id, stockFileName: input.stockImport.fileName, stockRows: input.stock.length,
-      xmlFileName: input.xmlFileName, xmlRows: input.xml.length },
+      xmlFileName: input.xmlFileName, xmlRows: input.xml.length,
+      xmlPositionName: xmlNames[0] ?? null, xmlIsin: xmlIsins[0] ?? null },
   };
 }

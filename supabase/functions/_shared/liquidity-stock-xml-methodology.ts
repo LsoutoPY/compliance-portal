@@ -23,10 +23,10 @@ export const stockXml2026_1: LiquidityMethodology<StockXmlInputs, undefined, Sto
   toCommonResult: (result) => ({
     methodologyId: "cvpar_fidc_estoque_xml",
     methodologyVersion: "2026.1",
-    primaryIndicator: result.metrics.immediatePlusDue30ToPl.value,
+    primaryIndicator: result.metrics.due30ToStock.value,
     horizon: "30 dias de vencimento contratual",
     coverageIndex: null,
-    status: result.metrics.immediatePlusDue30ToPl.status,
+    status: result.metrics.due30ToStock.status,
     calculationMemory: result.metrics,
     evidence: result.evidence,
     gaps: result.gaps,

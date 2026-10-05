@@ -64,7 +64,7 @@ Deno.serve(async (req) => {
     const xmlFileName = lastXml?.[0]?.arquivo_nome;
     if (!xmlFileName) throw new Error("XML da posição não encontrado para fundo e data-base.");
     const { data: xmlWithIds, error: xmlError } = await service.from("posicao_carteira")
-      .select("id,fundo_cnpj,fundo_dtposicao,section,cnpjfundo,fundo_patliq,txadm,saldo,valor_padrao")
+      .select("id,fundo_cnpj,fundo_dtposicao,fundo_isin,fundo_nome,section,cnpjfundo,fundo_patliq,txadm,saldo,valor_padrao")
       .eq("fundo_cnpj", cnpj).eq("fundo_dtposicao", referenceDate.replace(/-/g, ""))
       .eq("arquivo_nome", xmlFileName).order("id").limit(1000);
     if (xmlError) throw xmlError;
