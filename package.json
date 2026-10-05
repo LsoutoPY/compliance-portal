@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:l1": "vitest run --config vitest.l1.config.ts",
-    "test:l2": "vitest run --config vitest.l2.config.ts"
+    "test:l2": "vitest run --config vitest.l2.config.ts",
+    "test:stock-xml": "vitest run tests/stock-xml"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

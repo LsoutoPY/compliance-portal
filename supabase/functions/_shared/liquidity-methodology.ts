@@ -9,7 +9,9 @@ import {
 export type LiquidityInputContract =
   | "informe_mensal_cvm"
   | "carteira_diaria"
-  | "minimo_subordinacao";
+  | "minimo_subordinacao"
+  | "estoque_recebiveis"
+  | "posicao_carteira_xml";
 
 export interface FidcMonthlyInputs {
   tables: CvmTables;
