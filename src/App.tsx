@@ -22,6 +22,8 @@ import LiquidezPassivoFundos from "./pages/liquidez/LiquidezPassivoFundos";
 import LiquidezResgatesSolicitados from "./pages/liquidez/LiquidezResgatesSolicitados";
 import LiquidezRelatorios from "./pages/liquidez/LiquidezRelatorios";
 import LiquidezMensalArtefato from "./pages/liquidez/LiquidezMensalArtefato";
+import LiquidezEstoqueXml from "./pages/liquidez/LiquidezEstoqueXml";
+import LiquidezVisaoGeral from "./pages/liquidez/LiquidezVisaoGeral";
 import EnquadramentoRelatorios from "./pages/enquadramento/EnquadramentoRelatorios";
 import LiquidezDescasamentoOperacional from "./pages/liquidez/LiquidezDescasamentoOperacional";
 import CreditoMatriz from "./pages/credito/CreditoMatriz";
@@ -76,7 +78,8 @@ export default function App() {
                 <Route path="/enquadramento/grupos-economicos" element={<AuthorizedRoute><GruposEconomicos /></AuthorizedRoute>} />
                 <Route path="/enquadramento/relatorios" element={<AuthorizedRoute><EnquadramentoRelatorios /></AuthorizedRoute>} />
 
-                <Route path="/liquidez" element={<AuthorizedRoute><Navigate to="/liquidez/monitoramento-fundo" replace /></AuthorizedRoute>} />
+                <Route path="/liquidez" element={<AuthorizedRoute><Navigate to="/liquidez/visao-geral" replace /></AuthorizedRoute>} />
+                <Route path="/liquidez/visao-geral" element={<AuthorizedRoute><LiquidezVisaoGeral /></AuthorizedRoute>} />
                 <Route path="/liquidez/matriz-anbima" element={<AuthorizedRoute><Liquidez /></AuthorizedRoute>} />
                 <Route path="/liquidez/consolidado" element={<AuthorizedRoute><LiquidezConsolidado /></AuthorizedRoute>} />
                 <Route path="/liquidez/importar" element={<Navigate to="/dados/importar" replace />} />
@@ -88,6 +91,7 @@ export default function App() {
                 <Route path="/liquidez/descasamento-operacional" element={<AuthorizedRoute><LiquidezDescasamentoOperacional /></AuthorizedRoute>} />
                 <Route path="/liquidez/relatorios" element={<AuthorizedRoute><LiquidezRelatorios /></AuthorizedRoute>} />
                 <Route path="/liquidez/mensal" element={<AuthorizedRoute><LiquidezMensalArtefato /></AuthorizedRoute>} />
+                <Route path="/liquidez/estoque-xml" element={<AuthorizedRoute><LiquidezEstoqueXml /></AuthorizedRoute>} />
 
                 <Route path="/dados/importar" element={<AuthorizedRoute><ImportXml /></AuthorizedRoute>} />
                 <Route path="/importar" element={<Navigate to="/dados/importar" replace />} />
