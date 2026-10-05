@@ -22,6 +22,7 @@ import LiquidezPassivoFundos from "./pages/liquidez/LiquidezPassivoFundos";
 import LiquidezResgatesSolicitados from "./pages/liquidez/LiquidezResgatesSolicitados";
 import LiquidezRelatorios from "./pages/liquidez/LiquidezRelatorios";
 import LiquidezMensalArtefato from "./pages/liquidez/LiquidezMensalArtefato";
+import LiquidezEstoqueXml from "./pages/liquidez/LiquidezEstoqueXml";
 import LiquidezVisaoGeral from "./pages/liquidez/LiquidezVisaoGeral";
 import EnquadramentoRelatorios from "./pages/enquadramento/EnquadramentoRelatorios";
 import LiquidezDescasamentoOperacional from "./pages/liquidez/LiquidezDescasamentoOperacional";
@@ -90,6 +91,7 @@ export default function App() {
                 <Route path="/liquidez/descasamento-operacional" element={<AuthorizedRoute><LiquidezDescasamentoOperacional /></AuthorizedRoute>} />
                 <Route path="/liquidez/relatorios" element={<AuthorizedRoute><LiquidezRelatorios /></AuthorizedRoute>} />
                 <Route path="/liquidez/mensal" element={<AuthorizedRoute><LiquidezMensalArtefato /></AuthorizedRoute>} />
+                <Route path="/liquidez/estoque-xml" element={<AuthorizedRoute><LiquidezEstoqueXml /></AuthorizedRoute>} />
 
                 <Route path="/dados/importar" element={<AuthorizedRoute><ImportXml /></AuthorizedRoute>} />
                 <Route path="/importar" element={<Navigate to="/dados/importar" replace />} />
