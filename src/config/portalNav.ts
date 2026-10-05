@@ -18,6 +18,7 @@ export const PORTAL_NAV: PortalNavItem[] = [
   { id: "enq-grupos", label: "Grupos econômicos", icon: "users", section: "Enquadramento", path: "/enquadramento/grupos-economicos" },
   { id: "enq-relatorios", label: "Relatórios", icon: "clipboard-list", section: "Enquadramento", path: "/enquadramento/relatorios" },
 
+  { id: "liq-visao-geral", label: "Visão geral", icon: "layout-dashboard", section: "Liquidez", path: "/liquidez/visao-geral" },
   { id: "liq-monitoramento", label: "Monitoramento", icon: "droplets", section: "Liquidez", path: "/liquidez/monitoramento-fundo" },
   { id: "liq-passivo", label: "Passivo fundos", icon: "file-text", section: "Liquidez", path: "/liquidez/passivo-fundos" },
   { id: "liq-matriz", label: "Matriz ANBIMA", icon: "table-2", section: "Liquidez", path: "/liquidez/matriz-anbima" },
@@ -64,6 +65,7 @@ const PATH_ALIASES: Array<{ test: (path: string) => boolean; id: string; crumbs:
   { test: (p) => p.startsWith("/liquidez/descasamento-operacional"), id: "liq-descasamento", crumbs: [{ label: "Liquidez" }, { label: "Descasamento" }], title: "Descasamento operacional" },
   { test: (p) => p.startsWith("/liquidez/relatorios"), id: "liq-relatorios", crumbs: [{ label: "Liquidez" }, { label: "Relatórios" }], title: "Relatórios de liquidez" },
   { test: (p) => p.startsWith("/liquidez/mensal"), id: "liq-mensal", crumbs: [{ label: "Liquidez" }, { label: "FIDC mensal" }], title: "Liquidez mensal FIDC" },
+  { test: (p) => p.startsWith("/liquidez/visao-geral"), id: "liq-visao-geral", crumbs: [{ label: "Liquidez" }, { label: "Visão geral" }], title: "Visão geral de liquidez" },
   { test: (p) => p.startsWith("/liquidez"), id: "liq-monitoramento", crumbs: [{ label: "Liquidez" }, { label: "Monitoramento" }], title: "Monitoramento de liquidez" },
   { test: (p) => p.startsWith("/credito/rollrate"), id: "cred-rollrate", crumbs: [{ label: "Crédito" }, { label: "Roll rate" }], title: "Roll rate / migração" },
   { test: (p) => p.startsWith("/credito/elegibilidade"), id: "cred-elegibilidade", crumbs: [{ label: "Crédito" }, { label: "Elegibilidade" }], title: "Elegibilidade" },
