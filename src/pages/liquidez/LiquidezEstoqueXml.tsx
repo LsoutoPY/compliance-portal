@@ -1,10 +1,11 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState, type FormEvent } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Layout } from "@/components/Layout";
 import { useAuth } from "@/contexts/AuthContext";
 import { Badge } from "@/design-system/components/core/Badge";
 import { Button } from "@/design-system/components/core/Button";
 import { Card } from "@/design-system/components/core/Card";
+import { Input } from "@/design-system/components/forms/Input";
 import { Select } from "@/design-system/components/forms/Select";
 import { supabase } from "@/integrations/supabase/client";
 import "./liquidez-estoque-xml.css";
@@ -72,11 +73,14 @@ const format = (metric: Metric | undefined, unit: Row["unit"] = "money") => metr
 const monthEnd = (month: string) => new Date(Date.UTC(Number(month.slice(0, 4)), Number(month.slice(5, 7)), 0)).toISOString().slice(0, 10);
 
 export default function LiquidezEstoqueXml() {
-  const { user } = useAuth();
+  const { user, signIn, loading: authLoading } = useAuth();
   const queryClient = useQueryClient();
   const [month, setMonth] = useState("2026-07");
   const [cnpj, setCnpj] = useState("");
   const [busy, setBusy] = useState(false);
+  const [loginBusy, setLoginBusy] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const fundQuery = useQuery({ queryKey: ["stock-xml-funds", user?.id], enabled: !!user, queryFn: async (): Promise<Fund[]> => {
     const { data, error } = await supabase.from("funds").select("id,short_name,cnpj_fundo_master").eq("active", true).order("short_name").limit(500);
@@ -137,6 +141,25 @@ export default function LiquidezEstoqueXml() {
     finally { setBusy(false); }
   }
 
+  async function handleSignIn(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setLoginBusy(true);
+    setMessage("");
+    try {
+      const outcome = await signIn(email.trim(), password);
+      if (outcome.error) {
+        setMessage(outcome.error);
+        return;
+      }
+      setPassword("");
+      setMessage("Sessão iniciada. Carregando os dados do fundo.");
+    } catch (error) {
+      setMessage(`Falha no login: ${errorText(error)}`);
+    } finally {
+      setLoginBusy(false);
+    }
+  }
+
   return <Layout><main className="lsx-page">
     <header className="lsx-heading"><div><span className="lsx-eyebrow">Liquidez · metodologia independente</span><h1>FIDC mensal · Estoque + XML</h1><p>Apuração indicativa dos recebíveis do fundo e da posição XML importada.</p></div><Badge tone="warning">Sem fechamento</Badge></header>
     <div className="lsx-controls">
@@ -147,7 +170,14 @@ export default function LiquidezEstoqueXml() {
     <p className="lsx-perimeter" role="note"><strong>Perímetros separados.</strong> O estoque cobre recebíveis do fundo. O XML importado descreve uma posição/classe; seu PL e seus ativos não são usados como denominador nem somados ao estoque. Vencimentos contratuais não são previsão de caixa.</p>
     {message && <p className="lsx-feedback" role="status">{message}</p>}
     {(fundQuery.error || importQuery.error || xmlQuery.error || runQuery.error || roleQuery.error) && <p className="lsx-error" role="alert">Falha na consulta: {errorText(fundQuery.error || importQuery.error || xmlQuery.error || runQuery.error || roleQuery.error)}</p>}
-    {!user && <p className="lsx-empty">Entre no portal para consultar os arquivos importados e as execuções desta metodologia.</p>}
+    {authLoading && <p className="lsx-empty">Verificando sessão do portal…</p>}
+    {!user && !authLoading && <Card title="Entrar para consultar e calcular" subtitle="Use sua conta do portal. A execução exige perfil Risco ativo.">
+      <form className="lsx-login" onSubmit={(event) => void handleSignIn(event)}>
+        <Input label="E-mail" type="email" autoComplete="username" value={email} onChange={(event) => setEmail(event.target.value)} required disabled={loginBusy} />
+        <Input label="Senha" type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required disabled={loginBusy} />
+        <Button type="submit" loading={loginBusy} disabled={loginBusy}>Entrar</Button>
+      </form>
+    </Card>}
     {!!user && !importQuery.isLoading && !availableMonths.length && <p className="lsx-empty">Nenhum estoque FIDC concluído foi encontrado.</p>}
     {!!cnpj && !xmlQuery.isLoading && !xmlQuery.data && <p className="lsx-empty">XML da posição não encontrado para este fundo e competência.</p>}
     {!!cnpj && xmlQuery.data && !runQuery.isLoading && !run && <p className="lsx-empty">Estoque e XML encontrados. Esta metodologia ainda não foi calculada para a competência.</p>}
